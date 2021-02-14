@@ -10,9 +10,9 @@ alt + Return
 alt + Escape
 	pkill -USR1 -x sxhkd
 
-# start dmenu
+# open rofi run window
 alt + d
-	dmenu_run
+	rofi -show run -theme dmenu
 
 
 #
