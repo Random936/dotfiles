@@ -6,11 +6,16 @@ URxvt.shading: 10
 URxvt.scrollBar: false
 URxvt.internalBorder: 10
 
-!URxvt.perl-ext-common: resize-font
-!URxvt.resize-font.smaller: C-j
-!URxvt.resize-font.bigger: C-k
-
+! Font styles
 URxvt.font: xft:MesloLGS NF:size=12
 URxvt.cursorColor: #d50505
 URxvt.highlightColor: #303030
 URxvt.highlightTextColor: #A0A0A0
+URxvt.saveLines: 200000
+
+! External packages
+URxvt.perl-ext-common: resize-font
+
+! Resize terminal
+URxvt.resize-font.smaller: C-j
+URxvt.resize-font.bigger: C-k

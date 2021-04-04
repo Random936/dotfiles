@@ -43,8 +43,8 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab
 
 # History configurations
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=2000
+HISTSIZE=1000000
+SAVEHIST=1000000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
@@ -84,12 +84,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)──}(%B%F{%(#.red.blue)}%n%(#.💀.㉿)%m%b%F{%(#.blue.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-    RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
-
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
-	. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
+	. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 	ZSH_HIGHLIGHT_STYLES[default]=none
 	ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -203,9 +200,28 @@ fi
 LS_COLORS=$LS_COLORS:'di=1;31:' ; export LS_COLORS
 
 # Load zplug and extensions 
-source /usr/share/zplug/init.zsh
+source /usr/share/zsh/scripts/zplug/init.zsh
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
+# Source completion and highlighting scripts
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# CUSTOM ALIASES & FUNCTIONS
+alias open='xdg-open'
+alias cewl='ruby -W0 /opt/CeWL/cewl.rb'
+alias up='sudo python -m http.server 80'
+
+# Wordlists
+export directorylist="~/Wordlists/directory-list.txt"
+export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
+export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
+
+# Ease of use
+alias kraken="ssh random@10.0.0.13"
+alias pi="ssh root@10.0.0.31"
