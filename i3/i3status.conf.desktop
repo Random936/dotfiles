@@ -19,13 +19,13 @@ order += "memory"
 order += "volume master"
 order += "tztime local"
 
-ethernet tun0 {
-	format_up = "VPN: %ip (%speed)"
+wireless tun0 {
+	format_up = "VPN: %ip"
 	format_down = "VPN: down"
 }
 
 ethernet _first_ {
-        format_up = "Ethernet: %ip (%speed)"
+        format_up = "Ethernet: %ip" 
         format_down = "Ethernet: down"
 }
 

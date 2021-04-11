@@ -216,6 +216,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 alias open='xdg-open'
 alias cewl='ruby -W0 /opt/CeWL/cewl.rb'
 alias up='sudo python -m http.server 80'
+alias vim='nvim'
 
 # Wordlists
 export directorylist="~/Wordlists/directory-list.txt"
