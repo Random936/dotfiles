@@ -41,6 +41,9 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Gruvbox colorscheme
 Plug 'morhetz/gruvbox'
+
+" For vim practice
+Plug 'ThePrimeagen/vim-be-good'
 call plug#end()
 
 " Load the clangd server as the interpreter

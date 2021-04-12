@@ -219,10 +219,11 @@ alias up='sudo python -m http.server 80'
 alias vim='nvim'
 
 # Wordlists
-export directorylist="~/Wordlists/directory-list.txt"
 export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
+alias mountenc='encfs ~/Documents/.encrypted ~/Documents/Encrypted'
+alias umountenc='fusermount -u ~/Documents/Encrypted'
 alias kraken="ssh random@10.0.0.13"
 alias pi="ssh root@10.0.0.31"
