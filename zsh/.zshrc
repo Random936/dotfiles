@@ -208,15 +208,34 @@ zplug load
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # CUSTOM ALIASES & FUNCTIONS
 alias open='xdg-open'
-alias cewl='ruby -W0 /opt/CeWL/cewl.rb'
-alias up='sudo python -m http.server 80'
+alias listen='rlwrap nc -lnvp'
 alias vim='nvim'
+
+# Cd multiple directoryies alias.
+function .. () {cd ..}
+function ... () {cd ../../}
+function .... () {cd ../../../}
+function ..... () {cd ../../../../}
+function ...... () {cd ../../../../../}
+
+function up() {
+	for ip in $(ip addr | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
+	do
+		for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' -printf '%f\n')
+		do
+			echo "http://$ip/$filepath"
+  	done
+	done
+	sudo python -m http.server 80
+}
 
 # Wordlists
 export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"

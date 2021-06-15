@@ -7,7 +7,7 @@ URxvt.scrollBar: false
 URxvt.internalBorder: 10
 
 ! Font styles
-URxvt.font: xft:MesloLGS NF:size=12
+URxvt.font: xft:MesloLGS NF:size=16
 URxvt.cursorColor: #d50505
 URxvt.highlightColor: #303030
 URxvt.highlightTextColor: #A0A0A0
@@ -17,5 +17,11 @@ URxvt.saveLines: 200000
 URxvt.perl-ext-common: resize-font
 
 ! Resize terminal
-URxvt.resize-font.smaller: C-j
-URxvt.resize-font.bigger: C-k
+URxvt.keysym.Shift-Control-J: resize-font:smaller
+URxvt.keysym.Shift-Control-K: resize-font:bigger
+
+! Ctrl-HJKL
+URxvt.keysym.Control-j:     \033[1;5A
+URxvt.keysym.Control-k:   \033[1;5B
+URxvt.keysym.Control-h:   \033[1;5D
+URxvt.keysym.Control-l:  \033[1;5C

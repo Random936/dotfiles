@@ -11,6 +11,7 @@ set nohlsearch
 set hidden
 set incsearch
 set scrolloff=8
+set colorcolumn=80
 set signcolumn=yes
 
 " Remove arrow keys to train my fingers
@@ -23,6 +24,9 @@ noremap <Right>   <Nop>
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
+" Grammarous keybindings
+noremap <C-c> :GrammarousCheck<CR>
+
 " Add key bindings for fuzzy finder
 nnoremap <leader>pf <cmd>Telescope find_files<cr>
 nnoremap <leader>pg <cmd>Telescope live_grep<cr>
@@ -33,6 +37,9 @@ call plug#begin('~/.vim/plugged')
 " Syntax correcting and autocomplete for nvim
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+
+" Grammar checker
+Plug 'rhysd/vim-grammarous'
 
 " Nvim fuzzy finder
 Plug 'nvim-lua/popup.nvim'
@@ -49,8 +56,10 @@ call plug#end()
 " Load the clangd server as the interpreter
 set completeopt=menuone,noinsert,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+" Language server for nvim-lsp
 lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
-lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
+"lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
 
 " Set colorscheme
 colorscheme gruvbox
