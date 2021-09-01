@@ -24,9 +24,6 @@ noremap <Right>   <Nop>
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 
-" Grammarous keybindings
-noremap <C-c> :GrammarousCheck<CR>
-
 " Add key bindings for fuzzy finder
 nnoremap <leader>pf <cmd>Telescope find_files<cr>
 nnoremap <leader>pg <cmd>Telescope live_grep<cr>
@@ -37,9 +34,6 @@ call plug#begin('~/.vim/plugged')
 " Syntax correcting and autocomplete for nvim
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-
-" Grammar checker
-Plug 'rhysd/vim-grammarous'
 
 " Nvim fuzzy finder
 Plug 'nvim-lua/popup.nvim'
@@ -53,15 +47,36 @@ Plug 'morhetz/gruvbox'
 Plug 'ThePrimeagen/vim-be-good'
 call plug#end()
 
+" Set colorscheme
+let g:gruvbox_contrast_dark = 'hard'
+
+if exists('+termgicolors')
+   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+colorscheme gruvbox
+set background=dark
+hi Normal guibg=NONE ctermbg=NONE
+
 " Load the clangd server as the interpreter
 set completeopt=menuone,noinsert,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 " Language server for nvim-lsp
-lua require'lspconfig'.clangd.setup{on_attach=require'completion'.on_attach}
-"lua require'lspconfig'.pyls.setup{on_attach=require'completion'.on_attach}
 
-" Set colorscheme
-colorscheme gruvbox
-set background=dark
-hi Normal guibg=NONE ctermbg=NONE
+lua << EOF
+require'lspconfig'.clangd.setup{
+   on_attach=require'completion'.on_attach,
+   filetypes = {"c", "cpp", "objc", "objcpp"}
+}
+require'lspconfig'.pylsp.setup{
+   on_attach=require'completion'.on_attach,
+   cmd = {"pylsp"},
+   filetypes = {"python", "py"}
+}
+require'lspconfig'.tsserver.setup{
+   on_attach=require'completion'.on_attach,
+   root_dir = function() return vim.loop.cwd() end
+}
+EOF
