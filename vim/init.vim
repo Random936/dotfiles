@@ -20,28 +20,27 @@ noremap <Down>   <Nop>
 noremap <Left>   <Nop>
 noremap <Right>   <Nop>
 
-" Set <leader> to space
-nnoremap <SPACE> <Nop>
+" set <leader> to space
+nnoremap <space> <nop>
 let mapleader=" "
 
-" Add key bindings for fuzzy finder
-nnoremap <leader>pf <cmd>Telescope find_files<cr>
-nnoremap <leader>pg <cmd>Telescope live_grep<cr>
-nnoremap <leader>pb <cmd>Telescope buffers<cr>
-nnoremap <leader>ph <cmd>Telescope help_tags<cr>
+" FZF key bindings 
+noremap <C-p> <cmd>Files<cr>
+noremap <C-b> <cmd>Buffers<cr>
 
 call plug#begin('~/.vim/plugged')
 " Syntax correcting and autocomplete for nvim
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 
-" Nvim fuzzy finder
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" FZF
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 
-" Gruvbox colorscheme
+" Theme and Syntax Highlighting
 Plug 'morhetz/gruvbox'
+Plug 'bfrg/vim-cpp-modern'
 
 " For vim practice
 Plug 'ThePrimeagen/vim-be-good'
