@@ -1,0 +1,620 @@
+* Pending Improvements
+
+There are still many improvements that I have yet to do. Here are just a few that I add when I think of them.
+
+- Add word document compatability
+
+* General Configuration
+
+General configuarion is configuration of vanilla emacs. This includes making emacs minimal, 
+
+** Cosmetic Configuration
+
+Disable the useless features that make emacs bloated.
+
+#+begin_src emacs-lisp
+  ; Disable startup message
+  (setq inhibit-startup-message t)
+
+  (scroll-bar-mode -1) ; Disable scrollbar
+  (tool-bar-mode -1)   ; Disable  toolbar
+  (tooltip-mode -1)    ; Disable tooltips 
+  (menu-bar-mode -1)   ; Disable menu-bar
+  (set-fringe-mode 10) ; Add gaps on left and right
+#+end_src
+
+*** Change font
+
+Pretty self explanitory.
+
+#+begin_src emacs-lisp
+  (set-face-attribute 'default nil :font "Fira Code Retina" :height 140)
+#+end_src
+
+** Disable Error Bell
+
+Disable error bell and visual bell. Visual bell would be nice on linux, but on mac it is just annoying so I removed it.
+
+#+begin_src emacs-lisp
+  (setq ring-bell-function 'ignore)
+  (setq visual-bell nil)
+#+end_src
+
+** Relocate Custom File
+
+Change location of custom file. This will stop *custom* from appending to the config file.
+
+#+begin_src emacs-lisp
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
+#+end_src
+
+** Move Backup File
+
+This moves the backup files so that emacs doesn't clutter up directories with backup files.
+
+#+begin_src emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
+
+#+end_src
+
+* Packages
+
+Emacs and packages. Pretty much a requirement.
+
+** Setup package
+
+Initialize *package* and setup package archives. This lets you install packages from other archives such as [[https://melpa.org/][melpa]].
+
+#+begin_src emacs-lisp
+  (require 'package)
+
+  (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpa" . "https://elpa.gnu.org/packages/")))
+
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+end_src
+
+** Use-package
+
+Install use package for easier installation of other packages.
+
+#+begin_src emacs-lisp
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
+
+  (require 'use-package)
+  (setq use-package-always-ensure t)
+#+end_src
+
+#+begin_src emacs-lisp
+  (use-package exec-path-from-shell
+    :config
+    (when (memq window-system '(mac ns x))
+      (exec-path-from-shell-initialize)))
+#+end_src
+
+** Installed Packages
+
+This is a list of installed packages not included in any other category.
+
+*** Command Log Mode
+
+Command Log Mode creates a window that logs all commands and corrosponding keybindings.
+
+#+begin_src emacs-lisp
+    (use-package command-log-mode
+      :config (global-command-log-mode))
+#+end_src
+
+*** Emacs Autocompletion
+
+Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
+
+**** Counsel 
+
+Adds various completion functions used by Ivy. 
+
+#+begin_src emacs-lisp
+  (use-package counsel
+    :bind (("M-x" . counsel-M-x)
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           :map minibuffer-local-map
+           ("C-r" . counsel-minibuffer-history)))
+#+end_src
+
+**** Ivy
+
+Ivy is a basic autocompletion package that completes emacs functions. 
+
+#+begin_src emacs-lisp
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)	
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (ivy-mode 1))
+#+end_src
+
+**** Ivy-rich
+
+Install *Ivy-rich* for function info in Ivy autocomplete.
+
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :init (ivy-rich-mode 1))
+#+end_src
+
+* Cosmetic
+
+Packages that change the look of emacs in some way.
+
+** Doom Modeline
+
+Use doom modeline to make the modeline look nicer.
+
+#+begin_src emacs-lisp
+    (use-package all-the-icons) ; requirement
+    (use-package doom-modeline
+      :init (doom-modeline-mode 1)
+      :config (setq doom-modeline-height 45))
+#+end_src
+
+** Doom Themes
+
+Install doom themes for better themes.
+
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :init (load-theme 'doom-city-lights t))
+#+end_src
+
+** Rainbow Delimiters
+
+Colors perenthesis for better lisp syntax highlighting.
+
+#+begin_src emacs-lisp
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+#+end_src
+
+** Line Numbers
+
+This adds relative line numbers while excluding certain modes.
+
+#+begin_src emacs-lisp
+  ; Disable line numbers for certain modes
+  (dolist (mode '(org-mode-hook
+                  term-mode-hook
+                  vterm-mode-hook
+                  shell-mode-hook
+                  eshell-mode-hook))
+    (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+  ; Enable relative line numbers
+  (setq-default display-line-numbers-type 'visual)
+  (global-display-line-numbers-mode t)
+#+end_src
+
+* Keybindings
+
+Any key remappings or packages are listed here.
+
+** General Configurations
+
+Remap quit command to make it easier to rescue a buffer. With this function, escape will be used instead of *C-g*.
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+** Packages
+*** Which-key
+
+Lists all possible keybindings off of prefix.
+
+#+begin_src emacs-lisp
+  (use-package which-key
+    :init (which-key-mode)
+    :diminish which-key-mode
+    :config (setq which-key-idle-delay 0))
+#+end_src
+
+*** General
+
+General allows you to setup a prefix key easily. This makes it really easy to setup a bunch of keybindings with ease. 
+
+#+begin_src emacs-lisp
+  (use-package general
+    :config
+    (general-create-definer jm/leader-keys
+      :keymaps '(normal insert visual emacs)
+      :prefix "SPC"
+      :global-prefix "C-SPC")
+
+    (jm/leader-keys
+     ; Example of a keybinding should be changed later
+     "t" '(counsel-load-theme :which-key "Choose theme")
+     "v" '(multi-vterm :which-key "Open terminal")
+     "r" '(rename-buffer :which-key "Rename buffer")))
+#+end_src
+
+*** Evil
+
+Evil is a package that adds vim keybindings to emacs.
+
+#+begin_src emacs-lisp
+  ;; Setup vim keybindings with evil
+  (use-package evil
+    :init
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil) ; replaced with evil collection
+    (setq evil-want-C-u-scroll t)
+    (setq evil-want-C-i-jump nil)
+    :config
+    (evil-mode 1)
+    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+    ; Use visual line motions even outside of visual-line-mode buffers.
+    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+    ; Modify which modes use vim keybindings.
+    (evil-set-initial-state 'messages-buffer-mode 'normal)
+    (evil-set-initial-state 'dashboard-mode 'normal))
+#+end_src
+
+**** Evil Collection
+
+Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybindings. 
+
+#+begin_src emacs-lisp
+  (use-package evil-collection
+    :after evil
+    :config (evil-collection-init))
+#+end_src
+
+**** Undo-Tree
+
+Undo tree's use is self explanitory. While the built-in emacs undo system is fine for me, *undo-tree* is required as it fixes an issue with evil where you can't redo.
+
+#+begin_src emacs-lisp
+  ; Fix vim redo with undo tree
+  (use-package undo-tree
+    :after evil
+    :config
+    (evil-set-undo-system 'undo-tree) 
+    (global-undo-tree-mode 1))
+#+end_src
+
+*** Hydra
+
+Hydra is a package that implements a way to execute the same commands in quick succession.
+
+#+begin_src emacs-lisp
+  (use-package hydra)
+#+end_src
+
+Setup easy changing of font size. This implements a zooming system to make text smaller or bigger quickly.
+
+#+begin_src emacs-lisp
+  (defhydra hydra-zoom (:timeout 4)
+    ("j" text-scale-increase "in")
+    ("k" text-scale-decrease "out")
+    ("f" nil "finished" :exit t))
+#+end_src
+
+This keybinding needs to be added to general to give it a prefix.
+
+#+begin_src emacs-lisp
+  (jm/leader-keys
+  "z" '(hydra-zoom/body :which-key "scale-text"))
+#+end_src
+
+* File Management
+
+This section includes any configuration that improves file management capabilities.
+
+** Customize Dired
+
+Dired is a built-in package in emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
+
+#+begin_src emacs-lisp
+  (use-package dired
+    :ensure nil ; Melpa won't be able to find this package.
+    :commands (dired dired-jump)
+    :bind (("C-x C-j" . dired-jump))
+    :custom ((dired-listing-switches "-ahgo"))
+    :config
+    (evil-collection-define-key 'normal 'dired-mode-map
+      "h" 'dired-single-up-directory
+      "l" 'dired-single-buffer))
+#+end_src
+
+** Dired Single
+
+Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a rediculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
+
+#+begin_src emacs-lisp
+  (use-package dired-single)
+#+end_src
+
+** All the Icons Dired
+
+~all-the-icons-dired~ is a dired plugin that adds icons to each of the files. 
+
+#+begin_src emacs-lisp
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
+#+end_src
+
+** Hide Dotfiles
+
+This hides all dotfiles in dired with the keybinding ~H~.
+
+#+begin_src emacs-lisp
+(use-package dired-hide-dotfiles
+  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    "H" 'dired-hide-dotfiles-mode))
+#+end_src
+
+* Org Mode
+
+Org is a package that allows you to create files like this one that look nice while also being able to run code. In this file, the code being run is stored in code blocks and all other text is disregarded.
+
+** Org Setup
+
+This installs the org package and creates a setup function to enable/disable certain functionalities.
+
+#+begin_src emacs-lisp
+  ;; Setup org mode
+  (defun jm/org-mode-setup ()
+    (org-indent-mode)
+    (variable-pitch-mode 1)
+    (visual-line-mode 1)
+    (setq org-hide-emphasis-markers t))
+
+  (use-package org
+    :hook (org-mode . jm/org-mode-setup)
+    :config
+    (setq org-ellipsis " ▾"))
+
+#+end_src
+
+** Org-Bullets
+
+Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
+
+#+begin_src emacs-lisp
+  ; Org-bullets for better headings
+  (use-package org-bullets
+    :after org
+    :hook (org-mode . org-bullets-mode)
+    :custom
+    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+#+end_src
+
+** Add List Dots
+
+By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+#+begin_src emacs-lisp
+  ; Replace - lists with a dot
+  (font-lock-add-keywords 'org-mode
+                            '(("^ *\\([-]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+** Font Changes
+
+Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org-faces 
+      ; Set faces for heading size levels
+      (dolist (face '((org-level-1 . 1.2)
+                      (org-level-2 . 1.1)
+                      (org-level-3 . 1.05)
+                      (org-level-4 . 1.0)
+                      (org-level-5 . 1.0)
+                      (org-level-6 . 1.0)
+                      (org-level-7 . 1.0)
+                      (org-level-8 . 1.0)))
+        (set-face-attribute (car face) nil :font "Fira Code Light" :weight 'regular :height (cdr face)))
+
+      ; Ensure that anything that should be fixed-pitch in Org files appears that way
+      (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+      (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+      (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+      (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+      (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+      (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+      (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+
+#+end_src
+
+** Visual Fill Column
+
+Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files. 
+
+#+begin_src emacs-lisp
+  ; Set left-right margins with visual-fill-column
+  (defun jm/org-mode-visual-fill ()
+    (setq visual-fill-column-width 100
+          visual-fill-column-center-text t)
+    (visual-fill-column-mode 1))
+
+  (use-package visual-fill-column
+    :hook (org-mode . jm/org-mode-visual-fill))
+#+end_src
+
+** Fix Snippets
+
+This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this fix, you are required to manually type out structures like code blocks. 
+
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+#+end_src
+
+* Language Server Protocol
+
+Language servers provide autocompletion and syntax highlighting capabilities making them essential for development.
+
+** Lsp Mode
+
+Lsp Mode is a package that adds language server functionalities to emacs.
+
+*** Breadcrumb Headerline
+
+This adds a headerline that shows the scope of where the cursor is in the code. For example if the user is in the main function, the headerline will contain main.
+
+#+begin_src emacs-lisp
+  (defun jm/lsp-mode-setup ()
+    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+    (lsp-headerline-breadcrumb-mode))
+#+end_src
+
+*** Install Lsp Mode
+
+Below I am installing the actual package and adding some basic configuration. 
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init (setq lsp-keymap-prefix "C-c l") ; Lsp mode prefix
+    :hook (lsp-mode . jm/lsp-mode-setup)  
+    :commands (lsp lsp-deferred) ; Startup commands
+    :config (lsp-enable-which-key-integration t))
+#+end_src
+
+*** Lsp Additional Packages
+
+**** Lsp-UI
+
+#+begin_src emacs-lisp
+  (use-package lsp-ui :commands lsp-ui-mode)
+#+end_src
+
+**** Lsp-Ivy
+
+#+begin_src emacs-lisp
+  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+#+end_src
+
+** Company Mode
+
+Company is a package that automatically finds completions instead of making the user run a command for completions.
+
+#+begin_src emacs-lisp
+  (use-package company
+    :after lsp-mode
+    :hook (lsp-mode . company-mode)
+    :bind (:map company-active-map ; Map tab to select completion
+                ("<tab>" . company-complete-selection))
+          (:map lsp-mode-map
+                ("<tab>" . company-indent-or-complete-common)))
+#+end_src
+
+** Language Servers
+
+This will include any language server packages and configuration.
+
+*** HTML
+
+#+begin_src emacs-lisp
+  (use-package web-mode
+    :mode "\\.html\\'"
+    :hook (web-mode . lsp-deferred))
+#+end_src
+
+*** Javascript/Typescript
+
+#+begin_src emacs-lisp
+  (use-package typescript-mode
+    :mode ("\\.ts\\'" "\\.js\\'")
+    :hook (typescript-mode . lsp-deferred))
+#+end_src
+
+Install the ~typescript-language-server~ through npm.
+
+#+begin_src sh
+  npm install -g typescript-language-server
+#+end_src
+
+*** C/C++
+
+#+begin_src emacs-lisp
+  (use-package ccls
+    :hook ((c-mode cc-mode c++-mode objc-mode cuda-mode) .
+          (lambda () (require 'ccls) (lsp))) 
+    :config
+    (setq ccls-executable "/opt/homebrew/bin/ccls"))
+#+end_src
+
+Install ~ccls~ with homebrew using the following command.
+
+#+begin_src sh
+  homebrew install ccls
+#+end_src
+
+* Terminal
+
+Emacs also has the functionality to run a terminal environment. While many other terminals will try to have similar capabilities with keybindings, nothing matches just integrating your terminal in emacs.
+
+** VTerm
+
+VTerm is a terminal emulator written in C. While emacs has a few built-in terminal all of them either lack speed or are missing many escape sequences.
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :commands vterm
+    :config
+    (setq vterm-max-scrollback 10000)
+    ; Fixes vterm issue with cursor not updating
+    (advice-add #'vterm--redraw :after (lambda (&rest args) (evil-refresh-cursor evil-state))))
+#+end_src
+
+*** Multi-Vterm
+
+Multi-Vterm is a package that allows for multiple vterm terminals to be used. By default vterm creates one ~*vterm*~ buffer. This buffer needs to be renamed in order to use multiple terminals.
+
+#+begin_src emacs-lisp
+(use-package multi-vterm)
+#+end_src
+
+** Change Terminal Font
+
+When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make the prompt align properly. Due to this, this code is implemented to change the font only when VTerm is being used.
+
+#+begin_src emacs-lisp
+  (add-hook 'vterm-mode-hook
+            (lambda ()
+              (set (make-local-variable 'buffer-face-mode-face) '(:family "MesloLGS NF" :height 135))
+              (buffer-face-mode t)))
+#+end_src
+
