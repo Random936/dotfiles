@@ -172,7 +172,9 @@ Use doom modeline to make the modeline look nicer.
     (use-package all-the-icons) ; requirement
     (use-package doom-modeline
       :init (doom-modeline-mode 1)
-      :config (setq doom-modeline-height 45))
+      :config 
+      (setq doom-modeline-height 45)
+      (display-time))
 #+end_src
 
 ** Doom Themes
@@ -411,7 +413,6 @@ Org-bullets is a package that adds bullets to each heading instead of asterisks.
     :custom
     (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 #+end_src
-
 ** Add List Dots
 
 By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
@@ -480,6 +481,16 @@ This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
+#+end_src
+
+* PDF Viewing
+
+PDF-tools is a package that adds pdf viewing functionality to emacs.
+
+#+begin_src emacs-lisp
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
 #+end_src
 
 * Language Server Protocol
@@ -573,13 +584,13 @@ Install the ~typescript-language-server~ through npm.
     :hook ((c-mode cc-mode c++-mode objc-mode cuda-mode) .
           (lambda () (require 'ccls) (lsp))) 
     :config
-    (setq ccls-executable "/opt/homebrew/bin/ccls"))
+    (setq ccls-executable "/usr/bin/ccls"))
 #+end_src
 
 Install ~ccls~ with homebrew using the following command.
 
 #+begin_src sh
-  homebrew install ccls
+  sudo apt install ccls
 #+end_src
 
 * Terminal
@@ -618,3 +629,105 @@ When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make th
               (buffer-face-mode t)))
 #+end_src
 
+* EXWM
+
+EXWM is a desktop environment built within emacs.
+
+** General Config
+
+This section contains the general configuration for EXWM. 
+
+#+begin_src emacs-lisp
+(defun jm/exwm-update-class ()
+  (exwm-workspace-rename-buffer exwm-class-name))
+
+(use-package exwm
+  :config
+  
+  ; Set default number of workspaces
+  (setq exwm-workspace-number 5)
+
+  ; Add key remaps
+  (start-process-shell-command "xmodmap" nil "xmodmap ~/.Xmodmap")
+  
+  ; Add hook to rename EXWM window to running application name
+  (add-hook 'exwm-update-class-hook #'jm/exwm-update-class)
+
+  ;; These keys should always pass through to Emacs
+  (setq exwm-input-prefix-keys
+    '(?\C-x
+      ?\C-w
+      ?\C-u
+      ?\C-h
+      ?\M-x
+      ?\M-`
+      ?\M-&
+      ?\M-:
+      ?\C-\M-j  ;; Buffer list
+      ?\C-\ ))  ;; Ctrl+Space
+      
+  ;; Set up global key bindings.  These always work, no matter the input state!
+  ;; Keep in mind that changing this list after EXWM initializes has no effect.
+  (setq exwm-input-global-keys
+        `(
+          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
+          ([?\s-r] . exwm-reset)
+          
+          ;; Move window to other workspace
+          ([?\s-m] . exwm-workspace-move-window)
+
+          ;; Launch applications via shell command
+          ([?\s-&] . (lambda (command)
+                       (interactive (list (read-shell-command "$ ")))
+                       (start-process-shell-command command nil command)))
+
+          ;; Switch workspace
+          ([?\s-w] . exwm-workspace-switch)
+          ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
+
+          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
+          ,@(mapcar (lambda (i)
+                      `(,(kbd (format "s-%d" i)) .
+                        (lambda ()
+                          (interactive)
+                          (exwm-workspace-switch-create ,i))))
+                    (number-sequence 0 9))))
+
+  (exwm-enable))
+#+end_src
+
+** Randr
+
+EXWM Randr is a built-in plugin that allows you to add two monitor support. By default EXWM merges the two monitors into one making the desktop environment unusable.
+
+#+begin_src emacs-lisp
+(use-package exwm-randr
+  :ensure nil
+  :config
+  (exwm-randr-enable)
+  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --mode 2560x1080 --pos 0x694 --rotate normal --output DP-0 --off --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --primary --mode 3440x1440 --pos 2560x0 --rotate normal --output DP-5 --off")
+
+  ;; This will need to be updated to the name of a display!  You can find
+  ;; the names of your displays by looking at arandr or the output of xrandr
+  (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-0" 3 "HDMI-0")))
+
+#+end_src
+
+** System Tray
+
+#+begin_src emacs-lisp
+(use-package exwm-systemtray
+  :ensure nil
+  :config
+  (exwm-systemtray-enable))
+#+end_src
+
+** Volume Control
+
+To control volume through EXWM you can install the ~pulseaudio-control~ package.
+
+#+begin_src emacs-lisp
+(use-package pulseaudio-control
+  :config
+  (pulseaudio-control-default-keybindings))
+#+end_src

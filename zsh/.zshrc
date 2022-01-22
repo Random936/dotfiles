@@ -200,15 +200,15 @@ fi
 LS_COLORS=$LS_COLORS:'di=1;31:' ; export LS_COLORS
 
 # Load zplug and extensions 
-source /usr/share/zsh/scripts/zplug/init.zsh
+source /usr/share/zplug/init.zsh
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
 # Source completion and highlighting scripts
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -217,7 +217,6 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # CUSTOM ALIASES & FUNCTIONS
 alias open='xdg-open'
 alias listen='rlwrap nc -lnvp'
-alias vim='nvim'
 
 # Cd multiple directoryies alias.
 function .. () {cd ..}
@@ -242,7 +241,4 @@ export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
-alias mountenc='encfs ~/Documents/.encrypted ~/Documents/Encrypted'
-alias umountenc='fusermount -u ~/Documents/Encrypted'
-alias kraken="ssh random@10.0.0.13"
-alias pi="ssh root@10.0.0.31"
+alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
