@@ -610,6 +610,12 @@ VTerm is a terminal emulator written in C. While emacs has a few built-in termin
     (advice-add #'vterm--redraw :after (lambda (&rest args) (evil-refresh-cursor evil-state))))
 #+end_src
 
+There are a few packages that you need to install in order to use VTerm.
+
+#+begin_src bash
+  sudo apt install cmake libtool-bin 
+#+end_src
+
 *** Multi-Vterm
 
 Multi-Vterm is a package that allows for multiple vterm terminals to be used. By default vterm creates one ~*vterm*~ buffer. This buffer needs to be renamed in order to use multiple terminals.
@@ -629,105 +635,12 @@ When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make th
               (buffer-face-mode t)))
 #+end_src
 
-* EXWM
+* Import Other Files
 
-EXWM is a desktop environment built within emacs.
-
-** General Config
-
-This section contains the general configuration for EXWM. 
+This is the section to include imports from other files.
 
 #+begin_src emacs-lisp
-(defun jm/exwm-update-class ()
-  (exwm-workspace-rename-buffer exwm-class-name))
-
-(use-package exwm
-  :config
-  
-  ; Set default number of workspaces
-  (setq exwm-workspace-number 5)
-
-  ; Add key remaps
-  (start-process-shell-command "xmodmap" nil "xmodmap ~/.Xmodmap")
-  
-  ; Add hook to rename EXWM window to running application name
-  (add-hook 'exwm-update-class-hook #'jm/exwm-update-class)
-
-  ;; These keys should always pass through to Emacs
-  (setq exwm-input-prefix-keys
-    '(?\C-x
-      ?\C-w
-      ?\C-u
-      ?\C-h
-      ?\M-x
-      ?\M-`
-      ?\M-&
-      ?\M-:
-      ?\C-\M-j  ;; Buffer list
-      ?\C-\ ))  ;; Ctrl+Space
-      
-  ;; Set up global key bindings.  These always work, no matter the input state!
-  ;; Keep in mind that changing this list after EXWM initializes has no effect.
-  (setq exwm-input-global-keys
-        `(
-          ;; Reset to line-mode (C-c C-k switches to char-mode via exwm-input-release-keyboard)
-          ([?\s-r] . exwm-reset)
-          
-          ;; Move window to other workspace
-          ([?\s-m] . exwm-workspace-move-window)
-
-          ;; Launch applications via shell command
-          ([?\s-&] . (lambda (command)
-                       (interactive (list (read-shell-command "$ ")))
-                       (start-process-shell-command command nil command)))
-
-          ;; Switch workspace
-          ([?\s-w] . exwm-workspace-switch)
-          ([?\s-`] . (lambda () (interactive) (exwm-workspace-switch-create 0)))
-
-          ;; 's-N': Switch to certain workspace with Super (Win) plus a number key (0 - 9)
-          ,@(mapcar (lambda (i)
-                      `(,(kbd (format "s-%d" i)) .
-                        (lambda ()
-                          (interactive)
-                          (exwm-workspace-switch-create ,i))))
-                    (number-sequence 0 9))))
-
-  (exwm-enable))
-#+end_src
-
-** Randr
-
-EXWM Randr is a built-in plugin that allows you to add two monitor support. By default EXWM merges the two monitors into one making the desktop environment unusable.
-
-#+begin_src emacs-lisp
-(use-package exwm-randr
-  :ensure nil
-  :config
-  (exwm-randr-enable)
-  (start-process-shell-command "xrandr" nil "xrandr --output HDMI-0 --mode 2560x1080 --pos 0x694 --rotate normal --output DP-0 --off --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --primary --mode 3440x1440 --pos 2560x0 --rotate normal --output DP-5 --off")
-
-  ;; This will need to be updated to the name of a display!  You can find
-  ;; the names of your displays by looking at arandr or the output of xrandr
-  (setq exwm-randr-workspace-monitor-plist '(2 "HDMI-0" 3 "HDMI-0")))
-
-#+end_src
-
-** System Tray
-
-#+begin_src emacs-lisp
-(use-package exwm-systemtray
-  :ensure nil
-  :config
-  (exwm-systemtray-enable))
-#+end_src
-
-** Volume Control
-
-To control volume through EXWM you can install the ~pulseaudio-control~ package.
-
-#+begin_src emacs-lisp
-(use-package pulseaudio-control
-  :config
-  (pulseaudio-control-default-keybindings))
+(let ((exwm-org-file "~/.emacs.d/exwm.org"))
+(when (file-exists-p exwm-org-file)
+  (org-babel-load-file exwm-org-file)))
 #+end_src
