@@ -1,8 +1,4 @@
-* EXWM
-
-EXWM is a desktop environment built within emacs.
-
-** General Config
+* General Config
 
 This section contains the general configuration for EXWM. 
 
@@ -65,7 +61,7 @@ This section contains the general configuration for EXWM.
   (exwm-enable))
 #+end_src
 
-** Randr
+* Randr
 
 EXWM Randr is a built-in plugin that allows you to add two monitor support. By default EXWM merges the two monitors into one making the desktop environment unusable.
 
@@ -82,7 +78,7 @@ EXWM Randr is a built-in plugin that allows you to add two monitor support. By d
 
 #+end_src
 
-** System Tray
+* System Tray
 
 #+begin_src emacs-lisp
 (use-package exwm-systemtray
@@ -91,7 +87,7 @@ EXWM Randr is a built-in plugin that allows you to add two monitor support. By d
   (exwm-systemtray-enable))
 #+end_src
 
-** Volume Control
+* Volume Control
 
 To control volume through EXWM you can install the ~pulseaudio-control~ package.
 

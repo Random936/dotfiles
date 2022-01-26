@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=EXWM
+Comment=Emacs Window Manager
+Exec=/home/random/.emacs.d/start-exwm.sh
