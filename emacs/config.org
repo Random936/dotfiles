@@ -58,6 +58,21 @@ This moves the backup files so that emacs doesn't clutter up directories with ba
 
 #+end_src
 
+** Time Startup
+
+This function times the startup to tell you how long it took for the emacs config to load.
+
+#+begin_src emacs-lisp
+(defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                     (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+#+end_src
+
 * Packages
 
 Emacs and packages. Pretty much a requirement.
@@ -90,6 +105,8 @@ Install use package for easier installation of other packages.
   (setq use-package-always-ensure t)
 #+end_src
 
+Fixes path issue that occurs on mac. 
+
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
     :config
@@ -107,6 +124,7 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
 
 #+begin_src emacs-lisp
     (use-package command-log-mode
+      :defer
       :config (global-command-log-mode))
 #+end_src
 
@@ -310,7 +328,7 @@ Undo tree's use is self explanitory. While the built-in emacs undo system is fin
 Hydra is a package that implements a way to execute the same commands in quick succession.
 
 #+begin_src emacs-lisp
-  (use-package hydra)
+  (use-package hydra :defer)
 #+end_src
 
 Setup easy changing of font size. This implements a zooming system to make text smaller or bigger quickly.
@@ -354,7 +372,7 @@ Dired is a built-in package in emacs that allows for basic file navigation. Whil
 Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a rediculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
 
 #+begin_src emacs-lisp
-  (use-package dired-single)
+  (use-package dired-single :after dired)
 #+end_src
 
 ** All the Icons Dired
@@ -363,6 +381,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
+    :after dired
     :hook (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
@@ -472,6 +491,7 @@ Visual fill column is a package that allows you to center text and add borders t
     (visual-fill-column-mode 1))
 
   (use-package visual-fill-column
+    :after org
     :hook (org-mode . jm/org-mode-visual-fill))
 #+end_src
 
@@ -481,16 +501,6 @@ This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
-#+end_src
-
-* PDF Viewing
-
-PDF-tools is a package that adds pdf viewing functionality to emacs.
-
-#+begin_src emacs-lisp
-(use-package pdf-tools
-  :config
-  (pdf-tools-install))
 #+end_src
 
 * Language Server Protocol
@@ -528,7 +538,7 @@ Below I am installing the actual package and adding some basic configuration.
 **** Lsp-UI
 
 #+begin_src emacs-lisp
-  (use-package lsp-ui :commands lsp-ui-mode)
+  (use-package lsp-ui :after lsp-mode :commands lsp-ui-mode)
 #+end_src
 
 **** Lsp-Ivy
@@ -575,6 +585,20 @@ Install the ~typescript-language-server~ through npm.
 
 #+begin_src sh
   npm install -g typescript-language-server
+#+end_src
+
+*** Python
+
+#+begin_src emacs-lisp
+  (use-package python-mode
+    :mode ("\\.py\\'")
+    :hook (python-mode . lsp-deferred))
+#+end_src
+
+Install the ~python-lsp-server~ though pip.
+
+#+begin_src sh
+  pip install python-lsp-server
 #+end_src
 
 *** C/C++
