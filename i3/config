@@ -157,7 +157,7 @@ bindsym $mod+r mode "resize"
 # Window Cosmetic Changes
 gaps inner 10
 new_window pixel 3
-client.focused #555555 #555555 #ffffff #0000ff #0000A0
+client.focused #555555 #555555 #ffffff #333333 #0000ff
 client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
