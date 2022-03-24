@@ -1,0 +1,17 @@
+* {
+   background: rgba(0, 0, 0, 95%);
+   foreground: #EEEEEE;
+
+   normal-background: transparent;
+   alternate-normal-background: transparent;
+   selected-normal-background: rgba(0, 0, 255, 95%);
+}
+
+window {
+   border: 3px;
+}
+
+listview {
+   scrollbar: false;
+   border: 3px 0 0 0;
+}

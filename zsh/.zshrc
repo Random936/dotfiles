@@ -196,9 +196,6 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-# Set LS directory color
-LS_COLORS=$LS_COLORS:'di=1;31:' ; export LS_COLORS
-
 # Load zplug and extensions 
 source /usr/share/zplug/init.zsh
 zplug romkatv/powerlevel10k, as:theme, depth:1
