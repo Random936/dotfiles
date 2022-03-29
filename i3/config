@@ -162,7 +162,6 @@ client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
-exec --no-startup-id xmodmap -e "remove Lock = Caps_Lock"
-exec --no-startup-id xmodmap -e "keycode 66 = Escape NoSymbol Escape"
+exec --no-startup-id "xmodmap $HOME/.Xmodmap"
 exec --no-startup-id "compton -b"
 exec --no-startup-id "polybar"
