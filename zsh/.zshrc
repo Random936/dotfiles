@@ -197,15 +197,32 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 # Load zplug and extensions 
-source /usr/share/zplug/init.zsh
+if [ -f "/usr/share/zplug/init.zsh" ]; then
+    source /usr/share/zplug/init.zsh
+elif [ -f "/usr/share/zsh/scripts/zplug/init.zsh" ]; then
+    source /usr/share/zsh/scripts/zplug/init.zsh
+fi
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
 # Source completion and highlighting scripts
-source /usr/share/doc/fzf/examples/completion.zsh
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f "/usr/share/doc/fzf/examples/completion.zsh" ]; then
+    source /usr/share/doc/fzf/examples/completion.zsh
+elif [ -f "/usr/share/fzf/completion.zsh" ]; then
+    source /usr/share/fzf/completion.zsh
+fi
+
+if [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
+    source /usr/share/fzf/key-bindings.zsh
+fi
+
+if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
