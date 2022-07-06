@@ -24,58 +24,38 @@ noremap <Right>   <Nop>
 nnoremap <space> <nop>
 let mapleader=" "
 
-" FZF key bindings 
-noremap <C-p> <cmd>Files<cr>
-noremap <C-b> <cmd>Buffers<cr>
-
 call plug#begin('~/.vim/plugged')
-" Syntax correcting and autocomplete for nvim
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+" Syntax highlighting and autocomplete for nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" FZF
+" FZF for better file jumping.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'stsewd/fzf-checkout.vim'
 
 " Theme and Syntax Highlighting
 Plug 'morhetz/gruvbox'
-Plug 'bfrg/vim-cpp-modern'
-
-" For vim practice
-Plug 'ThePrimeagen/vim-be-good'
 call plug#end()
 
 " Set colorscheme
 let g:gruvbox_contrast_dark = 'hard'
 
-if exists('+termgicolors')
-   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
+" Transparent background with gruvbox theme
 colorscheme gruvbox
 set background=dark
 hi Normal guibg=NONE ctermbg=NONE
 
-" Load the clangd server as the interpreter
-set completeopt=menuone,noinsert,noselect
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+" FZF key bindings 
+nnoremap <leader>ff <cmd>Files<cr>
+nnoremap <leader>fg <cmd>Rg<cr>
+nnoremap <leader>fb <cmd>Buffers<cr>
 
-" Language server for nvim-lsp
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-lua << EOF
-require'lspconfig'.clangd.setup{
-   on_attach=require'completion'.on_attach,
-   filetypes = {"c", "cpp", "objc", "objcpp"}
-}
-require'lspconfig'.pylsp.setup{
-   on_attach=require'completion'.on_attach,
-   cmd = {"pylsp"},
-   filetypes = {"python", "py"}
-}
-require'lspconfig'.tsserver.setup{
-   on_attach=require'completion'.on_attach,
-   root_dir = function() return vim.loop.cwd() end
-}
-EOF
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
