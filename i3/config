@@ -153,6 +153,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Brightness keys setup
+bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 5"
+bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 5"
 
 # Window Cosmetic Changes
 gaps inner 10
@@ -163,5 +166,9 @@ client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
 exec --no-startup-id "xmodmap $HOME/.Xmodmap"
-exec --no-startup-id "compton -b"
 exec --no-startup-id "polybar"
+exec --no-startup-id "lxpolkit &"
+
+# Tweak keyboard and trackpad
+exec --no-startup-id "synclient VertEdgeScroll=1 VertScrollDelta=-111"
+exec --no-startup-id "setxkbmap -option caps:escape"

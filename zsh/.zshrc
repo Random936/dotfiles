@@ -256,3 +256,4 @@ export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
+alias vim="nvim"

@@ -34,6 +34,7 @@ Plug 'junegunn/fzf.vim'
 
 " Theme and Syntax Highlighting
 Plug 'morhetz/gruvbox'
+Plug 's3rvac/vim-syntax-yara'
 call plug#end()
 
 " Set colorscheme
@@ -43,6 +44,9 @@ let g:gruvbox_contrast_dark = 'hard'
 colorscheme gruvbox
 set background=dark
 hi Normal guibg=NONE ctermbg=NONE
+
+" Yara syntax highlighting
+autocmd BufNewFile,BufRead *.yar,*.yara setlocal filetype=yara
 
 " FZF key bindings 
 nnoremap <leader>ff <cmd>Files<cr>
