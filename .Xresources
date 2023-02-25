@@ -8,7 +8,7 @@ URxvt.internalBorder: 10
 
 ! Font styles
 URxvt.font: xft:MesloLGS NF:size=16
-URxvt.cursorColor: #d50505
+URxvt.cursorColor: #0000ff
 URxvt.highlightColor: #303030
 URxvt.highlightTextColor: #A0A0A0
 URxvt.saveLines: 200000
