@@ -210,18 +210,24 @@ if [ -f "/usr/share/doc/fzf/examples/completion.zsh" ]; then
     source /usr/share/doc/fzf/examples/completion.zsh
 elif [ -f "/usr/share/fzf/completion.zsh" ]; then
     source /usr/share/fzf/completion.zsh
+else
+    echo "completion.zsh not installed"
 fi
 
 if [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
     source /usr/share/fzf/key-bindings.zsh
+else
+    echo "key-bidings.zsh not installed"
 fi
 
 if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+    echo "zsh-autosuggestions.zsh not installed"
 fi
 
 

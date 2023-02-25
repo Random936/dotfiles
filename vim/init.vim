@@ -11,7 +11,7 @@ set nohlsearch
 set hidden
 set incsearch
 set scrolloff=8
-set colorcolumn=80
+set colorcolumn=100
 set signcolumn=yes
 
 " Remove arrow keys to train my fingers
@@ -45,7 +45,7 @@ colorscheme gruvbox
 set background=dark
 hi Normal guibg=NONE ctermbg=NONE
 
-" Yara syntax highlighting
+" Setup yara syntax highlighting
 autocmd BufNewFile,BufRead *.yar,*.yara setlocal filetype=yara
 
 " FZF key bindings 
@@ -54,12 +54,15 @@ nnoremap <leader>fg <cmd>Rg<cr>
 nnoremap <leader>fb <cmd>Buffers<cr>
 
 " use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
+
+inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"

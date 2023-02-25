@@ -73,6 +73,22 @@ This function times the startup to tell you how long it took for the emacs confi
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 #+end_src
 
+** White Space
+
+This configuration replaces tabs with a custom number of spaces.
+
+#+begin_src emacs-lisp
+  (setq-default indent-tabs-mode nil) ; Use spaces instead of tabs.
+  (setq-default tab-width 3) ; Set tabs to be 3 spaces in length.
+
+  ; Alias tab width for various languages.
+  (setq-default c-basic-offset tab-width)
+  (setq-default cperl-indent-level tab-width)
+  (setq-default lisp-body-indent tab-width)
+  (setq-default lisp-indent-offset tab-width)
+  (setq-default js-indent-level tab-width) ; For both JSON and Javascript modes.
+#+end_src
+
 * Packages
 
 Emacs and packages. Pretty much a requirement.
@@ -194,6 +210,8 @@ Use doom modeline to make the modeline look nicer.
       (setq doom-modeline-height 45)
       (display-time))
 #+end_src
+
+In order to avoid missing icons, you should also install the package ~all-the-icons-install-fonts~ through the emacs command line.
 
 ** Doom Themes
 
@@ -320,6 +338,7 @@ Undo tree's use is self explanitory. While the built-in emacs undo system is fin
     :after evil
     :config
     (evil-set-undo-system 'undo-tree) 
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
     (global-undo-tree-mode 1))
 #+end_src
 
@@ -538,7 +557,9 @@ Below I am installing the actual package and adding some basic configuration.
 **** Lsp-UI
 
 #+begin_src emacs-lisp
-  (use-package lsp-ui :after lsp-mode :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :hook (lsp-mode . lsp-ui-mode)
+    :config (setq lsp-ui-sideline-show-diagnostics t))
 #+end_src
 
 **** Lsp-Ivy
@@ -559,6 +580,13 @@ Company is a package that automatically finds completions instead of making the 
                 ("<tab>" . company-complete-selection))
           (:map lsp-mode-map
                 ("<tab>" . company-indent-or-complete-common)))
+#+end_src
+
+** Flycheck
+
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :init (global-flycheck-mode))
 #+end_src
 
 ** Language Servers
@@ -615,6 +643,20 @@ Install ~ccls~ with homebrew using the following command.
 
 #+begin_src sh
   sudo apt install ccls
+#+end_src
+
+*** Golang
+
+#+begin_src emacs-lisp
+  (use-package go-mode
+     :hook (go-mode . lsp-deferred))
+#+end_src
+
+*** JSON
+
+#+begin_src emacs-lisp
+  (use-package json-mode
+    :hook (json-mode . lsp-deferred))
 #+end_src
 
 * Terminal
