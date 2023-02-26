@@ -6,7 +6,7 @@ There are still many improvements that I have yet to do. Here are just a few tha
 
 * General Configuration
 
-General configuarion is configuration of vanilla emacs. This includes making emacs minimal, 
+General configuarion is configuration of vanilla emacs. This includes making emacs more minimal.
 
 ** Cosmetic Configuration
 
@@ -18,7 +18,7 @@ Disable the useless features that make emacs bloated.
 
   (scroll-bar-mode -1) ; Disable scrollbar
   (tool-bar-mode -1)   ; Disable  toolbar
-  (tooltip-mode -1)    ; Disable tooltips 
+  (tooltip-mode -1)    ; Disable tooltips
   (menu-bar-mode -1)   ; Disable menu-bar
   (set-fringe-mode 10) ; Add gaps on left and right
 #+end_src
@@ -70,23 +70,44 @@ This function times the startup to tell you how long it took for the emacs confi
                      (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+(add-hook 'emacs-startup-hook 'efs/display-startup-time)
 #+end_src
 
 ** White Space
 
-This configuration replaces tabs with a custom number of spaces.
+Various configuration relating to whitespace.
+
+#+begin_src emacs-lisp
+  (setq-default electric-ident-inhibit t) ; Stop indentation of the previous line.
+#+end_src
+
+*** Tabs/Spaces
+
+Disable tabs and replace them with a custom number of spaces.
 
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil) ; Use spaces instead of tabs.
-  (setq-default tab-width 3) ; Set tabs to be 3 spaces in length.
+  (setq-default tab-width 3)
 
-  ; Alias tab width for various languages.
-  (setq-default c-basic-offset tab-width)
-  (setq-default cperl-indent-level tab-width)
-  (setq-default lisp-body-indent tab-width)
-  (setq-default lisp-indent-offset tab-width)
-  (setq-default js-indent-level tab-width) ; For both JSON and Javascript modes.
+  (setq-default evil-shift-width tab-width)
+#+end_src
+
+*** Visualizing White Space
+
+Add a nice visualization for tabs and spaces. This can be helpful to identify which is which quickly to avoid submitting poorly spaced code.
+
+#+begin_src emacs-lisp
+  (global-whitespace-mode)
+  (setq whitespace-global-modes '(not org-mode dired-mode))
+  (setq whitespace-style '(face tabs spaces tab-mark space-mark trailing))
+  (custom-set-faces
+    '(whitespace-tab ((t (:foreground "#384551" :background nil))))
+    '(whitespace-space ((t (:foreground "#384551" :background nil)))))
+
+
+  (setq whitespace-display-mappings
+    '((tab-mark 9 [187 9] [92 9])
+      (space-mark 32 [183] [46])))
 #+end_src
 
 * Packages
@@ -121,7 +142,7 @@ Install use package for easier installation of other packages.
   (setq use-package-always-ensure t)
 #+end_src
 
-Fixes path issue that occurs on mac. 
+Fixes path issue that occurs on mac.
 
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
@@ -148,9 +169,9 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
 
 Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
 
-**** Counsel 
+**** Counsel
 
-Adds various completion functions used by Ivy. 
+Adds various completion functions used by Ivy.
 
 #+begin_src emacs-lisp
   (use-package counsel
@@ -163,7 +184,7 @@ Adds various completion functions used by Ivy.
 
 **** Ivy
 
-Ivy is a basic autocompletion package that completes emacs functions. 
+Ivy is a basic autocompletion package that completes emacs functions.
 
 #+begin_src emacs-lisp
   (use-package ivy
@@ -206,7 +227,7 @@ Use doom modeline to make the modeline look nicer.
     (use-package all-the-icons) ; requirement
     (use-package doom-modeline
       :init (doom-modeline-mode 1)
-      :config 
+      :config
       (setq doom-modeline-height 45)
       (display-time))
 #+end_src
@@ -275,7 +296,7 @@ Lists all possible keybindings off of prefix.
 
 *** General
 
-General allows you to setup a prefix key easily. This makes it really easy to setup a bunch of keybindings with ease. 
+General allows you to setup a prefix key easily. This makes it really easy to setup a bunch of keybindings with ease.
 
 #+begin_src emacs-lisp
   (use-package general
@@ -320,7 +341,7 @@ Evil is a package that adds vim keybindings to emacs.
 
 **** Evil Collection
 
-Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybindings. 
+Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybindings.
 
 #+begin_src emacs-lisp
   (use-package evil-collection
@@ -337,7 +358,7 @@ Undo tree's use is self explanitory. While the built-in emacs undo system is fin
   (use-package undo-tree
     :after evil
     :config
-    (evil-set-undo-system 'undo-tree) 
+    (evil-set-undo-system 'undo-tree)
     (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
     (global-undo-tree-mode 1))
 #+end_src
@@ -396,7 +417,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
 
 ** All the Icons Dired
 
-~all-the-icons-dired~ is a dired plugin that adds icons to each of the files. 
+~all-the-icons-dired~ is a dired plugin that adds icons to each of the files.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
@@ -471,7 +492,7 @@ By default lists are started with a hyphen, though this doesn't really match the
 Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
 
 #+begin_src emacs-lisp
-  (with-eval-after-load 'org-faces 
+  (with-eval-after-load 'org-faces
       ; Set faces for heading size levels
       (dolist (face '((org-level-1 . 1.2)
                       (org-level-2 . 1.1)
@@ -500,7 +521,7 @@ Org-faces changes the font size of the headings to make them bigger in the org f
 
 ** Visual Fill Column
 
-Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files. 
+Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
 
 #+begin_src emacs-lisp
   ; Set left-right margins with visual-fill-column
@@ -516,7 +537,7 @@ Visual fill column is a package that allows you to center text and add borders t
 
 ** Fix Snippets
 
-This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this fix, you are required to manually type out structures like code blocks. 
+This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this fix, you are required to manually type out structures like code blocks.
 
 #+begin_src emacs-lisp
   (require 'org-tempo)
@@ -542,12 +563,12 @@ This adds a headerline that shows the scope of where the cursor is in the code. 
 
 *** Install Lsp Mode
 
-Below I am installing the actual package and adding some basic configuration. 
+Below I am installing the actual package and adding some basic configuration.
 
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :init (setq lsp-keymap-prefix "C-c l") ; Lsp mode prefix
-    :hook (lsp-mode . jm/lsp-mode-setup)  
+    :hook (lsp-mode . jm/lsp-mode-setup)
     :commands (lsp lsp-deferred) ; Startup commands
     :config (lsp-enable-which-key-integration t))
 #+end_src
@@ -634,7 +655,7 @@ Install the ~python-lsp-server~ though pip.
 #+begin_src emacs-lisp
   (use-package ccls
     :hook ((c-mode cc-mode c++-mode objc-mode cuda-mode) .
-          (lambda () (require 'ccls) (lsp))) 
+          (lambda () (require 'ccls) (lsp)))
     :config
     (setq ccls-executable "/usr/bin/ccls"))
 #+end_src
@@ -679,7 +700,7 @@ VTerm is a terminal emulator written in C. While emacs has a few built-in termin
 There are a few packages that you need to install in order to use VTerm.
 
 #+begin_src bash
-  sudo apt install cmake libtool-bin 
+  sudo apt install cmake libtool-bin
 #+end_src
 
 *** Multi-Vterm
