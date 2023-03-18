@@ -16,11 +16,12 @@ Disable the useless features that make emacs bloated.
   ; Disable startup message
   (setq inhibit-startup-message t)
 
-  (scroll-bar-mode -1) ; Disable scrollbar
-  (tool-bar-mode -1)   ; Disable  toolbar
-  (tooltip-mode -1)    ; Disable tooltips
-  (menu-bar-mode -1)   ; Disable menu-bar
-  (set-fringe-mode 10) ; Add gaps on left and right
+  (scroll-bar-mode -1)   ; Disable scrollbar
+  (tool-bar-mode -1)     ; Disable toolbar
+  (tooltip-mode -1)      ; Disable tooltips
+  (menu-bar-mode -1)     ; Disable menu-bar
+  (set-fringe-mode 10)   ; Add gaps on left and right
+  (setq scroll-margin 4) ; Scroll as cursor reaches bottom/top of page.
 #+end_src
 
 *** Change font
@@ -28,7 +29,19 @@ Disable the useless features that make emacs bloated.
 Pretty self explanitory.
 
 #+begin_src emacs-lisp
-  (set-face-attribute 'default nil :font "Fira Code Retina" :height 140)
+  (defun jm/set-font-faces ()
+      (set-face-attribute 'default nil :font "Fira Code Retina" :height 140))
+#+end_src
+
+Adding a fix for fonts when running emacs as a daemon.
+
+#+begin_src emacs-lisp
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (jm/set-font-faces))))
+    (jm/set-font-faces))
 #+end_src
 
 ** Disable Error Bell
@@ -55,7 +68,6 @@ This moves the backup files so that emacs doesn't clutter up directories with ba
 
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
-
 #+end_src
 
 ** Time Startup
@@ -671,6 +683,13 @@ Install ~ccls~ with homebrew using the following command.
 #+begin_src emacs-lisp
   (use-package go-mode
      :hook (go-mode . lsp-deferred))
+#+end_src
+
+*** Rust
+
+#+begin_src emacs-lisp
+  (use-package rust-mode
+     :hook (rust-mode . lsp-deferred))
 #+end_src
 
 *** JSON
