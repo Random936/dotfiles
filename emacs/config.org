@@ -601,6 +601,7 @@ Below I am installing the actual package and adding some basic configuration.
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
 
+
 ** Company Mode
 
 Company is a package that automatically finds completions instead of making the user run a command for completions.
@@ -688,15 +689,30 @@ Install ~ccls~ with homebrew using the following command.
 *** Rust
 
 #+begin_src emacs-lisp
-  (use-package rust-mode
+  (use-package rustic
      :hook (rust-mode . lsp-deferred))
 #+end_src
+
+*** C# 
+
+#+begin_src emacs-lisp
+  (use-package csharp-mode
+     :hook (csharp-mode . lsp-deferred))
+#+end_src
+
 
 *** JSON
 
 #+begin_src emacs-lisp
   (use-package json-mode
     :hook (json-mode . lsp-deferred))
+#+end_src
+
+*** Yaml
+
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :hook (yaml-mode . lsp-deferred))
 #+end_src
 
 * Terminal
