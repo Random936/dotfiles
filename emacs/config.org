@@ -102,6 +102,10 @@ Disable tabs and replace them with a custom number of spaces.
   (setq-default tab-width 3)
 
   (setq-default evil-shift-width tab-width)
+
+  ; Yara Indentation
+  (setq yara-indent-offset 4)
+  (setq yara-indent-section 4)
 #+end_src
 
 *** Visualizing White Space
@@ -601,7 +605,6 @@ Below I am installing the actual package and adding some basic configuration.
   (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
 
-
 ** Company Mode
 
 Company is a package that automatically finds completions instead of making the user run a command for completions.
@@ -700,7 +703,6 @@ Install ~ccls~ with homebrew using the following command.
      :hook (csharp-mode . lsp-deferred))
 #+end_src
 
-
 *** JSON
 
 #+begin_src emacs-lisp
@@ -713,6 +715,31 @@ Install ~ccls~ with homebrew using the following command.
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :hook (yaml-mode . lsp-deferred))
+#+end_src
+
+*** Yara
+
+To install the corresponding LSP, you need to install ~yls~. Using the command ~pip install -U yls-yara~. Keep in mind that ~yls~ is dependent on an up to date version of ~yara-python~.
+
+#+begin_src emacs-lisp
+  (use-package yara-mode
+    :hook (yara-mode . lsp-deferred)
+    :config
+     (with-eval-after-load 'lsp-mode
+      (add-to-list 'lsp-language-id-configuration
+                   '(yara-mode . "yara"))
+
+      (lsp-register-client
+       (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+                        :activation-fn (lsp-activate-on "yara")
+                        :server-id 'yls))))
+#+end_src
+
+*** R
+
+#+begin_src emacs-lisp
+  (use-package ess
+    :hook (R-mode . lsp-deferred))
 #+end_src
 
 * Terminal
