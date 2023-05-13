@@ -231,6 +231,14 @@ Install *Ivy-rich* for function info in Ivy autocomplete.
     :init (ivy-rich-mode 1))
 #+end_src
 
+*** Magit
+
+*Magit* adds several features to emacs that make using git easier.
+
+#+begin_src emacs-lisp
+  (use-package magit)
+#+end_src
+
 * Cosmetic
 
 Packages that change the look of emacs in some way.
