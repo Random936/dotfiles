@@ -99,13 +99,16 @@ Disable tabs and replace them with a custom number of spaces.
 
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil) ; Use spaces instead of tabs.
-  (setq-default tab-width 3)
+  (setq-default tab-width 4)
 
   (setq-default evil-shift-width tab-width)
 
+  ; C Indentation
+  (setq-default c-basic-offset 4)
+
   ; Yara Indentation
-  (setq yara-indent-offset 4)
-  (setq yara-indent-section 4)
+  (setq-default yara-indent-offset 4)
+  (setq-default yara-indent-section 4)
 #+end_src
 
 *** Visualizing White Space
@@ -124,6 +127,16 @@ Add a nice visualization for tabs and spaces. This can be helpful to identify wh
   (setq whitespace-display-mappings
     '((tab-mark 9 [187 9] [92 9])
       (space-mark 32 [183] [46])))
+#+end_src
+
+** SSH Remoting with Tramp
+
+Below are a few configuration changes to avoid TRAMP freezes when sshing into a system with complex config files.
+
+#+begin_src emacs-lisp
+(setq tramp-remote-shell "/bin/sh")
+(setq tramp-remote-shell-login "-l")
+(setq tramp-remote-shell-args "-c")
 #+end_src
 
 * Packages
