@@ -160,29 +160,31 @@ precmd() {
 }
 
 # enable color support of ls, less and man, and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+if [ $(uname -s) = "Darwin" ]; then
+    alias ls='ls -G'
+else
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias diff='diff --color=auto'
-    alias ip='ip --color=auto'
-
-    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
-    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
-
-    # Take advantage of $LS_COLORS for completion as well
-    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 fi
+
+#alias dir='dir --color=auto'
+#alias vdir='vdir --color=auto'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+# Take advantage of $LS_COLORS for completion as well
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 # some more ls aliases
 alias ll='ls -l'
@@ -196,12 +198,15 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-# Load zplug and extensions 
+# Load zplug and extensions
 if [ -f "/usr/share/zplug/init.zsh" ]; then
     source /usr/share/zplug/init.zsh
 elif [ -f "/usr/share/zsh/scripts/zplug/init.zsh" ]; then
     source /usr/share/zsh/scripts/zplug/init.zsh
+elif [ -f "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh" ]; then
+    source "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh"
 fi
+
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
@@ -210,6 +215,8 @@ if [ -f "/usr/share/doc/fzf/examples/completion.zsh" ]; then
     source /usr/share/doc/fzf/examples/completion.zsh
 elif [ -f "/usr/share/fzf/completion.zsh" ]; then
     source /usr/share/fzf/completion.zsh
+elif [ -f "/opt/homebrew/Cellar/fzf/0.39.0/shell/completion.zsh" ]; then
+    source /opt/homebrew/Cellar/fzf/0.39.0/shell/completion.zsh
 else
     echo "completion.zsh not installed"
 fi
@@ -218,6 +225,8 @@ if [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
     source /usr/share/fzf/key-bindings.zsh
+elif [ -f "/opt/homebrew/Cellar/fzf/0.39.0/shell/key-bindings.zsh" ]; then
+    source /opt/homebrew/Cellar/fzf/0.39.0/shell/key-bindings.zsh
 else
     echo "key-bidings.zsh not installed"
 fi
@@ -226,15 +235,14 @@ if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 elif [ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 else
     echo "zsh-autosuggestions.zsh not installed"
 fi
 
-
 if [ -f "/usr/share/doc/pkgfile/command-not-found.zsh" ]; then
     source /usr/share/doc/pkgfile/command-not-found.zsh
-else
-   echo "command-not-found not installed"
 fi
 
 # Fix arch linux valgrind issue.
@@ -244,8 +252,6 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # CUSTOM ALIASES & FUNCTIONS
-alias open='xdg-open'
-alias listen='rlwrap nc -lnvp'
 
 # Cd multiple directoryies alias.
 function .. () {cd ..}
@@ -255,14 +261,14 @@ function ..... () {cd ../../../../}
 function ...... () {cd ../../../../../}
 
 function up() {
-	for ip in $(ip addr | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
-	do
-		for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' -printf '%f\n')
-		do
-			echo "http://$ip/$filepath"
-  	done
-	done
-	sudo python -m http.server 80
+    for ip in $(ip addr | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
+    do
+        for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' -printf '%f\n')
+        do
+            echo "http://$ip/$filepath"
+        done
+    done
+    sudo python3 -m http.server 80
 }
 
 # Wordlists
@@ -270,6 +276,7 @@ export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
+alias open='xdg-open'
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
-alias vim="nvim"
+alias listen="rlwrap nc -lnvp"
 alias emacs="emacsclient -c"
