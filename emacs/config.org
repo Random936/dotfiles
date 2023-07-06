@@ -1,9 +1,3 @@
-* Pending Improvements
-
-There are still many improvements that I have yet to do. Here are just a few that I add when I think of them.
-
-- Add word document compatability
-
 * General Configuration
 
 General configuarion is configuration of vanilla emacs. This includes making emacs more minimal.
