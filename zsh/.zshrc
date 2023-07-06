@@ -231,6 +231,15 @@ else
 fi
 
 
+if [ -f "/usr/share/doc/pkgfile/command-not-found.zsh" ]; then
+    source /usr/share/doc/pkgfile/command-not-found.zsh
+else
+   echo "command-not-found not installed"
+fi
+
+# Fix arch linux valgrind issue.
+[[ $(uname -r) == *"arch"* ]] && export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -263,3 +272,4 @@ export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 # Ease of use
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
 alias vim="nvim"
+alias emacs="emacsclient -c"
