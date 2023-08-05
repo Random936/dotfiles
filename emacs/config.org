@@ -340,7 +340,8 @@ General allows you to setup a prefix key easily. This makes it really easy to se
     (jm/leader-keys
      ; Example of a keybinding should be changed later
      "t" '(counsel-load-theme :which-key "Choose theme")
-     "v" '(multi-vterm :which-key "Open terminal")
+     "v" '(multi-vterm :which-key "Open vterm terminal")
+     "e" '(eshell :which-key "Open eshell terminal")
      "r" '(rename-buffer :which-key "Rename buffer")))
 #+end_src
 
@@ -491,7 +492,8 @@ This installs the org package and creates a setup function to enable/disable cer
 
 #+end_src
 
-** Org-Bullets
+** Cosmetics
+*** Org-Bullets
 
 Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
 
@@ -503,7 +505,8 @@ Org-bullets is a package that adds bullets to each heading instead of asterisks.
     :custom
     (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 #+end_src
-** Add List Dots
+
+*** Add List Dots
 
 By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
 
@@ -518,7 +521,7 @@ By default lists are started with a hyphen, though this doesn't really match the
                                (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 #+end_src
 
-** Font Changes
+*** Font Changes
 
 Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
 
@@ -550,7 +553,7 @@ Org-faces changes the font size of the headings to make them bigger in the org f
 
 #+end_src
 
-** Visual Fill Column
+*** Visual Fill Column
 
 Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
 
@@ -564,6 +567,28 @@ Visual fill column is a package that allows you to center text and add borders t
   (use-package visual-fill-column
     :after org
     :hook (org-mode . jm/org-mode-visual-fill))
+#+end_src
+
+** Org Roam
+
+Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory "~/Notes")
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode))
 #+end_src
 
 ** Fix Snippets
