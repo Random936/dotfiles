@@ -162,6 +162,29 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
   (use-package magit)
 #+end_src
 
+*** Helpful
+
+*Helpful* is a package that improves the builtin emacs help menus.
+
+#+begin_src emacs-lisp
+  (use-package helpful
+    :config ; Set keybindings to call helpful instead of the default emacs help.
+    (global-set-key (kbd "C-h f") #'helpful-callable)
+    (global-set-key (kbd "C-h v") #'helpful-variable)
+    (global-set-key (kbd "C-h k") #'helpful-key)
+    (global-set-key (kbd "C-h x") #'helpful-command)
+
+    ;; Lookup the current symbol at point. C-c C-d is a common keybinding for this in lisp modes.
+    (global-set-key (kbd "C-c C-d") #'helpful-at-point)
+
+    ;; Look up *F*unctions (excludes macros).
+    (global-set-key (kbd "C-h F") #'helpful-function)
+
+    ;; Syncing with ivy and counsel
+    (setq counsel-describe-function-function #'helpful-callable)
+    (setq counsel-describe-variable-function #'helpful-variable))
+#+end_src
+
 * Cosmetic
 
 Packages that change the look of emacs in some way.
