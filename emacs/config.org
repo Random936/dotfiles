@@ -2,42 +2,6 @@
 
 General configuarion is configuration of vanilla emacs. This includes making emacs more minimal.
 
-** Cosmetic Configuration
-
-Disable the useless features that make emacs bloated.
-
-#+begin_src emacs-lisp
-  ; Disable startup message
-  (setq inhibit-startup-message t)
-
-  (scroll-bar-mode -1)   ; Disable scrollbar
-  (tool-bar-mode -1)     ; Disable toolbar
-  (tooltip-mode -1)      ; Disable tooltips
-  (menu-bar-mode -1)     ; Disable menu-bar
-  (set-fringe-mode 10)   ; Add gaps on left and right
-  (setq scroll-margin 4) ; Scroll as cursor reaches bottom/top of page.
-#+end_src
-
-*** Change font
-
-Pretty self explanitory.
-
-#+begin_src emacs-lisp
-  (defun jm/set-font-faces ()
-      (set-face-attribute 'default nil :font "Fira Code Retina" :height 140))
-#+end_src
-
-Adding a fix for fonts when running emacs as a daemon.
-
-#+begin_src emacs-lisp
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-                (lambda (frame)
-                  (with-selected-frame frame
-                    (jm/set-font-faces))))
-    (jm/set-font-faces))
-#+end_src
-
 ** Disable Error Bell
 
 Disable error bell and visual bell. Visual bell would be nice on linux, but on mac it is just annoying so I removed it.
@@ -53,6 +17,8 @@ Change location of custom file. This will stop *custom* from appending to the co
 
 #+begin_src emacs-lisp
   (setq custom-file "~/.emacs.d/custom.el")
+  (if (not (file-exists-p custom-file))
+      (make-empty-file custom-file))
   (load custom-file)
 #+end_src
 
@@ -133,7 +99,7 @@ Below are a few configuration changes to avoid TRAMP freezes when sshing into a 
 (setq tramp-remote-shell-args "-c")
 #+end_src
 
-* Packages
+* General Packages
 
 Emacs and packages. Pretty much a requirement.
 
@@ -188,56 +154,6 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
       :config (global-command-log-mode))
 #+end_src
 
-*** Emacs Autocompletion
-
-Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
-
-**** Counsel
-
-Adds various completion functions used by Ivy.
-
-#+begin_src emacs-lisp
-  (use-package counsel
-    :bind (("M-x" . counsel-M-x)
-           ("C-x b" . counsel-ibuffer)
-           ("C-x C-f" . counsel-find-file)
-           :map minibuffer-local-map
-           ("C-r" . counsel-minibuffer-history)))
-#+end_src
-
-**** Ivy
-
-Ivy is a basic autocompletion package that completes emacs functions.
-
-#+begin_src emacs-lisp
-  (use-package ivy
-    :diminish
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)	
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    (ivy-mode 1))
-#+end_src
-
-**** Ivy-rich
-
-Install *Ivy-rich* for function info in Ivy autocomplete.
-
-#+begin_src emacs-lisp
-  (use-package ivy-rich
-    :init (ivy-rich-mode 1))
-#+end_src
-
 *** Magit
 
 *Magit* adds several features to emacs that make using git easier.
@@ -249,6 +165,42 @@ Install *Ivy-rich* for function info in Ivy autocomplete.
 * Cosmetic
 
 Packages that change the look of emacs in some way.
+
+** Cosmetic Configuration
+
+Disable the useless features that make emacs bloated.
+
+#+begin_src emacs-lisp
+  ; Disable startup message
+  (setq inhibit-startup-message t)
+
+  (scroll-bar-mode -1)   ; Disable scrollbar
+  (tool-bar-mode -1)     ; Disable toolbar
+  (tooltip-mode -1)      ; Disable tooltips
+  (menu-bar-mode -1)     ; Disable menu-bar
+  (set-fringe-mode 10)   ; Add gaps on left and right
+  (setq scroll-margin 4) ; Scroll as cursor reaches bottom/top of page.
+#+end_src
+
+*** Change font
+
+Pretty self explanitory.
+
+#+begin_src emacs-lisp
+  (defun jm/set-font-faces ()
+      (set-face-attribute 'default nil :font "Fira Code Retina" :height 140))
+#+end_src
+
+Adding a fix for fonts when running emacs as a daemon.
+
+#+begin_src emacs-lisp
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (jm/set-font-faces))))
+    (jm/set-font-faces))
+#+end_src
 
 ** Doom Modeline
 
@@ -299,6 +251,56 @@ This adds relative line numbers while excluding certain modes.
   ; Enable relative line numbers
   (setq-default display-line-numbers-type 'visual)
   (global-display-line-numbers-mode t)
+#+end_src
+
+* Autocompletion
+
+Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
+
+**** Counsel
+
+Adds various completion functions used by Ivy.
+
+#+begin_src emacs-lisp
+  (use-package counsel
+    :bind (("M-x" . counsel-M-x)
+           ("C-x b" . counsel-ibuffer)
+           ("C-x C-f" . counsel-find-file)
+           :map minibuffer-local-map
+           ("C-r" . counsel-minibuffer-history)))
+#+end_src
+
+**** Ivy
+
+Ivy is a basic autocompletion package that completes emacs functions.
+
+#+begin_src emacs-lisp
+  (use-package ivy
+    :diminish
+    :bind (("C-s" . swiper)
+           :map ivy-minibuffer-map
+           ("TAB" . ivy-alt-done)	
+           ("C-l" . ivy-alt-done)
+           ("C-j" . ivy-next-line)
+           ("C-k" . ivy-previous-line)
+           :map ivy-switch-buffer-map
+           ("C-k" . ivy-previous-line)
+           ("C-l" . ivy-done)
+           ("C-d" . ivy-switch-buffer-kill)
+           :map ivy-reverse-i-search-map
+           ("C-k" . ivy-previous-line)
+           ("C-d" . ivy-reverse-i-search-kill))
+    :config
+    (ivy-mode 1))
+#+end_src
+
+**** Ivy-rich
+
+Install *Ivy-rich* for function info in Ivy autocomplete.
+
+#+begin_src emacs-lisp
+  (use-package ivy-rich
+    :init (ivy-rich-mode 1))
 #+end_src
 
 * Keybindings
@@ -419,11 +421,7 @@ This keybinding needs to be added to general to give it a prefix.
   "z" '(hydra-zoom/body :which-key "scale-text"))
 #+end_src
 
-* File Management
-
-This section includes any configuration that improves file management capabilities.
-
-** Customize Dired
+* Dired
 
 Dired is a built-in package in emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
 
@@ -483,6 +481,7 @@ This installs the org package and creates a setup function to enable/disable cer
     (org-indent-mode)
     (variable-pitch-mode 1)
     (visual-line-mode 1)
+    (add-to-list 'org-link-frame-setup '(file . find-file)) ; Open link in current window not other window.
     (setq org-hide-emphasis-markers t))
 
   (use-package org
@@ -819,7 +818,8 @@ There are a few packages that you need to install in order to use VTerm.
 Multi-Vterm is a package that allows for multiple vterm terminals to be used. By default vterm creates one ~*vterm*~ buffer. This buffer needs to be renamed in order to use multiple terminals.
 
 #+begin_src emacs-lisp
-(use-package multi-vterm)
+  (use-package multi-vterm
+    :after vterm)
 #+end_src
 
 ** Change Terminal Font
