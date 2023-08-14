@@ -35,14 +35,14 @@ This moves the backup files so that emacs doesn't clutter up directories with ba
 This function times the startup to tell you how long it took for the emacs config to load.
 
 #+begin_src emacs-lisp
-(defun efs/display-startup-time ()
+(defun jm/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
            (format "%.2f seconds"
                    (float-time
                      (time-subtract after-init-time before-init-time)))
            gcs-done))
 
-(add-hook 'emacs-startup-hook 'efs/display-startup-time)
+(add-hook 'emacs-startup-hook 'jm/display-startup-time)
 #+end_src
 
 ** White Space
@@ -276,24 +276,38 @@ This adds relative line numbers while excluding certain modes.
   (global-display-line-numbers-mode t)
 #+end_src
 
+* Managing Buffers
+
+*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sublist of buffers. 
+
+#+begin_src emacs-lisp
+  (use-package perspective
+    :bind
+    (("C-x b" . persp-ivy-switch-buffer)
+     ("C-x k" . persp-kill-buffer*))
+    :custom
+    (persp-mode-prefix-key (kbd "C-x w"))
+    :init
+    (persp-mode))
+#+end_src
+
 * Autocompletion
 
 Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
 
-**** Counsel
+** Counsel
 
 Adds various completion functions used by Ivy.
 
 #+begin_src emacs-lisp
   (use-package counsel
     :bind (("M-x" . counsel-M-x)
-           ("C-x b" . counsel-ibuffer)
            ("C-x C-f" . counsel-find-file)
            :map minibuffer-local-map
            ("C-r" . counsel-minibuffer-history)))
 #+end_src
 
-**** Ivy
+** Ivy
 
 Ivy is a basic autocompletion package that completes emacs functions.
 
@@ -317,7 +331,7 @@ Ivy is a basic autocompletion package that completes emacs functions.
     (ivy-mode 1))
 #+end_src
 
-**** Ivy-rich
+** Ivy-rich
 
 Install *Ivy-rich* for function info in Ivy autocomplete.
 
@@ -339,6 +353,7 @@ Remap quit command to make it easier to rescue a buffer. With this function, esc
 #+end_src
 
 ** Packages
+
 *** Which-key
 
 Lists all possible keybindings off of prefix.
@@ -346,8 +361,7 @@ Lists all possible keybindings off of prefix.
 #+begin_src emacs-lisp
   (use-package which-key
     :init (which-key-mode)
-    :diminish which-key-mode
-    :config (setq which-key-idle-delay 0))
+    :diminish which-key-mode)
 #+end_src
 
 *** General
