@@ -513,19 +513,22 @@ Org is a package that allows you to create files like this one that look nice wh
 This installs the org package and creates a setup function to enable/disable certain functionalities.
 
 #+begin_src emacs-lisp
-  ;; Setup org mode
-  (defun jm/org-mode-setup ()
-    (org-indent-mode)
-    (variable-pitch-mode 1)
-    (visual-line-mode 1)
-    (add-to-list 'org-link-frame-setup '(file . find-file)) ; Open link in current window not other window.
-    (setq org-hide-emphasis-markers t))
+;; Setup org mode
+(defun jm/org-mode-setup ()
+  (org-indent-mode)
+  (variable-pitch-mode 1)
+  (visual-line-mode 1)
+  (add-to-list 'org-link-frame-setup '(file . find-file))) ; Open link in current window not other window.
 
-  (use-package org
-    :hook (org-mode . jm/org-mode-setup)
-    :config
-    (setq org-ellipsis " ▾"))
-
+(use-package org
+  :hook (org-mode . jm/org-mode-setup)
+  :config
+  (setq org-ellipsis " ▾")
+  (setq org-hide-emphasis-markers t)
+  (setq org-src-preserve-indentation t)
+  (setq org-export-with-toc nil)
+  (setq org-export-with-section-numbers nil)
+  (setq org-export-with-sub-superscripts nil))
 #+end_src
 
 ** Cosmetics
