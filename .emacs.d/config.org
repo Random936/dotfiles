@@ -879,7 +879,7 @@ This is the section to include imports from other files.
 
 #+begin_src emacs-lisp
 ;; Uncomment this to use EXWM. I currently don't use this.
-(let ((exwm-org-file "~/.emacs.d/exwm.org"))
+;(let ((exwm-org-file "~/.emacs.d/exwm.org"))
 ;(when (file-exists-p exwm-org-file)
 ;  (org-babel-load-file exwm-org-file)))
 #+end_src
