@@ -215,8 +215,8 @@ if [ -f "/usr/share/doc/fzf/examples/completion.zsh" ]; then
     source /usr/share/doc/fzf/examples/completion.zsh
 elif [ -f "/usr/share/fzf/completion.zsh" ]; then
     source /usr/share/fzf/completion.zsh
-elif [ -f "/opt/homebrew/Cellar/fzf/0.39.0/shell/completion.zsh" ]; then
-    source /opt/homebrew/Cellar/fzf/0.39.0/shell/completion.zsh
+elif [ -f /opt/homebrew/Cellar/fzf/*/shell/completion.zsh ]; then
+    source /opt/homebrew/Cellar/fzf/*/shell/completion.zsh
 else
     echo "completion.zsh not installed"
 fi
@@ -225,8 +225,8 @@ if [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
     source /usr/share/doc/fzf/examples/key-bindings.zsh
 elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
     source /usr/share/fzf/key-bindings.zsh
-elif [ -f "/opt/homebrew/Cellar/fzf/0.39.0/shell/key-bindings.zsh" ]; then
-    source /opt/homebrew/Cellar/fzf/0.39.0/shell/key-bindings.zsh
+elif [ -f /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh ]; then
+    source /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh
 else
     echo "key-bidings.zsh not installed"
 fi
@@ -249,7 +249,7 @@ fi
 [[ $(uname -r) == *"arch"* ]] && export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # CUSTOM ALIASES & FUNCTIONS
 
@@ -261,7 +261,7 @@ function ..... () {cd ../../../../}
 function ...... () {cd ../../../../../}
 
 function up() {
-    for ip in $(ip addr | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
+    for ip in $(ifconfig | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
     do
         for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' -printf '%f\n')
         do
@@ -279,4 +279,4 @@ export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 alias open='xdg-open'
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
 alias listen="rlwrap nc -lnvp"
-alias emacs="emacsclient -c"
+alias reload="source ~/.zshrc"
