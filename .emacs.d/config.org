@@ -91,7 +91,7 @@ Add a nice visualization for tabs and spaces. This can be helpful to identify wh
 
 ** SSH Remoting with Tramp
 
-Below are a few configuration changes to avoid TRAMP freezes when sshing into a system with complex config files.
+Below are a few configuration changes to avoid TRAMP freezes when attempting to SSH into another system with more complex config files.
 
 #+begin_src emacs-lisp
 (setq tramp-remote-shell "/bin/sh")
@@ -342,7 +342,7 @@ Install *Ivy-rich* for function info in Ivy auto complete.
 
 * Keybindings
 
-Any key remappings or packages are listed here.
+Contains the configuration for any keybindings or packages relating to keybindings.
 
 ** General Configurations
 
@@ -654,6 +654,8 @@ Configure ~Ispell~ to not spell check certain org mode specific keywords
 #+begin_src emacs-lisp
 (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
 (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+(add-to-list 'ispell-skip-region-alist '("~" . "~"))
+(add-to-list 'ispell-skip-region-alist '("\\[\\[" . "\\]"))
 #+end_src
 
 * Language Server Protocol
