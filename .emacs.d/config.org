@@ -1,10 +1,10 @@
 * General Configuration
 
-General configuarion is configuration of vanilla emacs. This includes making emacs more minimal.
+General configuration is configuration of vanilla Emacs. This includes making Emacs more minimal.
 
 ** Disable Error Bell
 
-Disable error bell and visual bell. Visual bell would be nice on linux, but on mac it is just annoying so I removed it.
+Disable error bell and visual bell. Visual bell would be nice on Linux, but on mac it is just annoying so I removed it temp.
 
 #+begin_src emacs-lisp
   (setq ring-bell-function 'ignore)
@@ -24,7 +24,7 @@ Change location of custom file. This will stop *custom* from appending to the co
 
 ** Move Backup File
 
-This moves the backup files so that emacs doesn't clutter up directories with backup files.
+This moves the backup files so that Emacs doesn't clutter up directories with backup files.
 
 #+begin_src emacs-lisp
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
@@ -32,7 +32,7 @@ This moves the backup files so that emacs doesn't clutter up directories with ba
 
 ** Time Startup
 
-This function times the startup to tell you how long it took for the emacs config to load.
+This function times the startup to tell you how long it took for the Emacs config to load.
 
 #+begin_src emacs-lisp
 (defun jm/display-startup-time ()
@@ -47,7 +47,7 @@ This function times the startup to tell you how long it took for the emacs confi
 
 ** White Space
 
-Various configuration relating to whitespace.
+Various configuration relating to white-space.
 
 #+begin_src emacs-lisp
   (setq-default electric-ident-inhibit t) ; Stop indentation of the previous line.
@@ -146,7 +146,7 @@ This is a list of installed packages not included in any other category.
 
 *** Command Log Mode
 
-Command Log Mode creates a window that logs all commands and corrosponding keybindings.
+Command Log Mode creates a window that logs all commands and corresponding keybindings.
 
 #+begin_src emacs-lisp
     (use-package command-log-mode
@@ -156,7 +156,7 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
 
 *** Magit
 
-*Magit* adds several features to emacs that make using git easier.
+*Magit* adds several features to Emacs that make using git easier.
 
 #+begin_src emacs-lisp
   (use-package magit)
@@ -164,7 +164,7 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
 
 *** Helpful
 
-*Helpful* is a package that improves the builtin emacs help menus.
+*Helpful* is a package that improves the builtin Emacs help menus.
 
 #+begin_src emacs-lisp
   (use-package helpful
@@ -187,11 +187,11 @@ Command Log Mode creates a window that logs all commands and corrosponding keybi
 
 * Cosmetic
 
-Packages that change the look of emacs in some way.
+Packages that change the look of Emacs in some way.
 
 ** Cosmetic Configuration
 
-Disable the useless features that make emacs bloated.
+Disable the useless features that make Emacs bloated.
 
 #+begin_src emacs-lisp
   ; Disable startup message
@@ -207,14 +207,14 @@ Disable the useless features that make emacs bloated.
 
 *** Change font
 
-Pretty self explanitory.
+Pretty self explanatory.
 
 #+begin_src emacs-lisp
   (defun jm/set-font-faces ()
       (set-face-attribute 'default nil :font "Fira Code Retina" :height 140))
 #+end_src
 
-Adding a fix for fonts when running emacs as a daemon.
+Adding a fix for fonts when running Emacs as a daemon.
 
 #+begin_src emacs-lisp
   (if (daemonp)
@@ -238,7 +238,7 @@ Use doom modeline to make the modeline look nicer.
       (display-time))
 #+end_src
 
-In order to avoid missing icons, you should also install the package ~all-the-icons-install-fonts~ through the emacs command line.
+In order to avoid missing icons, you should also install the package ~all-the-icons-install-fonts~ through the Emacs command line.
 
 ** Doom Themes
 
@@ -251,7 +251,7 @@ Install doom themes for better themes.
 
 ** Rainbow Delimiters
 
-Colors perenthesis for better lisp syntax highlighting.
+Colors parenthesis for better lisp syntax highlighting.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
@@ -278,7 +278,7 @@ This adds relative line numbers while excluding certain modes.
 
 * Managing Buffers
 
-*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sublist of buffers. 
+*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
 
 #+begin_src emacs-lisp
   (use-package perspective
@@ -291,9 +291,9 @@ This adds relative line numbers while excluding certain modes.
     (persp-mode))
 #+end_src
 
-* Autocompletion
+* Auto-completion
 
-Packages associated with emacs autocompletion. This does not include autocompletion from language servers just the autocompletion of commands etc.
+Packages associated with Emacs auto-completion. This does not include auto-completion from language servers just the auto-completion of commands etc.
 
 ** Counsel
 
@@ -309,7 +309,7 @@ Adds various completion functions used by Ivy.
 
 ** Ivy
 
-Ivy is a basic autocompletion package that completes emacs functions.
+Ivy is a basic auto-completion package that completes Emacs functions.
 
 #+begin_src emacs-lisp
   (use-package ivy
@@ -333,7 +333,7 @@ Ivy is a basic autocompletion package that completes emacs functions.
 
 ** Ivy-rich
 
-Install *Ivy-rich* for function info in Ivy autocomplete.
+Install *Ivy-rich* for function info in Ivy auto complete.
 
 #+begin_src emacs-lisp
   (use-package ivy-rich
@@ -386,7 +386,7 @@ General allows you to setup a prefix key easily. This makes it really easy to se
 
 *** Evil
 
-Evil is a package that adds vim keybindings to emacs.
+Evil is a package that adds vim keybindings to Emacs.
 
 #+begin_src emacs-lisp
   ;; Setup vim keybindings with evil
@@ -422,7 +422,7 @@ Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybin
 
 **** Undo-Tree
 
-Undo tree's use is self explanitory. While the built-in emacs undo system is fine for me, *undo-tree* is required as it fixes an issue with evil where you can't redo.
+Undo tree's use is self explanatory. While the built-in Emacs undo system is fine for me, *undo-tree* is required as it fixes an issue with evil where you can't redo.
 
 #+begin_src emacs-lisp
   ; Fix vim redo with undo tree
@@ -460,7 +460,7 @@ This keybinding needs to be added to general to give it a prefix.
 
 * Dired
 
-Dired is a built-in package in emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
+Dired is a built-in package in Emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
 
 #+begin_src emacs-lisp
   (use-package dired
@@ -476,7 +476,7 @@ Dired is a built-in package in emacs that allows for basic file navigation. Whil
 
 ** Dired Single
 
-Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a rediculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
+Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a ridiculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
 
 #+begin_src emacs-lisp
   (use-package dired-single :after dired)
@@ -647,15 +647,24 @@ This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this
   (require 'org-tempo)
 #+end_src
 
+** Ispell
+
+Configure ~Ispell~ to not spell check certain org mode specific keywords
+
+#+begin_src emacs-lisp
+(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+#+end_src
+
 * Language Server Protocol
 
-Language servers provide autocompletion and syntax highlighting capabilities making them essential for development.
+Language servers provide auto completion and syntax highlighting capabilities making them essential for development.
 
 ** Lsp Mode
 
-Lsp Mode is a package that adds language server functionalities to emacs.
+Lsp Mode is a package that adds language server functionalities to Emacs.
 
-*** Breadcrumb Headerline
+*** Breadcrumb Header Line
 
 This adds a headerline that shows the scope of where the cursor is in the code. For example if the user is in the main function, the headerline will contain main.
 
@@ -726,7 +735,7 @@ This will include any language server packages and configuration.
     :hook (web-mode . lsp-deferred))
 #+end_src
 
-*** Javascript/Typescript
+*** JavaScript/Typescript
 
 #+begin_src emacs-lisp
   (use-package typescript-mode
