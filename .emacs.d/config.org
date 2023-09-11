@@ -11,6 +11,14 @@ Disable error bell and visual bell. Visual bell would be nice on Linux, but on m
   (setq visual-bell nil)
 #+end_src
 
+** Disable Dialog Box
+
+Disables the dialog prompting box and instead prompts the user in the minibuffer.
+
+#+begin_src emacs-lisp
+(setq use-dialog-box nil)
+#+end_src
+
 ** Relocate Custom File
 
 Change location of custom file. This will stop *custom* from appending to the config file.
@@ -631,8 +639,12 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
           '(("d" "default" plain "%?"
              :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
              :unnarrowed t)
-            ("p" "Programming Project" plain
-             (file "~/Notes/Templates/ProgrammingProject.org")
+            ("p" "Project" plain
+             (file "~/Notes/Templates/Project.org")
+             :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+             :unnarrowed t)
+            ("s" "Malware Sample" plain
+             (file "~/Notes/Templates/Sample.org")
              :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
              :unnarrowed t)))
     (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -649,10 +661,10 @@ This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this
 
 ** Ispell
 
-Configure ~Ispell~ to not spell check certain org mode specific keywords
+Configure ~Ispell~ to not spell check certain org mode specific keywords. By default, ~Ispell~ doesn't have a default dictionary selected. This can be changed by running ~ispell-change-dictionary~. If no dictionaries are found, you can install them from the ~hunspell-en_us~ pacman package.
 
 #+begin_src emacs-lisp
-(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:")) ;
 (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
 (add-to-list 'ispell-skip-region-alist '("~" . "~"))
 (add-to-list 'ispell-skip-region-alist '("\\[\\[" . "\\]"))
