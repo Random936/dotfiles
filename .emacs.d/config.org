@@ -44,10 +44,8 @@ This function times the startup to tell you how long it took for the Emacs confi
 
 #+begin_src emacs-lisp
 (defun jm/display-startup-time ()
-  (message "Emacs loaded in %s with %d garbage collections."
-           (format "%.2f seconds"
-                   (float-time
-                     (time-subtract after-init-time before-init-time)))
+  (message "Emacs loaded in %.2f seconds with %d garbage collections."
+           (float-time (time-subtract after-init-time before-init-time))
            gcs-done))
 
 (add-hook 'emacs-startup-hook 'jm/display-startup-time)
@@ -68,7 +66,6 @@ Disable tabs and replace them with a custom number of spaces.
 #+begin_src emacs-lisp
   (setq-default indent-tabs-mode nil) ; Use spaces instead of tabs.
   (setq-default tab-width 4)
-
   (setq-default evil-shift-width tab-width)
 
   ; C Indentation
