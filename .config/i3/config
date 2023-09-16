@@ -164,7 +164,7 @@ client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
-exec --no-startup-id "$HOME/.screenlayout/layout.sh"
+exec --no-startup-id "$HOME/.screenlayout/launch.sh"
 exec --no-startup-id "xmodmap $HOME/.Xmodmap"
 exec --no-startup-id "polybar"
 exec --no-startup-id "lxpolkit &"
@@ -172,4 +172,3 @@ exec --no-startup-id "lxpolkit &"
 # Tweak keyboard and trackpad
 exec --no-startup-id "synclient VertEdgeScroll=1 VertScrollDelta=-111"
 exec --no-startup-id "setxkbmap -option caps:escape"
-exec --no-startup-id "nitrogen --restore &"
