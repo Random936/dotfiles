@@ -386,7 +386,8 @@ General allows you to setup a prefix key easily. This makes it really easy to se
      "t" '(counsel-load-theme :which-key "Choose theme")
      "v" '(multi-vterm :which-key "Open vterm terminal")
      "e" '(eshell :which-key "Open eshell terminal")
-     "r" '(rename-buffer :which-key "Rename buffer")))
+     "r" '(rename-buffer :which-key "Rename buffer")
+     "oa" '(org-agenda :which-key "Org agenda")))
 #+end_src
 
 *** Evil
@@ -536,6 +537,16 @@ This installs the org package and creates a setup function to enable/disable cer
   (setq org-export-with-sub-superscripts nil))
 #+end_src
 
+** Org Agenda
+
+Org mode by default contains an /agenda/ system which is like a basic calendar that allows you to schedule todo items from org documents. All of the todo items from each org document are stored in a central area to allow for a formation of an /agenda/.
+
+#+begin_src emacs-lisp
+(defun jm/org-roam-refresh-agenda-list ()
+  (interactive)
+  (setq org-agenda-files (mapcar #'org-roam-node-file (org-roam-node-list))))
+#+end_src
+
 ** Cosmetics
 *** Org-Bullets
 
@@ -645,6 +656,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (jm/org-roam-refresh-agenda-list)
   (org-roam-db-autosync-mode))
 #+end_src
 
