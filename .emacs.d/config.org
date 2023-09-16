@@ -643,14 +643,6 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
           ("p" "Project" plain
            (file "~/Notes/Templates/Project.org")
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-          ("a" "Article" plain
-           (file "~/Notes/Templates/Article.org")
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-          ("m" "Malware Sample" plain
-           (file "~/Notes/Templates/Malware.org")
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode))
