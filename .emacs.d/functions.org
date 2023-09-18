@@ -1,0 +1,4 @@
+#+TITLE: Custom Elisp Functions
+
+As of now, I haven't added anything here, though I do expect to start adding some custom functions as I learn more about Elisp.
+

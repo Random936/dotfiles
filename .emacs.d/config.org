@@ -383,9 +383,14 @@ General allows you to setup a prefix key easily. This makes it really easy to se
      ; Example of a keybinding should be changed later
      "t" '(counsel-load-theme :which-key "Choose theme")
      "v" '(multi-vterm :which-key "Open vterm terminal")
-     "e" '(eshell :which-key "Open eshell terminal")
      "r" '(rename-buffer :which-key "Rename buffer")
-     "oa" '(org-agenda :which-key "Org agenda")))
+
+     ; Org mode related keybindings
+     "oa" '(org-agenda :which-key "Org agenda")
+
+     ; Emacs related keybindings
+     "er" '((lambda () (interactive) (load-file "~/.emacs")) :which-key "Reload emacs config")
+     "es" '(eshell :which-key "Open eshell terminal")))
 #+end_src
 
 *** Evil
@@ -931,4 +936,9 @@ This is the section to include imports from other files.
 ;(let ((exwm-org-file "~/.emacs.d/exwm.org"))
 ;(when (file-exists-p exwm-org-file)
 ;  (org-babel-load-file exwm-org-file)))
+
+;; Load org file containing custom Elisp functions.
+(let ((functions-file "~/.emacs.d/functions.org"))
+  (when (file-exists-p functions-file)
+    (org-babel-load-file functions-file)))
 #+end_src
