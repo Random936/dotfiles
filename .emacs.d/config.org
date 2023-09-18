@@ -940,10 +940,10 @@ When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make th
 This is the section to include imports from other files.
 
 #+begin_src emacs-lisp
-;; Uncomment this to use EXWM. I currently don't use this.
-;(let ((exwm-org-file "~/.emacs.d/exwm.org"))
-;(when (file-exists-p exwm-org-file)
-;  (org-babel-load-file exwm-org-file)))
+;; Load org file contianing EXWM config.
+(let ((exwm-org-file "~/.emacs.d/exwm.org"))
+(when (and (file-exists-p exwm-org-file) (getenv "USING_EXWM"))
+  (org-babel-load-file exwm-org-file)))
 
 ;; Load org file containing custom Elisp functions.
 (let ((functions-file "~/.emacs.d/functions.org"))
