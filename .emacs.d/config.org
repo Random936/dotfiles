@@ -286,14 +286,12 @@ This adds relative line numbers while excluding certain modes.
 *Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
 
 #+begin_src emacs-lisp
-  (use-package perspective
-    :bind
-    (("C-x b" . persp-ivy-switch-buffer)
-     ("C-x k" . persp-kill-buffer*))
-    :custom
-    (persp-mode-prefix-key (kbd "C-x w"))
-    :init
-    (persp-mode))
+(use-package perspective
+  :bind (("C-x b" . persp-ivy-switch-buffer)
+         ("C-x k" . persp-kill-buffer*))
+  :custom (persp-mode-prefix-key (kbd "C-x w"))
+  :init
+  (persp-mode))
 #+end_src
 
 * Auto-completion
@@ -529,12 +527,12 @@ This installs the org package and creates a setup function to enable/disable cer
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
-  (setq org-ellipsis " ▾")
-  (setq org-hide-emphasis-markers t)
-  (setq org-src-preserve-indentation t)
-  (setq org-export-with-toc nil)
-  (setq org-export-with-section-numbers nil)
-  (setq org-export-with-sub-superscripts nil))
+  (setq org-ellipsis " ▾"
+        org-hide-emphasis-markers t
+        org-src-preserve-indentation t
+        org-export-with-toc nil
+        org-export-with-section-numbers nil
+        org-export-with-sub-superscripts nil))
 #+end_src
 
 ** Org Agenda
@@ -542,12 +540,31 @@ This installs the org package and creates a setup function to enable/disable cer
 Org mode by default contains an /agenda/ system which is like a basic calendar that allows you to schedule todo items from org documents. All of the todo items from each org document are stored in a central area to allow for a formation of an /agenda/.
 
 #+begin_src emacs-lisp
+(setq org-agenda-start-with-log-mode t)
+(setq org-log-done 'time)
+(setq org-log-into-drawer t)
+#+end_src
+
+*** Refresh Org Agenda Files
+
+Creates a function to refresh the ~org-agenda-files~ variable to be set to include all org roam notes files.
+
+#+begin_src emacs-lisp
 (defun jm/org-roam-refresh-agenda-list ()
   (interactive)
   (setq org-agenda-files (mapcar #'org-roam-node-file (org-roam-node-list))))
 #+end_src
 
+*** Custom States
+
+Adds custom states to tasks such as ~NEXT~, ~CANCELLED~, etc.
+
+#+begin_src emacs-lisp
+(setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)")))
+#+end_src
+
 ** Cosmetics
+
 *** Org-Bullets
 
 Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
