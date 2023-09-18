@@ -568,6 +568,14 @@ Adds custom states to tasks such as ~NEXT~, ~CANCELLED~, etc.
 (setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)")))
 #+end_src
 
+*** Refresh Checkboxes
+
+Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will be reset to an unchecked state.
+
+#+begin_src emacs-lisp
+(add-hook 'org-todo-repeat-hook #'org-reset-checkbox-state-subtree)
+#+end_src
+
 ** Cosmetics
 
 *** Org-Bullets
