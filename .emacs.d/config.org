@@ -382,7 +382,7 @@ General allows you to setup a prefix key easily. This makes it really easy to se
     (jm/leader-keys
      ; Example of a keybinding should be changed later
      "t" '(counsel-load-theme :which-key "Choose theme")
-     "v" '(multi-vterm :which-key "Open vterm terminal")
+     "v" '(vterm :which-key "Open vterm terminal")
      "r" '(rename-buffer :which-key "Rename buffer")
 
      ; Org mode related keybindings
@@ -786,7 +786,6 @@ VTerm is a terminal emulator written in C. While emacs has a few built-in termin
 
 #+begin_src emacs-lisp
   (use-package vterm
-    :commands vterm
     :config
     (setq vterm-max-scrollback 10000)
     ; Fixes vterm issue with cursor not updating
@@ -797,15 +796,6 @@ There are a few packages that you need to install in order to use VTerm.
 
 #+begin_src bash
   sudo apt install cmake libtool-bin
-#+end_src
-
-*** Multi-Vterm
-
-Multi-Vterm is a package that allows for multiple vterm terminals to be used. By default vterm creates one ~*vterm*~ buffer. This buffer needs to be renamed in order to use multiple terminals.
-
-#+begin_src emacs-lisp
-  (use-package multi-vterm
-    :after vterm)
 #+end_src
 
 ** Change Terminal Font
@@ -825,8 +815,8 @@ This is the section to include imports from other files.
 
 #+begin_src emacs-lisp
 (defun jm/load-config-if-exists (file-path)
-  (when (file-exists-p file_path)
-    (org-babel-load-file file_path)))
+  (when (file-exists-p file-path)
+    (org-babel-load-file file-path)))
 
 ;; Load LSP (Language Server Protocol) configuration.
 (jm/load-config-if-exists "~/.emacs.d/lsp.org")

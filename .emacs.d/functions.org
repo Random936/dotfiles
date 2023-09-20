@@ -2,3 +2,7 @@
 
 As of now, I haven't added anything here, though I do expect to start adding some custom functions as I learn more about Elisp.
 
+#+begin_src emacs-lisp
+(message "functions.org: No functions yet!")
+#+end_src
+
