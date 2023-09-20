@@ -835,7 +835,7 @@ This is the section to include imports from other files.
 (jm/load-config-if-exists "~/.emacs.d/functions.org")
 
 ;; Load emacs email client configuration
-(jm/load-config-if-exists "~/.emacs.d/lsp.org")
+(jm/load-config-if-exists "~/.emacs.d/email.org")
 
 ;; Load EXWM configuration if environment variable set.
 (let ((exwm-org-file "~/.emacs.d/exwm.org"))
