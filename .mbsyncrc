@@ -1,6 +1,6 @@
 IMAPAccount gmail
 Host imap.gmail.com
-User randomdude936@gmail.com
+User jadenprovost@gmail.com
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.passwords/gmail.gpg"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt

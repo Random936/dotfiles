@@ -33,7 +33,7 @@ yay -S mu
 After installing the ~mu~ client, I also need to run a initial index using the following command:
 #+begin_src bash
 mbsync -a
-mu init --maildir=~/Mail --my-address=randomdude936@gmail.com
+mu init --maildir=~/Mail --my-address=jadenprovost@gmail.com
 mu index
 #+end_src
 
@@ -42,9 +42,15 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
 (use-package mu4e
   :ensure nil
   :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :bind ("C-x m" . mu4e)
   :config
   ;; Avoids syncing issues.
   (setq mu4e-change-filenames-when-moving t)
+
+  ;; Fix message citation style for gmail.
+  (setq message-cite-style message-cite-style-gmail)
+  (setq message-citation-line-format "On %a, %b %d, %Y at %H:%M %p %f wrote:")
+  (setq message-citation-line-function 'message-insert-formatted-citation-line)
 
   ;; Refresh mail every X seconds. Set to 5 minutes currently
   (setq mu4e-update-interval (* 5 60))
@@ -66,5 +72,25 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
 
 Adding some configuration to correct ~mu4e~'s default values.
 #+begin_src emacs-lisp
-(setq user-mail-address "randomdude936@gmail.com")
+(setq user-full-name "Jaden Provost Maxwell-Comfort")
+(setq user-mail-address "jadenprovost@gmail.com")
 #+end_src
+
+* SMTP
+
+In order to send mail with ~mu4e~, you must also configure an SMTP client.  Based on the ~mu4e~ wiki, I was able to shamelessly steal some of the config for the gmail configuration found [[https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html][here]].
+
+#+begin_src emacs-lisp
+(use-package smtpmail
+  :config
+  (setq smtpmail-stream-type 'ssl)
+  (setq smtpmail-smtp-server "smtp.gmail.com")
+  (setq smtpmail-smtp-service 465))
+#+end_src
+
+When running this however, you need to authenticate by creating an ~~/.authinfo~ file. This file is formatted as follows:
+#+begin_src text
+machine mail.example.org port 25 login myuser password mypassword
+#+end_src
+
+Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security.
