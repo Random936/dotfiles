@@ -61,5 +61,10 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
           (:maildir "/[Gmail]/Sent Mail" :key ?s)
           (:maildir "/[Gmail]/Trash" :key ?t)
           (:maildir "/[Gmail]/Drafts" :key ?d)
-          (:maildir "/[Gmail]/All Mail" :key ?d))))
+          (:maildir "/[Gmail]/All Mail" :key ?a))))
+#+end_src
+
+Adding some configuration to correct ~mu4e~'s default values.
+#+begin_src emacs-lisp
+(setq user-mail-address "randomdude936@gmail.com")
 #+end_src
