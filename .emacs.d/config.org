@@ -684,8 +684,12 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
           ("p" "Project" plain
-           (file "~/Notes/Templates/Project.org")
+           (file "~/.emacs.d/capture-templates/Project.org")
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :unnarrowed t)
+          ("t" "Todo Item" plain
+           (file "~/.emacs.d/capture-templates/Todo.org")
+           :target (file+head "todo/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (jm/org-roam-refresh-agenda-list)
