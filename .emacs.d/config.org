@@ -25,7 +25,7 @@ Change location of custom file. This will stop *custom* from appending to the co
 
 #+begin_src emacs-lisp
   (setq custom-file "~/.emacs.d/custom.el")
-  (if (not (file-exists-p custom-file))
+  (unless (file-exists-p custom-file)
       (make-empty-file custom-file))
   (load custom-file)
 #+end_src
