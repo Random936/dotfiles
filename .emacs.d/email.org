@@ -22,6 +22,16 @@ rm ~/.passwords/gmail # Remove the plaintext password file.
 
 If you are using two factor authentication, this will not work. In this case, you will need to create an /app password/. A guide on how to do this can be found [[https://support.google.com/accounts/answer/185833][here]]. From here, I can just replace this value with what used to be my normal password.
 
+** Installation for MacOS
+
+MacOS doesn't include a certificate file in the typical ~/etc/ssl/certs~ directory. Due to this, you have to create a file using the ~Keychain Access~ app.
+#+begin_src bash
+Open the Application Keychain Access.app
+Select System Roots in the sidebar
+Select all items listen here – ⌘ + a
+Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
+#+end_src
+
 * Mu4e
 
 In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of emacs.
@@ -41,7 +51,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
 #+begin_src emacs-lisp
 (use-package mu4e
   :ensure nil
-  :load-path "/usr/share/emacs/site-lisp/mu4e/"
+  :load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e/"
   :bind ("C-x m" . mu4e)
   :config
   ;; Avoids syncing issues.
@@ -86,11 +96,13 @@ In order to send mail with ~mu4e~, you must also configure an SMTP client.  Base
   (setq smtpmail-stream-type 'ssl)
   (setq smtpmail-smtp-server "smtp.gmail.com")
   (setq smtpmail-smtp-service 465))
+
+(setq send-mail-function 'smtpmail-send-it)
 #+end_src
 
 When running this however, you need to authenticate by creating an ~~/.authinfo~ file. This file is formatted as follows:
 #+begin_src text
-machine mail.example.org port 25 login myuser password mypassword
+machine smtp.gmail.com port 465 login myuser password mypassword
 #+end_src
 
 Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security.
