@@ -43,7 +43,7 @@ yay -S mu
 After installing the ~mu~ client, I also need to run a initial index using the following command:
 #+begin_src bash
 mbsync -a
-mu init --maildir=~/Mail --my-address=jadenprovost@gmail.com
+mu init --maildir=~/.mail --my-address=jadenprovost@gmail.com
 mu index
 #+end_src
 
@@ -65,7 +65,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   ;; Refresh mail every X seconds. Set to 5 minutes currently
   (setq mu4e-update-interval (* 5 60))
   (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-maildir "~/Mail")
+  (setq mu4e-maildir "~/.mail")
 
   (setq mu4e-drafts-folder "/[Gmail]/Drafts")
   (setq mu4e-sent-folder "/[Gmail]/Sent Mail")
