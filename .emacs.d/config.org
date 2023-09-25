@@ -134,6 +134,7 @@ Install use package for easier installation of other packages.
 
   (require 'use-package)
   (setq use-package-always-ensure t)
+  (setq use-package-compute-statistics t)
 #+end_src
 
 Fixes path issue that occurs on mac.
@@ -154,9 +155,9 @@ This is a list of installed packages not included in any other category.
 Command Log Mode creates a window that logs all commands and corresponding keybindings.
 
 #+begin_src emacs-lisp
-    (use-package command-log-mode
-      :defer
-      :config (global-command-log-mode))
+(use-package command-log-mode
+  :defer t
+  :config (global-command-log-mode))
 #+end_src
 
 *** Magit
@@ -164,7 +165,8 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
 *Magit* adds several features to Emacs that make using git easier.
 
 #+begin_src emacs-lisp
-  (use-package magit)
+(use-package magit
+  :defer t)
 #+end_src
 
 *** Helpful

@@ -5,17 +5,19 @@ This will include any language server packages and configuration.
 ** HTML
 
 #+begin_src emacs-lisp
-  (use-package web-mode
-    :mode "\\.html\\'"
-    :hook (web-mode . lsp-deferred))
+(use-package web-mode
+  :defer t
+  :mode "\\.html\\'"
+  :hook (web-mode . lsp-deferred))
 #+end_src
 
 ** JavaScript/Typescript
 
 #+begin_src emacs-lisp
-  (use-package typescript-mode
-    :mode ("\\.ts\\'" "\\.js\\'")
-    :hook (typescript-mode . lsp-deferred))
+(use-package typescript-mode
+  :defer t
+  :mode ("\\.ts\\'" "\\.js\\'")
+  :hook (typescript-mode . lsp-deferred))
 #+end_src
 
 Install the ~typescript-language-server~ through npm.
@@ -27,9 +29,10 @@ Install the ~typescript-language-server~ through npm.
 ** Python
 
 #+begin_src emacs-lisp
-  (use-package python-mode
-    :mode ("\\.py\\'")
-    :hook (python-mode . lsp-deferred))
+(use-package python-mode
+  :defer t
+  :mode ("\\.py\\'")
+  :hook (python-mode . lsp-deferred))
 #+end_src
 
 Install the ~python-lsp-server~ though pip.
@@ -41,11 +44,12 @@ Install the ~python-lsp-server~ though pip.
 ** C/C++
 
 #+begin_src emacs-lisp
-  (use-package ccls
-    :hook ((c-mode cc-mode c++-mode objc-mode cuda-mode) .
-          (lambda () (require 'ccls) (lsp)))
-    :config
-    (setq ccls-executable "/usr/bin/ccls"))
+(use-package ccls
+  :defer t
+  :hook ((c-mode cc-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp)))
+  :config
+  (setq ccls-executable "/usr/bin/ccls"))
 #+end_src
 
 Install ~ccls~ with homebrew using the following command.
@@ -57,36 +61,41 @@ Install ~ccls~ with homebrew using the following command.
 ** Golang
 
 #+begin_src emacs-lisp
-  (use-package go-mode
-     :hook (go-mode . lsp-deferred))
+(use-package go-mode
+  :defer t
+  :hook (go-mode . lsp-deferred))
 #+end_src
 
 ** Rust
 
 #+begin_src emacs-lisp
-  (use-package rustic
-     :hook (rust-mode . lsp-deferred))
+(use-package rustic
+  :defer t
+  :hook (rust-mode . lsp-deferred))
 #+end_src
 
 ** C# 
 
 #+begin_src emacs-lisp
-  (use-package csharp-mode
-     :hook (csharp-mode . lsp-deferred))
+(use-package csharp-mode
+  :defer t
+  :hook (csharp-mode . lsp-deferred))
 #+end_src
 
 ** JSON
 
 #+begin_src emacs-lisp
-  (use-package json-mode
-    :hook (json-mode . lsp-deferred))
+(use-package json-mode
+  :defer t
+  :hook (json-mode . lsp-deferred))
 #+end_src
 
 ** Yaml
 
 #+begin_src emacs-lisp
-  (use-package yaml-mode
-    :hook (yaml-mode . lsp-deferred))
+(use-package yaml-mode
+  :defer t
+  :hook (yaml-mode . lsp-deferred))
 #+end_src
 
 ** Yara
@@ -94,22 +103,24 @@ Install ~ccls~ with homebrew using the following command.
 To install the corresponding LSP, you need to install ~yls~. Using the command ~pip install -U yls-yara~. Keep in mind that ~yls~ is dependent on an up to date version of ~yara-python~.
 
 #+begin_src emacs-lisp
-  (use-package yara-mode
-    :hook (yara-mode . lsp-deferred)
-    :config
-     (with-eval-after-load 'lsp-mode
-      (add-to-list 'lsp-language-id-configuration
-                   '(yara-mode . "yara"))
+(use-package yara-mode
+  :defer t
+  :hook (yara-mode . lsp-deferred)
+  :config
+  (with-eval-after-load 'lsp-mode
+    (add-to-list 'lsp-language-id-configuration
+                 '(yara-mode . "yara"))
 
-      (lsp-register-client
-       (make-lsp-client :new-connection (lsp-stdio-connection "yls")
-                        :activation-fn (lsp-activate-on "yara")
-                        :server-id 'yls))))
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+                      :activation-fn (lsp-activate-on "yara")
+                      :server-id 'yls))))
 #+end_src
 
 ** R
 
 #+begin_src emacs-lisp
-  (use-package ess
-    :hook (R-mode . lsp-deferred))
+(use-package ess
+  :defer t
+  :hook (R-mode . lsp-deferred))
 #+end_src
