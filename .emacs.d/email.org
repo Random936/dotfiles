@@ -49,9 +49,18 @@ mu index
 
 From here, I can continue onto configuring the ~mu4e~ emacs package.
 #+begin_src emacs-lisp
+
+;; Check which load-path exists for multi-platform support.
+(setq jm/mu4e-load-path
+      (let ((linux-path "/usr/share/emacs/site-lisp/mu4e")
+            (macos-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e"))
+        (cond ((file-exists-p linux-path) linux-path)
+              ((file-exists-p macos-path) macos-path)
+              (t (error "No mu4e load-path present. Is mu4e installed?")))))
+
 (use-package mu4e
   :ensure nil
-  :load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e/"
+  :load-path jm/mu4e-load-path
   :bind ("C-x m" . mu4e)
   :config
   ;; Avoids syncing issues.
