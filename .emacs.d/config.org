@@ -165,8 +165,7 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
 *Magit* adds several features to Emacs that make using git easier.
 
 #+begin_src emacs-lisp
-(use-package magit
-  :defer t)
+(use-package magit)
 #+end_src
 
 *** Helpful
