@@ -536,9 +536,15 @@ This installs the org package and creates a setup function to enable/disable cer
   (setq org-ellipsis " ▾"
         org-hide-emphasis-markers t
         org-src-preserve-indentation t
+
+        ; Default export configuration
         org-export-with-toc nil
         org-export-with-section-numbers nil
-        org-export-with-sub-superscripts nil))
+        org-export-with-sub-superscripts nil
+
+        ; Org agenda timestamp formatting
+        org-display-custom-times t
+        org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p")))
 #+end_src
 
 ** Org Agenda
