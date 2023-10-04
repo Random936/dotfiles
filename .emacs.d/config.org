@@ -547,6 +547,19 @@ This installs the org package and creates a setup function to enable/disable cer
         org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p")))
 #+end_src
 
+** Evil Org
+
+By default, many of the org specific keybindings do not feel intuitive when using evil mode. ~evil-org~ is a package that attempts to fix this by rebinding many of the default org keybindings to work better with Evil mode.
+
+#+begin_src emacs-lisp
+(use-package evil-org
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+#+end_src
+
 ** Org Agenda
 
 Org mode by default contains an /agenda/ system which is like a basic calendar that allows you to schedule todo items from org documents. All of the todo items from each org document are stored in a central area to allow for a formation of an /agenda/.
