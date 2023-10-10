@@ -1,0 +1,21 @@
+* Daily Todos
+
+** Habits
+
+- [ ] Shave
+- [ ] Shower
+- [ ] Brush Teeth
+
+** Tasks 
+
+*High Priority*
+
+- [ ] %?
+
+*Medium Priority*
+
+- [ ] 
+
+*Low Priority*
+
+- [ ]
