@@ -124,3 +124,11 @@ To install the corresponding LSP, you need to install ~yls~. Using the command ~
   :defer t
   :hook (R-mode . lsp-deferred))
 #+end_src
+
+** Haskell
+
+#+begin_src emacs-lisp
+(use-package haskell-mode
+  :defer t
+  :hook (haskell-mode . lsp-deferred))
+#+end_src
