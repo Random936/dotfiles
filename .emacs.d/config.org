@@ -698,7 +698,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
   :config
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-capture-templates
-        '(("d" "default" plain "%?"
+        '(("d" "Default" plain "%?"
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
           ("p" "Project" plain
@@ -710,10 +710,12 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
            :target (file+head "todo/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" plain
-          (file "~/.emacs.d/capture-templates/daily.org")
-          :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
-          :unnarrowed t)))
+        '(("d" "Default" entry "* %?" :target
+           (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
+          ("t" "Daily Todos" entry
+           (file "~/.emacs.d/capture-templates/daily.org")
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+           :unnarrowed t)))
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (jm/org-roam-refresh-agenda-list)
   (org-roam-db-autosync-mode))
