@@ -526,6 +526,7 @@ This installs the org package and creates a setup function to enable/disable cer
 ;; Setup org mode
 (defun jm/org-mode-setup ()
   (org-indent-mode)
+  (flyspell-mode)
   (variable-pitch-mode 1)
   (visual-line-mode 1)
   (add-to-list 'org-link-frame-setup '(file . find-file))) ; Open link in current window not other window.
