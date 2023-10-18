@@ -5,6 +5,7 @@
 - [ ] Shave
 - [ ] Shower
 - [ ] Brush Teeth
+- [ ] Wash Face
 
 ** Tasks 
 
