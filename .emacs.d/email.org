@@ -95,14 +95,6 @@ Adding some configuration to correct ~mu4e~'s default values.
 (setq user-mail-address "jadenprovost@gmail.com")
 #+end_src
 
-** Fixing Encryption Issues on Mac
-
-For whatever reason, I've been having several issues with syncing mail on MacOS. This appears to be due to the use of GPG files for the gmail passwords, however I was able to resolve my issues by running this line and downgrading ~gpg~ to version ~2.4.0~.
-
-#+begin_src emacs-lisp
-(auth-source-forget-all-cached)
-#+end_src
-
 * SMTP
 
 In order to send mail with ~mu4e~, you must also configure an SMTP client.  Based on the ~mu4e~ wiki, I was able to shamelessly steal some of the config for the gmail configuration found [[https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html][here]].
