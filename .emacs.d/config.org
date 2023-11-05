@@ -681,13 +681,18 @@ Visual fill column is a package that allows you to center text and add borders t
 Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
 
 #+begin_src emacs-lisp
-(setq jm/org-roam-directory "~/Notes")
+(setq jm/org-roam-directory (expand-file-name "~/Notes"))
 (unless (file-directory-p jm/org-roam-directory)
   (make-directory jm/org-roam-directory))
 
+(setq jm/org-roam-templates-directory
+      (expand-file-name "templates" jm/org-roam-directory))
+
+(unless (file-directory-p jm/org-roam-templates-directory)
+  (make-directory jm/org-roam-templates-directory))
+
 (use-package org-roam
   :ensure t
-  :defer
   :custom
   (org-roam-directory jm/org-roam-directory)
   :bind (("C-c n l" . org-roam-buffer-toggle)
@@ -702,22 +707,22 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
   :config
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-capture-templates
-        '(("d" "Default" plain "%?"
+        `(("d" "Default" plain "%?"
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
           ("p" "Project" plain
-           (file "~/.emacs.d/capture-templates/Project.org")
+           (file ,(expand-file-name "project.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
           ("t" "Todo Item" plain
-           (file "~/.emacs.d/capture-templates/Todo.org")
+           (file ,(expand-file-name "todo.org" jm/org-roam-templates-directory))
            :target (file+head "todo/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
-        '(("d" "Default" entry "* %?" :target
+        `(("d" "Default" entry "* %?" :target
            (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
           ("t" "Daily Todos" entry
-           (file "~/.emacs.d/capture-templates/daily.org")
+           (file ,(expand-file-name "daily.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
            :unnarrowed t)))
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))

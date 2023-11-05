@@ -1,8 +1,0 @@
-* Information
-
-Name: ${title}
-Description: %^{Description}
-
-* Todo Items
-
-- [ ] %?
