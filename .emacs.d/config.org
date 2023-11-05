@@ -583,10 +583,11 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 
 *** Custom States
 
-Adds custom states to tasks such as ~NEXT~, ~CANCELLED~, etc.
+Adds custom states to tasks such as ~IN PROGRESS~, ~CANCELLED~, etc. I've also added some changes to the color of the todo items based on the status. For example, turning the task face orange if it is /in progress/.
 
 #+begin_src emacs-lisp
-(setq org-todo-keywords '((sequence "TODO(t)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keyword-faces '(("IN PROGRESS" . (:foreground "orange" :weight bold))))
+(setq org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
 #+end_src
 
 *** Refresh Checkboxes
