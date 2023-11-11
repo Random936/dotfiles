@@ -578,7 +578,10 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 #+begin_src emacs-lisp
 (defun jm/org-roam-refresh-agenda-list ()
   (interactive)
-  (setq org-agenda-files (mapcar #'org-roam-node-file (org-roam-node-list))))
+  (setq org-agenda-files
+        (seq-uniq (mapcar
+                   #'org-roam-node-file
+                   (org-roam-node-list)))))
 #+end_src
 
 *** Custom States
