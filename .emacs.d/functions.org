@@ -2,7 +2,24 @@
 
 As of now, I haven't added anything here, though I do expect to start adding some custom functions as I learn more about Elisp.
 
+* Capture Template Functions
+
+These functions are for my org roam daily capture template. 
+
 #+begin_src emacs-lisp
-(message "functions.org: No functions yet!")
+(defun jm/get-todos-with-priority (priority files)
+  (let ((items '()))
+    (org-map-entries
+     (lambda ()
+       (when (equal priority (cdr (assoc "PRIORITY" (org-entry-properties))))
+         (push (cdr (assoc "ITEM" (org-entry-properties))) items)))
+     "TODO=\"TODO\""
+     files)
+    items))
+
+(defun jm/format-org-todo-items (items)
+  (mapconcat (lambda (item) (concat "- [ ] " item))
+             items
+             "\n"))
 #+end_src
 

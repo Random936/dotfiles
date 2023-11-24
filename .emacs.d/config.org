@@ -569,6 +569,9 @@ Org mode by default contains an /agenda/ system which is like a basic calendar t
 (setq org-agenda-start-with-log-mode t)
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
+
+(setq org-priority-default ?D)
+(setq org-priority-lowest ?D)
 #+end_src
 
 *** Refresh Org Agenda Files
