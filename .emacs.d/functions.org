@@ -1,6 +1,3 @@
-:PROPERTIES:
-:ID:       D6E04450-9FB0-47BD-BE2A-A8BEE3EED201
-:END:
 #+TITLE: Custom Elisp Functions
 
 As of now, I haven't added anything here, though I do expect to start adding some custom functions as I learn more about Elisp.
