@@ -10,20 +10,22 @@ As of now, I haven't added anything here, though I do expect to start adding som
 These functions are for my org roam daily capture template. 
 
 #+begin_src emacs-lisp
-(defun jm/get-todos-with-priority-helper ()
+(defun jm/daily-todos-priority-tasks-helper ()
   (let ((item-priority (org-entry-get nil "PRIORITY"))
         (item-name (org-entry-get nil "ITEM"))
         (item-id (car (org-property-values "ID"))))
     (when (and item-id (equal priority item-priority))
       (format "- [ ] [[id:%s][%s]]" item-id item-name))))
 
-(defun jm/get-todos-with-priority (priority files)
+(defun jm/daily-todos-get-priority-tasks (priority files)
   (mapconcat #'identity
              (delq nil (org-map-entries
-                        #'jm/get-todos-with-priority-helper
+                        #'jm/daily-todos-priority-tasks-helper
                         "TODO=\"TODO\""
                         files)) "\n"))
 
-(jm/get-todos-with-priority "A" (org-agenda-files))
+(defun jm/daily-todos-dynamic-habits (habit week-days)
+  (let ((today (downcase (format-time-string "%a"))))
+    (when (seq-contains-p week-days today) habit)))
 #+end_src
 
