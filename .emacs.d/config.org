@@ -191,6 +191,19 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
     (setq counsel-describe-variable-function #'helpful-variable))
 #+end_src
 
+*** Perspective
+
+*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
+
+#+begin_src emacs-lisp
+(use-package perspective
+  :bind (("C-x b" . persp-ivy-switch-buffer)
+         ("C-x k" . persp-kill-buffer*))
+  :custom (persp-mode-prefix-key (kbd "C-x w"))
+  :init
+  (persp-mode))
+#+end_src
+
 * Cosmetic
 
 Packages that change the look of Emacs in some way.
@@ -280,19 +293,6 @@ This adds relative line numbers while excluding certain modes.
   ; Enable relative line numbers
   (setq-default display-line-numbers-type 'visual)
   (global-display-line-numbers-mode t)
-#+end_src
-
-* Managing Buffers
-
-*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
-
-#+begin_src emacs-lisp
-(use-package perspective
-  :bind (("C-x b" . persp-ivy-switch-buffer)
-         ("C-x k" . persp-kill-buffer*))
-  :custom (persp-mode-prefix-key (kbd "C-x w"))
-  :init
-  (persp-mode))
 #+end_src
 
 * Auto-completion
@@ -514,367 +514,24 @@ This hides all dotfiles in dired with the keybinding ~H~.
     "H" 'dired-hide-dotfiles-mode))
 #+end_src
 
-* Org Mode
-
-Org is a package that allows you to create files like this one that look nice while also being able to run code. In this file, the code being run is stored in code blocks and all other text is disregarded.
-
-** Org Setup
-
-This installs the org package and creates a setup function to enable/disable certain functionalities.
-
-#+begin_src emacs-lisp
-;; Setup org mode
-(defun jm/org-mode-setup ()
-  (org-indent-mode)
-  (flyspell-mode)
-  (variable-pitch-mode 1)
-  (visual-line-mode 1)
-  (add-to-list 'org-link-frame-setup '(file . find-file))) ; Open link in current window not other window.
-
-(use-package org
-  :hook (org-mode . jm/org-mode-setup)
-  :config
-  (setq org-ellipsis " ▾"
-        org-hide-emphasis-markers t
-        org-src-preserve-indentation t
-
-        ; Default export configuration
-        org-export-with-toc nil
-        org-export-with-section-numbers nil
-        org-export-with-sub-superscripts nil
-
-        ; Org agenda timestamp formatting
-        org-display-custom-times t
-        org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p")))
-#+end_src
-
-** Evil Org
-
-By default, many of the org specific keybindings do not feel intuitive when using evil mode. ~evil-org~ is a package that attempts to fix this by rebinding many of the default org keybindings to work better with Evil mode.
-
-#+begin_src emacs-lisp
-(use-package evil-org
-  :after org
-  :hook (org-mode . (lambda () evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
-#+end_src
-
-** Org Agenda
-
-Org mode by default contains an /agenda/ system which is like a basic calendar that allows you to schedule todo items from org documents. All of the todo items from each org document are stored in a central area to allow for a formation of an /agenda/.
-
-#+begin_src emacs-lisp
-(setq org-agenda-start-with-log-mode t)
-(setq org-log-done 'time)
-(setq org-log-into-drawer t)
-
-(setq org-priority-default ?D)
-(setq org-priority-lowest ?D)
-#+end_src
-
-*** Refresh Org Agenda Files
-
-Creates a function to refresh the ~org-agenda-files~ variable to be set to include all org roam notes files.
-
-#+begin_src emacs-lisp
-(defun jm/org-roam-refresh-agenda-list ()
-  (interactive)
-  (setq org-agenda-files
-        (seq-uniq (mapcar
-                   #'org-roam-node-file
-                   (org-roam-node-list)))))
-#+end_src
-
-*** Custom States
-
-Adds custom states to tasks such as ~IN PROGRESS~, ~CANCELLED~, etc. I've also added some changes to the color of the todo items based on the status. For example, turning the task face orange if it is /in progress/.
-
-#+begin_src emacs-lisp
-(setq org-todo-keyword-faces '(("IN PROGRESS" . (:foreground "orange" :weight bold))))
-(setq org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
-#+end_src
-
-*** Refresh Checkboxes
-
-Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will be reset to an unchecked state.
-
-#+begin_src emacs-lisp
-(add-hook 'org-todo-repeat-hook #'org-reset-checkbox-state-subtree)
-#+end_src
-
-** Cosmetics
-
-*** Org-Bullets
-
-Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
-
-#+begin_src emacs-lisp
-  ; Org-bullets for better headings
-  (use-package org-bullets
-    :after org
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-#+end_src
-
-*** Add List Dots
-
-By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
-
-- Bullet point 1
-- Bullet point 2
-- Bullet point 3
-
-#+begin_src emacs-lisp
-  ; Replace - lists with a dot
-  (font-lock-add-keywords 'org-mode
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
-
-*** Font Changes
-
-Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
-
-#+begin_src emacs-lisp
-  (with-eval-after-load 'org-faces
-      ; Set faces for heading size levels
-      (dolist (face '((org-level-1 . 1.2)
-                      (org-level-2 . 1.1)
-                      (org-level-3 . 1.05)
-                      (org-level-4 . 1.0)
-                      (org-level-5 . 1.0)
-                      (org-level-6 . 1.0)
-                      (org-level-7 . 1.0)
-                      (org-level-8 . 1.0)))
-        (set-face-attribute (car face) nil :font "Fira Code Light" :weight 'regular :height (cdr face)))
-
-      ; Ensure that anything that should be fixed-pitch in Org files appears that way
-      (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-      (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-      (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-      (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-      (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
-
-#+end_src
-
-*** Visual Fill Column
-
-Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
-
-#+begin_src emacs-lisp
-  ; Set left-right margins with visual-fill-column
-  (defun jm/org-mode-visual-fill ()
-    (setq visual-fill-column-width 100
-          visual-fill-column-center-text t)
-    (visual-fill-column-mode 1))
-
-  (use-package visual-fill-column
-    :after org
-    :hook (org-mode . jm/org-mode-visual-fill))
-#+end_src
-
-** Org Roam
-
-Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
-
-#+begin_src emacs-lisp
-(setq jm/org-roam-directory (expand-file-name "~/Notes"))
-(unless (file-directory-p jm/org-roam-directory)
-  (make-directory jm/org-roam-directory))
-
-(setq jm/org-roam-templates-directory
-      (expand-file-name "templates" jm/org-roam-directory))
-
-(unless (file-directory-p jm/org-roam-templates-directory)
-  (make-directory jm/org-roam-templates-directory))
-
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory jm/org-roam-directory)
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n o" . org-id-get-create)
-
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today)
-         ("C-c n k" . org-roam-dailies-capture-tomorrow))
-  :config
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
-  (setq org-roam-capture-templates
-        `(("d" "Default" plain "%?"
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-          ("p" "Project" plain
-           (file ,(expand-file-name "project.org" jm/org-roam-templates-directory))
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-          ("t" "Todo Item" plain
-           (file ,(expand-file-name "todo.org" jm/org-roam-templates-directory))
-           :target (file+head "todo/%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)))
-  (setq org-roam-dailies-capture-templates
-        `(("d" "Default" entry "* %?" :target
-           (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
-          ("t" "Daily Todos" entry
-           (file ,(expand-file-name "daily.org" jm/org-roam-templates-directory))
-           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
-           :unnarrowed t)))
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (jm/org-roam-refresh-agenda-list)
-  (org-roam-db-autosync-mode))
-#+end_src
-
-** Fix Snippets
-
-This is required as of org 9.2 as snippets such as ~<s~ don't work. Without this fix, you are required to manually type out structures like code blocks.
-
-#+begin_src emacs-lisp
-  (require 'org-tempo)
-#+end_src
-
-** Ispell
-
-Configure ~Ispell~ to not spell check certain org mode specific keywords. By default, ~Ispell~ doesn't have a default dictionary selected. This can be changed by running ~ispell-change-dictionary~. If no dictionaries are found, you can install them from the ~hunspell-en_us~ pacman package.
-
-#+begin_src emacs-lisp
-(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:")) ;
-(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-(add-to-list 'ispell-skip-region-alist '("~" . "~"))
-(add-to-list 'ispell-skip-region-alist '("\\[\\[" . "\\]"))
-#+end_src
-
-* Language Server Protocol
-
-Language servers provide auto completion and syntax highlighting capabilities making them essential for development.
-
-** Lsp Mode
-
-Lsp Mode is a package that adds language server functionalities to Emacs.
-
-*** Breadcrumb Header Line
-
-This adds a headerline that shows the scope of where the cursor is in the code. For example if the user is in the main function, the headerline will contain main.
-
-#+begin_src emacs-lisp
-  (defun jm/lsp-mode-setup ()
-    (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-    (lsp-headerline-breadcrumb-mode))
-#+end_src
-
-*** Install Lsp Mode
-
-Below I am installing the actual package and adding some basic configuration.
-
-#+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init (setq lsp-keymap-prefix "C-c l") ; Lsp mode prefix
-    :hook (lsp-mode . jm/lsp-mode-setup)
-    :commands (lsp lsp-deferred) ; Startup commands
-    :config (lsp-enable-which-key-integration t))
-#+end_src
-
-*** Lsp Additional Packages
-
-**** Lsp-UI
-
-#+begin_src emacs-lisp
-  (use-package lsp-ui
-    :hook (lsp-mode . lsp-ui-mode)
-    :config (setq lsp-ui-sideline-show-diagnostics t))
-#+end_src
-
-**** Lsp-Ivy
-
-#+begin_src emacs-lisp
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-#+end_src
-
-** Company Mode
-
-Company is a package that automatically finds completions instead of making the user run a command for completions.
-
-#+begin_src emacs-lisp
-  (use-package company
-    :after lsp-mode
-    :hook (lsp-mode . company-mode)
-    :bind (:map company-active-map ; Map tab to select completion
-                ("<tab>" . company-complete-selection))
-          (:map lsp-mode-map
-                ("<tab>" . company-indent-or-complete-common)))
-#+end_src
-
-** Flycheck
-
-#+begin_src emacs-lisp
-  (use-package flycheck
-    :init (global-flycheck-mode))
-#+end_src
-
-* Terminal
-
-Emacs also has the functionality to run a terminal environment. While many other terminals will try to have similar capabilities with keybindings, nothing matches just integrating your terminal in emacs.
-
-** VTerm
-
-VTerm is a terminal emulator written in C. While emacs has a few built-in terminal all of them either lack speed or are missing many escape sequences.
-
-#+begin_src emacs-lisp
-  (use-package vterm
-    :config
-    (setq vterm-max-scrollback 10000)
-    ; Fixes vterm issue with cursor not updating
-    (advice-add #'vterm--redraw :after (lambda (&rest args) (evil-refresh-cursor evil-state))))
-#+end_src
-
-There are a few packages that you need to install in order to use VTerm.
-
-#+begin_src bash
-  sudo apt install cmake libtool-bin
-#+end_src
-
-** Change Terminal Font
-
-When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make the prompt align properly. Due to this, this code is implemented to change the font only when VTerm is being used.
-
-#+begin_src emacs-lisp
-  (add-hook 'vterm-mode-hook
-            (lambda ()
-              (set (make-local-variable 'buffer-face-mode-face) '(:family "MesloLGS NF" :height 135))
-              (buffer-face-mode t)))
-#+end_src
-
 * Import Other Files
 
 This is the section to include imports from other files.
 
 #+begin_src emacs-lisp
-(defun jm/load-config-if-exists (file-path)
-  (when (file-exists-p file-path)
-    (org-babel-load-file file-path)))
+  (defun jm/load-config-if-exists (file-path)
+    (if (file-exists-p file-path)
+        (org-babel-load-file file-path)
+      (warn (concat "Failed to load config: " file-path))))
 
-;; Load LSP (Language Server Protocol) configuration.
-(jm/load-config-if-exists "~/.emacs.d/lsp.org")
+  (jm/load-config-if-exists "~/.emacs.d/org.org") ; Org-mode
+  (jm/load-config-if-exists "~/.emacs.d/lsp.org") ; Language Server Protocol
+  (jm/load-config-if-exists "~/.emacs.d/terminal.org") ; Emacs Terminal
+  (jm/load-config-if-exists "~/.emacs.d/functions.org") ; Personal Elisp Functions
+  (jm/load-config-if-exists "~/.emacs.d/email.org") ; Mu4e/SMTP Config
 
-;; Load custom functions from org file.
-(jm/load-config-if-exists "~/.emacs.d/functions.org")
-
-;; Load emacs email client configuration
-(jm/load-config-if-exists "~/.emacs.d/email.org")
-
-;; Load EXWM configuration if environment variable set.
-(let ((exwm-org-file "~/.emacs.d/exwm.org"))
-(when (and (file-exists-p exwm-org-file) (getenv "USING_EXWM"))
-  (org-babel-load-file exwm-org-file)))
+  ;; Load EXWM configuration if environment variable set.
+  (let ((exwm-org-file "~/.emacs.d/exwm.org"))
+    (when (and (file-exists-p exwm-org-file) (getenv "USING_EXWM"))
+      (org-babel-load-file exwm-org-file)))
 #+end_src

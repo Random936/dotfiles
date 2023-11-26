@@ -1,0 +1,30 @@
+Emacs also has the functionality to run a terminal environment. While many other terminals will try to have similar capabilities with keybindings, nothing matches just integrating your terminal in emacs.
+
+* VTerm
+
+VTerm is a terminal emulator written in C. While emacs has a few built-in terminal all of them either lack speed or are missing many escape sequences.
+
+#+begin_src emacs-lisp
+  (use-package vterm
+    :config
+    (setq vterm-max-scrollback 10000)
+    ; Fixes vterm issue with cursor not updating
+    (advice-add #'vterm--redraw :after (lambda (&rest args) (evil-refresh-cursor evil-state))))
+#+end_src
+
+There are a few packages that you need to install in order to use VTerm.
+
+#+begin_src bash
+  sudo apt install cmake libtool-bin
+#+end_src
+
+* Change Terminal Font
+
+When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make the prompt align properly. Due to this, this code is implemented to change the font only when VTerm is being used.
+
+#+begin_src emacs-lisp
+  (add-hook 'vterm-mode-hook
+            (lambda ()
+              (set (make-local-variable 'buffer-face-mode-face) '(:family "MesloLGS NF" :height 135))
+              (buffer-face-mode t)))
+#+end_src
