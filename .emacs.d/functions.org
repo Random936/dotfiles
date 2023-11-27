@@ -18,7 +18,7 @@ These functions are for my org roam daily capture template.
   (mapconcat #'identity
              (delq nil (org-map-entries
                         #'jm/daily-todos-priority-tasks-helper
-                        "TODO=\"TODO\""
+                        "/TODO=\"IN PROGRESS\"/"
                         files)) "\n"))
 
 (defun jm/daily-todos-dynamic-habits (habit week-days)
