@@ -18,11 +18,12 @@ These functions are for my org roam daily capture template.
   (mapconcat #'identity
              (delq nil (org-map-entries
                         #'jm/daily-todos-priority-tasks-helper
-                        "/TODO=\"IN PROGRESS\"/"
+                        "TODO=\"IN PROGRESS\""
                         files)) "\n"))
 
 (defun jm/daily-todos-dynamic-habits (habit week-days)
-  (let ((today (downcase (format-time-string "%a"))))
+  (let* ((org-date (or (org-capture-get :default-time) (current-time)))
+         (today (downcase (format-time-string "%a" org-date))))
     (when (seq-contains-p week-days today) habit)))
 #+end_src
 
