@@ -7,19 +7,34 @@ As of now, I haven't added anything here, though I do expect to start adding som
 These functions are for my org roam daily capture template. 
 
 #+begin_src emacs-lisp
-(defun jm/daily-todos-priority-tasks-helper ()
-  (let ((item-priority (org-entry-get nil "PRIORITY"))
-        (item-name (org-entry-get nil "ITEM"))
+
+(defun jm/daily-todos-filter-tasks (helper query files)
+  (let ((entries (org-map-entries helper query files)))
+    (mapconcat #'identity (delq nil entries) "\n")))
+
+(defun jm/daily-todos-format-link ()
+  (let ((item-name (org-entry-get nil "ITEM"))
         (item-id (car (org-property-values "ID"))))
-    (when (and item-id (equal priority item-priority))
+    (when item-id
       (format "- [ ] [[id:%s][%s]]" item-id item-name))))
 
-(defun jm/daily-todos-get-priority-tasks (priority files)
-  (mapconcat #'identity
-             (delq nil (org-map-entries
-                        #'jm/daily-todos-priority-tasks-helper
-                        "TODO=\"IN PROGRESS\""
-                        files)) "\n"))
+
+(defun jm/daily-todos-get-priority (priority)
+  (jm/daily-todos-filter-tasks
+   (lambda ()
+     (when (equal priority (org-entry-get nil "PRIORITY"))
+       (jm/daily-todos-format-link)))
+   "TODO=\"IN PROGRESS\""
+   (org-agenda-files)))
+
+
+(defun jm/daily-todos-get-due-today ()
+  (jm/daily-todos-filter-tasks
+   (lambda ()
+     (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
+       (jm/daily-todos-format-link)))
+   "DEADLINE<=\"<today>\""
+   (org-agenda-files)))
 
 (defun jm/daily-todos-dynamic-habits (habit week-days)
   (let* ((org-date (or (org-capture-get :default-time) (current-time)))
