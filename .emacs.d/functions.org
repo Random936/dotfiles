@@ -34,7 +34,9 @@ These functions are for my org roam daily capture template.
    (lambda ()
      (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
        (jm/daily-todos-format-link)))
-   "DEADLINE<=\"<today>\""
+   (format-time-string
+    "DEADLINE<=\"<%Y-%m-%d>\""
+    (or (org-capture-get :default-time) (current-time)))
    (org-agenda-files)))
 
 (defun jm/daily-todos-dynamic-habits (habit week-days)
