@@ -14,8 +14,9 @@ These functions are for my org roam daily capture template.
 
 (defun jm/daily-todos-format-link ()
   (let ((item-name (org-entry-get nil "ITEM"))
-        (item-id (car (org-property-values "ID"))))
-    (when item-id
+        (item-id (or (org-entry-get nil "ID")
+                     (car (org-property-values "ID")))))
+    (when (stringp item-id)
       (format "- [ ] [[id:%s][%s]]" item-id item-name))))
 
 
