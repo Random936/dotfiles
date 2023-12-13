@@ -251,7 +251,7 @@ function ...... () {cd ../../../../../}
 function up() {
     for ip in $(ifconfig | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
     do
-        for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' -printf '%f\n')
+        for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' | cut -d '/' -f 2-)
         do
             echo "http://$ip/$filepath"
         done
