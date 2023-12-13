@@ -159,16 +159,6 @@ precmd() {
     fi
 }
 
-# enable color support of ls, less and man, and also add handy aliases
-if [ $(uname -s) = "Darwin" ]; then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
-fi
-
-#alias dir='dir --color=auto'
-#alias vdir='vdir --color=auto'
-
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -185,11 +175,6 @@ export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
 # Take advantage of $LS_COLORS for completion as well
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
 
 # enable auto-suggestions based on the history
 if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
@@ -251,6 +236,9 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
+# Initializing zoxide
+eval "$(zoxide init zsh)"
+
 # CUSTOM ALIASES & FUNCTIONS
 
 # Cd multiple directoryies alias.
@@ -276,6 +264,8 @@ export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
+alias cd="z"
+alias ls="exa"
 alias open='xdg-open'
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
 alias listen="rlwrap nc -lnvp"
