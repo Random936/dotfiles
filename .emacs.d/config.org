@@ -137,15 +137,6 @@ Install use package for easier installation of other packages.
   (setq use-package-compute-statistics t)
 #+end_src
 
-Fixes path issue that occurs on mac.
-
-#+begin_src emacs-lisp
-  (use-package exec-path-from-shell
-    :config
-    (when (memq window-system '(mac ns x))
-      (exec-path-from-shell-initialize)))
-#+end_src
-
 ** Installed Packages
 
 This is a list of installed packages not included in any other category.
@@ -184,11 +175,8 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
     (global-set-key (kbd "C-c C-d") #'helpful-at-point)
 
     ;; Look up *F*unctions (excludes macros).
-    (global-set-key (kbd "C-h F") #'helpful-function)
+    (global-set-key (kbd "C-h F") #'helpful-function))
 
-    ;; Syncing with ivy and counsel
-    (setq counsel-describe-function-function #'helpful-callable)
-    (setq counsel-describe-variable-function #'helpful-variable))
 #+end_src
 
 *** Perspective
@@ -197,11 +185,10 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
 
 #+begin_src emacs-lisp
 (use-package perspective
-  :bind (("C-x b" . persp-ivy-switch-buffer)
+  :bind (("C-x b" . persp-switch-to-buffer*)
          ("C-x k" . persp-kill-buffer*))
   :custom (persp-mode-prefix-key (kbd "C-x w"))
-  :init
-  (persp-mode))
+  :init (persp-mode))
 #+end_src
 
 * Cosmetic
@@ -299,50 +286,33 @@ This adds relative line numbers while excluding certain modes.
 
 Packages associated with Emacs auto-completion. This does not include auto-completion from language servers just the auto-completion of commands etc.
 
-** Counsel
+** Vertico
 
-Adds various completion functions used by Ivy.
-
-#+begin_src emacs-lisp
-  (use-package counsel
-    :bind (("M-x" . counsel-M-x)
-           ("C-x C-f" . counsel-find-file)
-           :map minibuffer-local-map
-           ("C-r" . counsel-minibuffer-history)))
-#+end_src
-
-** Ivy
-
-Ivy is a basic auto-completion package that completes Emacs functions.
+Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
 
 #+begin_src emacs-lisp
-  (use-package ivy
-    :diminish
-    :bind (("C-s" . swiper)
-           :map ivy-minibuffer-map
-           ("TAB" . ivy-alt-done)	
-           ("C-l" . ivy-alt-done)
-           ("C-j" . ivy-next-line)
-           ("C-k" . ivy-previous-line)
-           :map ivy-switch-buffer-map
-           ("C-k" . ivy-previous-line)
-           ("C-l" . ivy-done)
-           ("C-d" . ivy-switch-buffer-kill)
-           :map ivy-reverse-i-search-map
-           ("C-k" . ivy-previous-line)
-           ("C-d" . ivy-reverse-i-search-kill))
-    :config
-    (ivy-mode 1))
+(use-package vertico
+  :init
+  (vertico-mode))
 #+end_src
 
-** Ivy-rich
-
-Install *Ivy-rich* for function info in Ivy auto complete.
+One feature of Vertico that is really helpful is that it works with another built-in emacs package, ~savehist~, to save directory history when navigating with Vertico.
 
 #+begin_src emacs-lisp
-  (use-package ivy-rich
-    :init (ivy-rich-mode 1))
+(use-package savehist
+  :init
+  (savehist-mode))
 #+end_src
+
+One last feature I will also add is the ~marginalia~ package which adds some nice /footnotes/ to the command information. This can be extra helpful when looking up Elisp functions for example.
+
+#+begin_src emacs-lisp
+(use-package marginalia
+  :after vertico
+  :init
+  (marginalia-mode))
+#+end_src
+
 
 * Keybindings
 

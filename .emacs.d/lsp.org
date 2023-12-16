@@ -29,18 +29,10 @@ Below I am installing the actual package and adding some basic configuration.
 
 ** Lsp Additional Packages
 
-*** Lsp-UI
-
 #+begin_src emacs-lisp
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
     :config (setq lsp-ui-sideline-show-diagnostics t))
-#+end_src
-
-*** Lsp-Ivy
-
-#+begin_src emacs-lisp
-  (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 #+end_src
 
 ** Company Mode
