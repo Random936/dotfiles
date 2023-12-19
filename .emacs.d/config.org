@@ -500,7 +500,7 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
 #+begin_src emacs-lisp
 (use-package erc-hl-nicks
   :after erc
-  :config (add-to-list 'erc-modules 'hl-nicks)
+  :config (add-to-list 'erc-modules 'hl-nicks))
 #+end_src
 
 * Import Other Files
