@@ -169,7 +169,7 @@ Visual fill column is a package that allows you to center text and add borders t
 Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
 
 #+begin_src emacs-lisp
-(setq jm/org-roam-directory (expand-file-name "~/Notes"))
+(setq jm/org-roam-directory (expand-file-name "~/Dropbox"))
 (unless (file-directory-p jm/org-roam-directory)
   (make-directory jm/org-roam-directory))
 
