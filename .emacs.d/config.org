@@ -191,8 +191,7 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
   :init (persp-mode))
 #+end_src
 
-
-*** Vertico
+** Vertico
 
 Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
 
@@ -218,8 +217,6 @@ One last feature I will also add is the ~marginalia~ package which adds some nic
   :init
   (marginalia-mode))
 #+end_src
-
-
 
 * Cosmetic
 
@@ -480,6 +477,30 @@ This hides all dotfiles in dired with the keybinding ~H~.
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
+#+end_src
+
+* ERC
+
+ERC is a builtin package that adds IRC chatting functionality to emacs.
+
+#+begin_src emacs-lisp
+
+; Basic autofill information
+(setq erc-nick "random936")
+
+; Cosmetic config
+(setq erc-fill-column 120
+      erc-fill-function 'erc-fill-static
+      erc-fill-static-center 20
+      erc-kill-buffer-on-part t)
+#+end_src
+
+To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. 
+
+#+begin_src emacs-lisp
+(use-package erc-hl-nicks
+  :after erc
+  :config (add-to-list 'erc-modules 'hl-nicks)
 #+end_src
 
 * Import Other Files
