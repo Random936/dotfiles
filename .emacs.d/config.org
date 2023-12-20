@@ -82,7 +82,7 @@ Add a nice visualization for tabs and spaces. This can be helpful to identify wh
 
 #+begin_src emacs-lisp
   (global-whitespace-mode)
-  (setq whitespace-global-modes '(not org-mode dired-mode))
+  (setq whitespace-global-modes '(not org-mode dired-mode erc-mode))
   (setq whitespace-style '(face tabs spaces tab-mark space-mark trailing))
   (custom-set-faces
     '(whitespace-tab ((t (:foreground "#384551"))))
@@ -298,6 +298,7 @@ This adds relative line numbers while excluding certain modes.
 #+begin_src emacs-lisp
   ; Disable line numbers for certain modes
   (dolist (mode '(org-mode-hook
+                  erc-mode-hook
                   term-mode-hook
                   vterm-mode-hook
                   shell-mode-hook
@@ -356,7 +357,11 @@ General allows you to setup a prefix key easily. This makes it really easy to se
 
      ; Emacs related keybindings
      "er" '((lambda () (interactive) (load-file "~/.emacs")) :which-key "Reload emacs config")
-     "es" '(eshell :which-key "Open eshell terminal")))
+     "es" '(eshell :which-key "Open eshell terminal")
+
+     ; ERC related keybindings
+     "cc" '(erc-tls :which-key "Quick-connect to IRC")
+     "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers")))
 #+end_src
 
 *** Evil
@@ -485,11 +490,10 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
 
 #+begin_src emacs-lisp
 
-; Basic autofill information
-(setq erc-nick "random936")
-
-; Cosmetic config
-(setq erc-fill-column 120
+(setq erc-nick "random936"
+      erc-hide-list '("JOIN" "PART" "QUIT")
+      erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
+      erc-fill-column 120
       erc-fill-function 'erc-fill-static
       erc-fill-static-center 20
       erc-kill-buffer-on-part t)
@@ -499,8 +503,14 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
 
 #+begin_src emacs-lisp
 (use-package erc-hl-nicks
-  :after erc
-  :config (add-to-list 'erc-modules 'hl-nicks))
+  :after erc)
+#+end_src
+
+I can also use the ~erc-image~ package to render images sent by other users over IRC.
+
+#+begin_src emacs-lisp
+(use-package erc-image
+  :after erc)
 #+end_src
 
 * Import Other Files
