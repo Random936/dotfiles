@@ -141,16 +141,6 @@ Install use package for easier installation of other packages.
 
 This is a list of installed packages not included in any other category.
 
-*** Command Log Mode
-
-Command Log Mode creates a window that logs all commands and corresponding keybindings.
-
-#+begin_src emacs-lisp
-(use-package command-log-mode
-  :defer t
-  :config (global-command-log-mode))
-#+end_src
-
 *** Magit
 
 *Magit* adds several features to Emacs that make using git easier.
@@ -161,21 +151,14 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
 
 *** Helpful
 
-*Helpful* is a package that improves the builtin Emacs help menus.
+*Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
 
 #+begin_src emacs-lisp
-  (use-package helpful
-    :config ; Set keybindings to call helpful instead of the default emacs help.
-    (global-set-key (kbd "C-h f") #'helpful-callable)
-    (global-set-key (kbd "C-h v") #'helpful-variable)
-    (global-set-key (kbd "C-h k") #'helpful-key)
-    (global-set-key (kbd "C-h x") #'helpful-command)
-
-    ;; Lookup the current symbol at point. C-c C-d is a common keybinding for this in lisp modes.
-    (global-set-key (kbd "C-c C-d") #'helpful-at-point)
-
-    ;; Look up *F*unctions (excludes macros).
-    (global-set-key (kbd "C-h F") #'helpful-function))
+(use-package helpful
+  :bind (("C-h f" . #'helpful-callable)
+         ("C-h v" . #'helpful-variable)
+         ("C-h k" . #'helpful-key)
+         ("C-h x" . #'helpful-command)))
 
 #+end_src
 
@@ -190,8 +173,7 @@ Command Log Mode creates a window that logs all commands and corresponding keybi
   :custom (persp-mode-prefix-key (kbd "C-x w"))
   :init (persp-mode))
 #+end_src
-
-** Vertico
+*** Vertico
 
 Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
 
@@ -288,7 +270,7 @@ Colors parenthesis for better lisp syntax highlighting.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
+    :hook prog-mode)
 #+end_src
 
 ** Line Numbers
@@ -469,7 +451,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
     :after dired
-    :hook (dired-mode . all-the-icons-dired-mode))
+    :hook dired-mode)
 #+end_src
 
 ** Hide Dotfiles
@@ -478,7 +460,7 @@ This hides all dotfiles in dired with the keybinding ~H~.
 
 #+begin_src emacs-lisp
 (use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode)
+  :hook dired-mode
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
