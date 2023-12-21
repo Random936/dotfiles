@@ -481,18 +481,19 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
       erc-kill-buffer-on-part t)
 #+end_src
 
-To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. 
+To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. I can also use the ~erc-image~ package to render images sent by other users over IRC.
 
 #+begin_src emacs-lisp
 (use-package erc-hl-nicks
-  :after erc)
-#+end_src
+  :after erc
+  :config (add-to-list 'erc-modules 'hl-nicks))
 
-I can also use the ~erc-image~ package to render images sent by other users over IRC.
-
-#+begin_src emacs-lisp
 (use-package erc-image
-  :after erc)
+  :after erc
+  :config
+  (setq erc-image-inline-rescale 300)
+  (add-to-list 'erc-modules 'image))
+
 #+end_src
 
 * Import Other Files
