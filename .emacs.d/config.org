@@ -479,6 +479,10 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
       erc-fill-function 'erc-fill-static
       erc-fill-static-center 20
       erc-kill-buffer-on-part t)
+
+; Fix for perspective.el not adding ERC buffers to active perspective.
+(add-hook 'erc-join-hook (lambda (&rest args)
+                           (persp-add-buffer (current-buffer))))
 #+end_src
 
 To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. I can also use the ~erc-image~ package to render images sent by other users over IRC.
