@@ -38,19 +38,6 @@ This moves the backup files so that Emacs doesn't clutter up directories with ba
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups/")))
 #+end_src
 
-** Time Startup
-
-This function times the startup to tell you how long it took for the Emacs config to load.
-
-#+begin_src emacs-lisp
-(defun jm/display-startup-time ()
-  (message "Emacs loaded in %.2f seconds with %d garbage collections."
-           (float-time (time-subtract after-init-time before-init-time))
-           gcs-done))
-
-(add-hook 'emacs-startup-hook 'jm/display-startup-time)
-#+end_src
-
 ** White Space
 
 Various configuration relating to white-space.
@@ -173,6 +160,7 @@ This is a list of installed packages not included in any other category.
   :custom (persp-mode-prefix-key (kbd "C-x w"))
   :init (persp-mode))
 #+end_src
+
 *** Vertico
 
 Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
@@ -183,21 +171,36 @@ Vertico is a package that implements a drop-down like menu in the mini buffer al
   (vertico-mode))
 #+end_src
 
-One feature of Vertico that is really helpful is that it works with another built-in emacs package, ~savehist~, to save directory history when navigating with Vertico.
+When installing Vertico, the documentation mentions a few other packages that add some nice features that would come by default with something like /ivy/. I've added some descriptions of these below:
+
+- ~savehist~ - One feature of Vertico that is really helpful is it's seamless integration with the built-in emacs package, ~savehist~, to save command history when navigating.
+- ~marginalia~ - Similar to the definition of /marginalia/, this emacs package implements descriptions besides each option in Vertico completion. Some examples of this would be definitions for Elisp functions, more verbose file information, etc.
+- ~orderless~ - By default, Vertico starts its completion from the start of the search the same way as default emacs completion. The ~orderless~ package changes this by implementing a nicer completion that searches for any similar options based on the provided search terms.
 
 #+begin_src emacs-lisp
 (use-package savehist
   :init
   (savehist-mode))
-#+end_src
 
-One last feature I will also add is the ~marginalia~ package which adds some nice /footnotes/ to the command information. This can be extra helpful when looking up Elisp functions for example.
-
-#+begin_src emacs-lisp
 (use-package marginalia
   :after vertico
   :init
   (marginalia-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+
+*** Dashboard
+
+The Emacs dashboard package provides a nice dashboard when first starting up emacs.
+
+#+begin_src emacs-lisp
+(use-package dashboard
+  :config (dashboard-setup-startup-hook))
 #+end_src
 
 * Cosmetic
@@ -471,7 +474,6 @@ This hides all dotfiles in dired with the keybinding ~H~.
 ERC is a builtin package that adds IRC chatting functionality to emacs.
 
 #+begin_src emacs-lisp
-
 (setq erc-nick "random936"
       erc-hide-list '("JOIN" "PART" "QUIT")
       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
@@ -497,7 +499,6 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
   :config
   (setq erc-image-inline-rescale 300)
   (add-to-list 'erc-modules 'image))
-
 #+end_src
 
 * Import Other Files
