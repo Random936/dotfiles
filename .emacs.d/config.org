@@ -475,7 +475,6 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
 
 #+begin_src emacs-lisp
 (setq erc-nick "random936"
-      erc-hide-list '("JOIN" "PART" "QUIT")
       erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
       erc-fill-column 120
       erc-fill-function 'erc-fill-static
