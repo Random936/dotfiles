@@ -348,8 +348,11 @@ General allows you to setup a prefix key easily. This makes it really easy to se
      "er" '((lambda () (interactive) (load-file "~/.emacs")) :which-key "Reload emacs config")
      "es" '(eshell :which-key "Open eshell terminal")
 
+     ; Git keybindings
+     "gc" 'magit-clone
+
      ; ERC related keybindings
-     "cc" '(erc-tls :which-key "Quick-connect to IRC")
+     "cc" '(erc-tls :which-key "Connect to IRC over TLS")
      "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers")))
 #+end_src
 
