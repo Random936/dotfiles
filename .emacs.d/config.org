@@ -338,7 +338,7 @@ General allows you to setup a prefix key easily. This makes it really easy to se
     (jm/leader-keys
      ; Example of a keybinding should be changed later
      "t" '(counsel-load-theme :which-key "Choose theme")
-     "v" '(vterm :which-key "Open vterm terminal")
+     "v" '(multi-vterm :which-key "Open vterm terminal")
      "r" '(rename-buffer :which-key "Rename buffer")
 
      ; Org mode related keybindings

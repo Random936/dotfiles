@@ -18,6 +18,15 @@ There are a few packages that you need to install in order to use VTerm.
   sudo apt install cmake libtool-bin
 #+end_src
 
+
+* Multi-Vterm
+
+Multi-vterm is a package that adds the capability to easily create multiple vterm terminal buffers without having to manually rename them each time.
+
+#+begin_src emacs-lisp
+(use-package multi-vterm)
+#+end_src
+
 * Change Terminal Font
 
 When using zsh with powerlevel10k, the ~MesloLGS NF~ font is required to make the prompt align properly. Due to this, this code is implemented to change the font only when VTerm is being used.
