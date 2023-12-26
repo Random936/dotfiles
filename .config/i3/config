@@ -171,6 +171,7 @@ exec --no-startup-id "$HOME/.screenlayout/launch.sh"
 exec --no-startup-id "xmodmap $HOME/.Xmodmap"
 exec --no-startup-id "polybar"
 exec --no-startup-id "lxpolkit &"
+exec --no-startup-id "dex -a"
 
 # Tweak keyboard and trackpad
 exec --no-startup-id "synclient VertEdgeScroll=1 VertScrollDelta=-111"
