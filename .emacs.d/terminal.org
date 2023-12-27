@@ -25,7 +25,10 @@ Multi-vterm is a package that adds the capability to easily create multiple vter
 
 #+begin_src emacs-lisp
 (use-package multi-vterm
-  :after vterm)
+  :after vterm
+  :config
+  (jm/leader-keys "v"
+    '(multi-vterm :which-key "Open vterm terminal")))
 #+end_src
 
 * Change Terminal Font

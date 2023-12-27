@@ -91,7 +91,7 @@ Below are a few configuration changes to avoid TRAMP freezes when attempting to 
 (setq tramp-remote-shell-args "-c")
 #+end_src
 
-* General Packages
+* Package Manager
 
 Emacs and packages. Pretty much a requirement.
 
@@ -122,89 +122,6 @@ Install use package for easier installation of other packages.
   (require 'use-package)
   (setq use-package-always-ensure t)
   (setq use-package-compute-statistics t)
-#+end_src
-
-** Installed Packages
-
-This is a list of installed packages not included in any other category.
-
-*** Magit
-
-*Magit* adds several features to Emacs that make using git easier.
-
-#+begin_src emacs-lisp
-(use-package magit)
-#+end_src
-
-*** Helpful
-
-*Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
-
-#+begin_src emacs-lisp
-(use-package helpful
-  :bind (("C-h f" . #'helpful-callable)
-         ("C-h v" . #'helpful-variable)
-         ("C-h k" . #'helpful-key)
-         ("C-h x" . #'helpful-command)))
-
-#+end_src
-
-*** Perspective
-
-*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
-
-#+begin_src emacs-lisp
-(use-package perspective
-  :bind (("C-x b" . persp-switch-to-buffer*)
-         ("C-x k" . persp-kill-buffer*))
-  :custom (persp-mode-prefix-key (kbd "C-x w"))
-  :init (persp-mode))
-#+end_src
-
-*** Vertico
-
-Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
-
-#+begin_src emacs-lisp
-(use-package vertico
-  :init
-  (vertico-mode))
-#+end_src
-
-When installing Vertico, the documentation mentions a few other packages that add some nice features that would come by default with something like /ivy/. I've added some descriptions of these below:
-
-- ~savehist~ - One feature of Vertico that is really helpful is it's seamless integration with the built-in emacs package, ~savehist~, to save command history when navigating.
-- ~marginalia~ - Similar to the definition of /marginalia/, this emacs package implements descriptions besides each option in Vertico completion. Some examples of this would be definitions for Elisp functions, more verbose file information, etc.
-- ~orderless~ - By default, Vertico starts its completion from the start of the search the same way as default emacs completion. The ~orderless~ package changes this by implementing a nicer completion that searches for any similar options based on the provided search terms.
-
-#+begin_src emacs-lisp
-(use-package savehist
-  :init
-  (savehist-mode))
-
-(use-package marginalia
-  :after vertico
-  :init
-  (marginalia-mode))
-
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-#+end_src
-
-
-*** Dashboard
-
-The Emacs dashboard package provides a nice dashboard when first starting up emacs.
-
-#+begin_src emacs-lisp
-(use-package dashboard
-  :config
-  (setq initial-buffer-choice (lambda ()
-                                (get-buffer-create "*dashboard*")
-                                (dashboard-refresh-buffer)))
-  (dashboard-setup-startup-hook))
 #+end_src
 
 * Cosmetic
@@ -305,15 +222,14 @@ Contains the configuration for any keybindings or packages relating to keybindin
 
 ** General Configurations
 
-Remap quit command to make it easier to rescue a buffer. With this function, escape will be used instead of *C-g*.
+Remap quit command to make it easier to rescue a buffer. With this function, escape will be used instead of ~C-g~.
 
 #+begin_src emacs-lisp
-  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 #+end_src
 
-** Packages
-
-*** Which-key
+** Which-key
 
 Lists all possible keybindings off of prefix.
 
@@ -323,7 +239,7 @@ Lists all possible keybindings off of prefix.
     :diminish which-key-mode)
 #+end_src
 
-*** General
+** General
 
 General allows you to setup a prefix key easily. This makes it really easy to setup a bunch of keybindings with ease.
 
@@ -336,27 +252,14 @@ General allows you to setup a prefix key easily. This makes it really easy to se
       :global-prefix "C-SPC")
 
     (jm/leader-keys
-     ; Example of a keybinding should be changed later
-     "t" '(counsel-load-theme :which-key "Choose theme")
-     "v" '(multi-vterm :which-key "Open vterm terminal")
-     "r" '(rename-buffer :which-key "Rename buffer")
-
-     ; Org mode related keybindings
-     "oa" '(org-agenda :which-key "Org agenda")
-
      ; Emacs related keybindings
+     "r" '(rename-buffer :which-key "Rename buffer")
      "er" '((lambda () (interactive) (load-file "~/.emacs")) :which-key "Reload emacs config")
-     "es" '(eshell :which-key "Open eshell terminal")
+     "es" '(eshell :which-key "Open eshell terminal")))
 
-     ; Git keybindings
-     "gc" 'magit-clone
-
-     ; ERC related keybindings
-     "cc" '(erc-tls :which-key "Connect to IRC over TLS")
-     "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers")))
 #+end_src
 
-*** Evil
+** Evil
 
 Evil is a package that adds vim keybindings to Emacs.
 
@@ -382,7 +285,7 @@ Evil is a package that adds vim keybindings to Emacs.
     (evil-set-initial-state 'dashboard-mode 'normal))
 #+end_src
 
-**** Evil Collection
+** Evil Collection
 
 Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybindings.
 
@@ -392,7 +295,7 @@ Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybin
     :config (evil-collection-init))
 #+end_src
 
-**** Undo-Tree
+** Undo-Tree
 
 Undo tree's use is self explanatory. While the built-in Emacs undo system is fine for me, *undo-tree* is required as it fixes an issue with evil where you can't redo.
 
@@ -404,6 +307,90 @@ Undo tree's use is self explanatory. While the built-in Emacs undo system is fin
     (evil-set-undo-system 'undo-tree)
     (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
     (global-undo-tree-mode 1))
+#+end_src
+
+* Other Packages
+
+This is a list of installed packages not included in any other category.
+
+** Magit
+
+*Magit* adds several features to Emacs that make using git easier.
+
+#+begin_src emacs-lisp
+(use-package magit
+  :config
+  (jm/leader-keys "gc" 'magit-clone))
+#+end_src
+
+** Helpful
+
+*Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
+
+#+begin_src emacs-lisp
+(use-package helpful
+  :bind (("C-h f" . #'helpful-callable)
+         ("C-h v" . #'helpful-variable)
+         ("C-h k" . #'helpful-key)
+         ("C-h x" . #'helpful-command)))
+
+#+end_src
+
+** Perspective
+
+*Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
+
+#+begin_src emacs-lisp
+(use-package perspective
+  :bind (("C-x b" . persp-switch-to-buffer*)
+         ("C-x k" . persp-kill-buffer*))
+  :custom (persp-mode-prefix-key (kbd "C-x w"))
+  :init (persp-mode))
+#+end_src
+
+** Vertico
+
+Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
+
+#+begin_src emacs-lisp
+(use-package vertico
+  :init
+  (vertico-mode))
+#+end_src
+
+When installing Vertico, the documentation mentions a few other packages that add some nice features that would come by default with something like /ivy/. I've added some descriptions of these below:
+
+- ~savehist~ - One feature of Vertico that is really helpful is it's seamless integration with the built-in emacs package, ~savehist~, to save command history when navigating.
+- ~marginalia~ - Similar to the definition of /marginalia/, this emacs package implements descriptions besides each option in Vertico completion. Some examples of this would be definitions for Elisp functions, more verbose file information, etc.
+- ~orderless~ - By default, Vertico starts its completion from the start of the search the same way as default emacs completion. The ~orderless~ package changes this by implementing a nicer completion that searches for any similar options based on the provided search terms.
+
+#+begin_src emacs-lisp
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package marginalia
+  :after vertico
+  :init
+  (marginalia-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+** Dashboard
+
+The Emacs dashboard package provides a nice dashboard when first starting up emacs.
+
+#+begin_src emacs-lisp
+(use-package dashboard
+  :config
+  (setq initial-buffer-choice (lambda ()
+                                (get-buffer-create "*dashboard*")
+                                (dashboard-refresh-buffer)))
+  (dashboard-setup-startup-hook))
 #+end_src
 
 * Dired
@@ -457,16 +444,23 @@ This hides all dotfiles in dired with the keybinding ~H~.
 ERC is a builtin package that adds IRC chatting functionality to emacs.
 
 #+begin_src emacs-lisp
-(setq erc-nick "random936"
-      erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
-      erc-fill-column 120
-      erc-fill-function 'erc-fill-static
-      erc-fill-static-center 20
-      erc-kill-buffer-on-part t)
+(use-package erc
+  :ensure nil
+  :config
+  (setq erc-nick "random936"
+        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
+        erc-fill-column 120
+        erc-fill-function 'erc-fill-static
+        erc-fill-static-center 20
+        erc-kill-buffer-on-part t)
 
-; Fix for perspective.el not adding ERC buffers to active perspective.
-(add-hook 'erc-join-hook (lambda (&rest args)
-                           (persp-add-buffer (current-buffer))))
+  ;; Fix for perspective.el not adding ERC buffers to active perspective.
+  (add-hook 'erc-join-hook (lambda (&rest args)
+                             (persp-add-buffer (current-buffer))))
+
+  (jm/leader-keys 
+    "cc" '(erc-tls :which-key "Connect to IRC over TLS")
+    "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers")))
 #+end_src
 
 To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. I can also use the ~erc-image~ package to render images sent by other users over IRC.
