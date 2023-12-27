@@ -313,29 +313,6 @@ Undo tree's use is self explanatory. While the built-in Emacs undo system is fin
 
 This is a list of installed packages not included in any other category.
 
-** Magit
-
-*Magit* adds several features to Emacs that make using git easier.
-
-#+begin_src emacs-lisp
-(use-package magit
-  :config
-  (jm/leader-keys "gc" 'magit-clone))
-#+end_src
-
-** Helpful
-
-*Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
-
-#+begin_src emacs-lisp
-(use-package helpful
-  :bind (("C-h f" . #'helpful-callable)
-         ("C-h v" . #'helpful-variable)
-         ("C-h k" . #'helpful-key)
-         ("C-h x" . #'helpful-command)))
-
-#+end_src
-
 ** Perspective
 
 *Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
@@ -378,6 +355,41 @@ When installing Vertico, the documentation mentions a few other packages that ad
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+#+end_src
+
+** Projectile
+
+/Projectile/ is a package that implements many great features to help with managing multiple coding projects. Some of the nice features include, searching over all project files with ~ripgrep~, testing your project with a quick keybinding, and much more.
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :config
+  (jm/leader-keys "p" projectile-command-map)
+  :init
+  (projectile-mode +1))
+#+end_src
+
+** Helpful
+
+*Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
+
+#+begin_src emacs-lisp
+(use-package helpful
+  :bind (("C-h f" . #'helpful-callable)
+         ("C-h v" . #'helpful-variable)
+         ("C-h k" . #'helpful-key)
+         ("C-h x" . #'helpful-command)))
+
+#+end_src
+
+** Magit
+
+*Magit* adds several features to Emacs that make using git easier.
+
+#+begin_src emacs-lisp
+(use-package magit
+  :config
+  (jm/leader-keys "gc" 'magit-clone))
 #+end_src
 
 ** Dashboard
