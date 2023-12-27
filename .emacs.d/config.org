@@ -406,30 +406,6 @@ Undo tree's use is self explanatory. While the built-in Emacs undo system is fin
     (global-undo-tree-mode 1))
 #+end_src
 
-*** Hydra
-
-Hydra is a package that implements a way to execute the same commands in quick succession.
-
-#+begin_src emacs-lisp
-  (use-package hydra :defer)
-#+end_src
-
-Setup easy changing of font size. This implements a zooming system to make text smaller or bigger quickly.
-
-#+begin_src emacs-lisp
-  (defhydra hydra-zoom (:timeout 4)
-    ("j" text-scale-increase "in")
-    ("k" text-scale-decrease "out")
-    ("f" nil "finished" :exit t))
-#+end_src
-
-This keybinding needs to be added to general to give it a prefix.
-
-#+begin_src emacs-lisp
-  (jm/leader-keys
-  "z" '(hydra-zoom/body :which-key "scale-text"))
-#+end_src
-
 * Dired
 
 Dired is a built-in package in Emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
