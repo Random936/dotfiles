@@ -399,9 +399,8 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
 #+begin_src emacs-lisp
 (use-package dashboard
   :config
-  (setq initial-buffer-choice (lambda ()
-                                (get-buffer-create "*dashboard*")
-                                (dashboard-refresh-buffer)))
+  (setq initial-buffer-choice
+        (lambda () (get-buffer-create "*dashboard*")))
   (dashboard-setup-startup-hook))
 #+end_src
 
