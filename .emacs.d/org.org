@@ -20,16 +20,18 @@ This installs the org package and creates a setup function to enable/disable cer
         org-hide-emphasis-markers t
         org-src-preserve-indentation t
 
-        ; Default export configuration
+        ;; Default export configuration
         org-export-with-toc nil
         org-export-with-section-numbers nil
         org-export-with-sub-superscripts nil
 
-        ; Org agenda timestamp formatting
+        ;; Org agenda timestamp formatting
         org-display-custom-times t
         org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p"))
 
-  (jm/leader-keys "oa" '(org-agenda :which-key "Org agenda")))
+  (jm/leader-keys
+    "oa" '(org-agenda :which-key "Org agenda")
+    "ot" '(org-roam-dailies-goto-today :which-key "Open/create daily notes file")))
 #+end_src
 
 * Evil Org
@@ -218,8 +220,8 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
 
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
-  (jm/org-roam-refresh-agenda-list)
-  (jm/leader-keys "ot" '(org-roam-dailies-goto-today :which-key "Open/create daily notes file")))
+  (jm/org-roam-refresh-agenda-list))
+  
 
 #+end_src
 
