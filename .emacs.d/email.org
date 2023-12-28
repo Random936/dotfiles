@@ -82,9 +82,8 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   (setq mu4e-trash-folder "/[Gmail]/Trash")
 
   (add-to-list 'mu4e-bookmarks
-               '( :name "Flagged messages"
-                  :query "flag:flagged"
-                  :key ?f))
+               '(:name "Flagged messages" :query "flag:flagged" :key ?f)
+               t)
 
   (setq mu4e-maildir-shortcuts
         '((:maildir "/Inbox" :key ?i)

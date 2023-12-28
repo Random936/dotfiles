@@ -399,7 +399,8 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
 #+begin_src emacs-lisp
 (use-package dashboard
   :init
-  (setq dashboard-set-file-icons t
+  (setq dashboard-icon-type 'all-the-icons
+        dashboard-set-file-icons t
         dashboard-set-heading-icons t
         initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
         dashboard-items '((projects . 5)
