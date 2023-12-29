@@ -24,12 +24,13 @@ These functions are for my org roam daily capture template.
                 (jm/dt-format-link "-")))
    "TODO=\"TODO\"|TODO=\"IN PROGRESS\""))
 
-(defun jm/dt-get-due-today ()
-  (jm/dt-filter-tasks
-   (lambda () (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
-                (jm/dt-format-link "- [ ]")))
-   (format-time-string "DEADLINE<=\"<%Y-%m-%d>\""
-                       (or (org-capture-get :default-time) (current-time)))))
+(defun jm/dt-get-due-within (days)
+  (let* ((time (or (org-capture-get :default-time) (current-time)))
+         (date (+ (time-convert time 'integer) (* days 86400))))
+    (jm/dt-filter-tasks
+     (lambda () (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
+                  (jm/dt-format-link "- [ ]")))
+     (format-time-string "DEADLINE<=\"<%Y-%m-%d>\"" date))))
 
 (defun jm/dt-get-status (status)
   (jm/dt-filter-tasks (lambda () (jm/dt-format-link "- [ ]"))
