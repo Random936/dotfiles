@@ -13,9 +13,6 @@ URxvt.highlightColor: #303030
 URxvt.highlightTextColor: #A0A0A0
 URxvt.saveLines: 200000
 
-! External packages
-URxvt.perl-ext-common: resize-font
-
 ! Resize terminal
 URxvt.keysym.Shift-Control-J: resize-font:smaller
 URxvt.keysym.Shift-Control-K: resize-font:bigger

@@ -6,4 +6,4 @@ if [ -f "$script" ]; then
    $script
 fi
 
-nitrogen --restore
+feh --bg-scale $HOME/Pictures/wallpaper.jpg
