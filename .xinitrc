@@ -30,4 +30,5 @@ fi
 
 feh --bg-scale $HOME/Pictures/wallpaper.jpg &
 $HOME/.screenlayout/launch.sh &
+/usr/libexec/polkit-gnome-authentication-agent-1 &
 exec dbus-launch --exit-with-session i3

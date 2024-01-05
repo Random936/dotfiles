@@ -32,9 +32,18 @@ Select all items listen here – ⌘ + a
 Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
 #+end_src
 
+* Authentication with Pass
+
+Pass is a password manager made to be used on the Linux command line. To integrate /pass/ with Emacs, I can install the ~auth-source-pass~ package.
+
+#+begin_src emacs-lisp
+(use-package auth-source-pass
+  :init (auth-source-pass-enable))
+#+end_src
+
 * Mu4e
 
-In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of emacs.
+In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of Emacs.
 
 #+begin_src bash
 yay -S mu
@@ -76,10 +85,11 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   (setq mu4e-get-mail-command "mbsync -a")
   (setq mu4e-maildir "~/.mail")
 
-  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
-  (setq mu4e-sent-folder "/[Gmail]/Sent Mail")
-  (setq mu4e-refile-folder "/[Gmail]/All Mail")
-  (setq mu4e-trash-folder "/[Gmail]/Trash")
+  ;; Config mu4e folders and bookmarks
+  (setq mu4e-drafts-folder "/[Gmail]/Drafts"
+        mu4e-sent-folder "/[Gmail]/Sent Mail"
+        mu4e-refile-folder "/[Gmail]/All Mail"
+        mu4e-trash-folder "/[Gmail]/Trash")
 
   (add-to-list 'mu4e-bookmarks
                '(:name "Flagged messages" :query "flag:flagged" :key ?f)
@@ -107,16 +117,16 @@ In order to send mail with ~mu4e~, you must also configure an SMTP client.  Base
 (use-package smtpmail
   :after mu4e
   :config
-  (setq smtpmail-stream-type 'ssl)
-  (setq smtpmail-smtp-server "smtp.gmail.com")
-  (setq smtpmail-smtp-service 465))
+  (setq smtpmail-stream-type 'ssl
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 465))
 
 (setq send-mail-function 'smtpmail-send-it)
 #+end_src
 
 When running this however, you need to authenticate by creating an ~~/.authinfo~ file. This file is formatted as follows:
 #+begin_src text
-machine smtp.gmail.com port 465 login myuser password mypassword
+machine smtp.gmail.com port 465 login "<USER>" password "<PASS>"
 #+end_src
 
 Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security.
