@@ -1,7 +1,6 @@
 ! Terminal Customization
 URxvt.depth: 32
 URxvt.background: [80]#000000
-!Urxvt*buffered: true
 URxvt.foreground: #ffffff
 URxvt.internalBorder: 10
 URxvt.scrollBar: false

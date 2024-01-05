@@ -184,10 +184,8 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 # Load zplug and extensions
-if [ -f "/usr/share/zplug/init.zsh" ]; then
-    source /usr/share/zplug/init.zsh
-elif [ -f "/usr/share/zsh/scripts/zplug/init.zsh" ]; then
-    source /usr/share/zsh/scripts/zplug/init.zsh
+if [ -f "$HOME/.zplug/init.zsh" ]; then
+    source "$HOME/.zplug/init.zsh"
 elif [ -f "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh" ]; then
     source "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh"
 fi
@@ -196,19 +194,15 @@ zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
 # Source completion and highlighting scripts
-if [ -f "/usr/share/doc/fzf/examples/completion.zsh" ]; then
-    source /usr/share/doc/fzf/examples/completion.zsh
-elif [ -f "/usr/share/fzf/completion.zsh" ]; then
-    source /usr/share/fzf/completion.zsh
+if [ -f "/usr/share/fzf/completion.zsh" ]; then
+    source "/usr/share/fzf/completion.zsh"
 elif [ -f /opt/homebrew/Cellar/fzf/*/shell/completion.zsh ]; then
     source /opt/homebrew/Cellar/fzf/*/shell/completion.zsh
 else
     echo "completion.zsh not installed"
 fi
 
-if [ -f "/usr/share/doc/fzf/examples/key-bindings.zsh" ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-elif [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
+if [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
     source /usr/share/fzf/key-bindings.zsh
 elif [ -f /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh ]; then
     source /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh
@@ -216,10 +210,8 @@ else
     echo "key-bidings.zsh not installed"
 fi
 
-if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-elif [ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
-    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f "/usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh" ]; then
+    source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
 elif [ -f "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
     source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 else
@@ -237,6 +229,7 @@ fi
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # Initializing zoxide
+export PATH="$PATH:$HOME/.cargo/bin"
 eval "$(zoxide init zsh)"
 
 # CUSTOM ALIASES & FUNCTIONS
@@ -265,7 +258,7 @@ export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
 
 # Ease of use
 alias cd="z"
-alias ls="exa"
+alias ls="eza"
 alias open='xdg-open'
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
 alias listen="rlwrap nc -lnvp"
