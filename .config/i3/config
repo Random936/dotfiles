@@ -171,3 +171,4 @@ exec --no-startup-id "lxpolkit &" # start authentication agent (prompt)
 exec --no-startup-id "xcompmgr &" # startup composition manager (transparency)
 exec --no-startup-id "polybar" # status bar
 exec --no-startup-id "dex -a" # run autostart desktop apps
+exec --no-startup-id "emacs --daemon &" # startup emacs daemon

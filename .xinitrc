@@ -18,7 +18,6 @@ fi
 
 if [ -f "$usermodmap" ]; then
    xmodmap "$usermodmap"
-   xcape -e "Mode_switch=Escape"
 fi
 
 # start some nice programs
@@ -31,4 +30,4 @@ fi
 
 feh --bg-scale $HOME/Pictures/wallpaper.jpg &
 $HOME/.screenlayout/launch.sh &
-exec i3
+exec dbus-launch --exit-with-session i3
