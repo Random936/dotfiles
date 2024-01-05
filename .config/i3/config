@@ -20,10 +20,8 @@ floating_modifier $mod
 
 # Application hot keys
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+f exec microsoft-edge-dev
-bindsym $mod+Shift+d exec discord
+bindsym $mod+Shift+f exec "firefox-bin"
 bindsym $mod+Shift+e exec "emacsclient -c"
-bindsym Print exec "flameshot gui"
 
 # kill focused window
 bindsym $mod+q kill
