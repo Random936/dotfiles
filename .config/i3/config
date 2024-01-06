@@ -154,8 +154,8 @@ bindsym l resize shrink width 10 px or 10 ppt
 bindsym $mod+r mode "resize"
 
 # Brightness keys setup
-bindsym XF86MonBrightnessDown exec --no-startup-id "brightnessctl set 5%-"
-bindsym XF86MonBrightnessUp exec --no-startup-id "brightnessctl set +5%"
+bindsym XF86MonBrightnessDown exec --no-startup-id "sudo $HOME/.config/i3/brightness.sh -5"
+bindsym XF86MonBrightnessUp exec --no-startup-id "sudo $HOME/.config/i3/brightness.sh 5"
 
 # Window Cosmetic Changes
 gaps inner 10
