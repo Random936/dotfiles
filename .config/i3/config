@@ -165,8 +165,6 @@ client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
-exec --no-startup-id "$HOME/.screenlayout/launch.sh" # load xrandr screen layout
-exec --no-startup-id "xmodmap $HOME/.Xmodmap" # update capslock key
 exec --no-startup-id "lxpolkit &" # start authentication agent (prompt)
 exec --no-startup-id "xcompmgr &" # startup composition manager (transparency)
 exec --no-startup-id "polybar" # status bar
