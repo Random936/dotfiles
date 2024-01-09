@@ -13,6 +13,16 @@ This installs the org package and creates a setup function to enable/disable cer
   (visual-line-mode 1)
   (add-to-list 'org-link-frame-setup '(file . find-file))) ; Open link in current window not other window.
 
+
+;; Shortcut to goto todays org-roam dailies document.
+(defun jm/org-roam-goto-today ()
+  (interactive)
+  (let* ((path (format-time-string "%Y-%m-%d.org" ))
+         (full-path (file-name-concat org-roam-directory org-roam-dailies-directory path)))
+    (if (file-exists-p full-path)
+        (find-file full-path)
+      (org-roam-dailies-capture-today))))
+
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
@@ -31,7 +41,7 @@ This installs the org package and creates a setup function to enable/disable cer
 
   (jm/leader-keys
     "oa" '(org-agenda :which-key "Org agenda")
-    "ot" '(org-roam-dailies-goto-today :which-key "Open/create daily notes file")))
+    "ot" '(jm/org-roam-goto-today :which-key "Open/create daily notes file")))
 #+end_src
 
 * Evil Org
