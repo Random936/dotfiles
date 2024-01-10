@@ -91,6 +91,16 @@ Below are a few configuration changes to avoid TRAMP freezes when attempting to 
 (setq tramp-remote-shell-args "-c")
 #+end_src
 
+** MacOS Environment Fix
+
+When using emacs on MacOS, the environment variables are not synced properly and therefore require a separate package to fix this. In this case, this package is the ~exec-path-from-shell~.
+
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns x))
+  :config (exec-path-from-shell-initialize))
+#+end_src
+
 * Package Manager
 
 Emacs and packages. Pretty much a requirement.

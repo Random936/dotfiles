@@ -18,7 +18,7 @@ This installs the org package and creates a setup function to enable/disable cer
 (defun jm/org-roam-goto-today ()
   (interactive)
   (let* ((path (format-time-string "%Y-%m-%d.org" ))
-         (full-path (file-name-concat org-roam-directory org-roam-dailies-directory path)))
+         (full-path (file-name-concat org-roam-directory "daily" path)))
     (if (file-exists-p full-path)
         (find-file full-path)
       (org-roam-dailies-capture-today))))
