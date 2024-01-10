@@ -466,6 +466,7 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
   :config
   (setq erc-nick "random936"
         erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
+        erc-autojoin-channels-alist '((".*\.libera\.chat" "#emacs" "#gentoo" "#systemcrafters"))
         erc-fill-column 120
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 20
