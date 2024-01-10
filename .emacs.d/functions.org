@@ -18,22 +18,22 @@ These functions are for my org roam daily capture template.
     (when (stringp item-id)
       (format "%s [[id:%s][%s]]" prefix item-id item-name))))
 
-(defun jm/dt-get-priority (priority)
+(defun jm/dt-get-priority (priority &optional prompt)
   (jm/dt-filter-tasks
    (lambda () (when (equal priority (org-entry-get nil "PRIORITY"))
-                (jm/dt-format-link "-")))
+                (jm/dt-format-link (or prompt "-"))))
    "TODO=\"TODO\"|TODO=\"IN PROGRESS\""))
 
-(defun jm/dt-get-due-within (days)
+(defun jm/dt-get-due-within (days &optional prompt)
   (let* ((time (or (org-capture-get :default-time) (current-time)))
          (date (+ (time-convert time 'integer) (* days 86400))))
     (jm/dt-filter-tasks
      (lambda () (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
-                  (jm/dt-format-link "- [ ]")))
+                  (jm/dt-format-link (or prompt "-"))))
      (format-time-string "DEADLINE<=\"<%Y-%m-%d>\"" date))))
 
-(defun jm/dt-get-status (status)
-  (jm/dt-filter-tasks (lambda () (jm/dt-format-link "- [ ]"))
+(defun jm/dt-get-status (status &optional prompt)
+  (jm/dt-filter-tasks (lambda () (jm/dt-format-link (or prompt "- [ ]")))
                       (concat "TODO=\"" status "\"")))
 
 (defun jm/dt-dynamic-habits (habit week-days)
@@ -41,4 +41,3 @@ These functions are for my org roam daily capture template.
          (today (downcase (format-time-string "%a" org-date))))
     (when (seq-contains-p week-days today) habit)))
 #+end_src
-
