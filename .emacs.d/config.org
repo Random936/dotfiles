@@ -480,7 +480,9 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
         erc-fill-column 120
         erc-fill-function 'erc-fill-static
         erc-fill-static-center 20
-        erc-kill-buffer-on-part t)
+        erc-kill-buffer-on-part t
+        erc-kill-queries-on-quit t
+        erc-kill-server-buffer-on-quit t)
 
   ;; Fix for perspective.el not adding ERC buffers to active perspective.
   (add-hook 'erc-join-hook (lambda (&rest args)
@@ -503,6 +505,14 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
   :config
   (setq erc-image-inline-rescale 300)
   (add-to-list 'erc-modules 'image))
+#+end_src
+
+* Ledger Mode
+
+Ledger is a Unix program that implements a finance tracking system or /ledger/. To implement this into emacs, you can install the ~ledger-mode~ emacs package.
+
+#+begin_src emacs-lisp
+(use-package ledger-mode)
 #+end_src
 
 * Import Other Files
