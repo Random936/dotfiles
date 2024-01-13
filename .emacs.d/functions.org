@@ -2,7 +2,7 @@
 
 As of now, I haven't added anything here, though I do expect to start adding some custom functions as I learn more about Elisp.
 
-* Org Roam Shortcuts
+* Org Roam Dailies Shortcuts
 
 Shortcut to goto todays org-roam dailies document.
 
@@ -16,9 +16,9 @@ Shortcut to goto todays org-roam dailies document.
       (org-roam-dailies--capture rel-time))))
 
 (jm/leader-keys
-  "op" '((lambda () (interactive) (jm/org-roam-goto-day -1)) :which-key "Open/create yesterday's daily notes file")
+  "oy" '((lambda () (interactive) (jm/org-roam-goto-day -1)) :which-key "Open/create yesterday's daily notes file")
   "ot" '((lambda () (interactive) (jm/org-roam-goto-day 0)) :which-key "Open/create today's daily notes file")
-  "on" '((lambda () (interactive) (jm/org-roam-goto-day 1)) :which-key "Open/create tomorrow's daily notes file"))
+  "ok" '((lambda () (interactive) (jm/org-roam-goto-day 1)) :which-key "Open/create tomorrow's daily notes file"))
 #+end_src
 
 * Capture Template Functions
