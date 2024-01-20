@@ -221,6 +221,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
     (make-directory jm/org-roam-templates-directory))
 
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
   (jm/org-roam-refresh-agenda-list))
   
