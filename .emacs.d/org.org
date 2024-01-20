@@ -77,8 +77,11 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 Adds custom states to tasks such as ~IN PROGRESS~, ~CANCELLED~, etc. I've also added some changes to the color of the todo items based on the status. For example, turning the task face orange if it is /in progress/.
 
 #+begin_src emacs-lisp
-(setq org-todo-keyword-faces '(("IN PROGRESS" . (:foreground "orange" :weight bold))))
-(setq org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(i)" "|" "DONE(d)" "CANCELLED(c)")))
+(setq org-todo-keyword-faces '(("IN PROGRESS" . (:foreground "orange" :weight bold))
+                               ("WAITING" . (:foreground "yellow" :weight bold))))
+                               
+
+(setq org-todo-keywords '((sequence "TODO(t)" "IN PROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")))
 #+end_src
 
 ** Refresh Checkboxes
@@ -174,7 +177,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
 #+begin_src emacs-lisp
 
 (use-package org-roam
-  :after org
+  :demand t
   :custom
   (org-roam-directory (file-truename "~/Dropbox"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
