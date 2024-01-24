@@ -34,10 +34,14 @@ These functions are for my org roam daily capture template.
 
 (defun jm/dt-format-link (prefix)
   (let ((item-name (org-entry-get nil "ITEM"))
-        (item-id (or (org-entry-get nil "ID")
-                     (car (org-property-values "ID")))))
-    (when (stringp item-id)
-      (format "%s [[id:%s][%s]]" prefix item-id item-name))))
+        (item-id (org-entry-get nil "ID"))
+        (doc-id (car (org-property-values "ID")))
+        (doc-title (org-get-title)))
+    (cond ((stringp item-id)
+           (format "%s [[id:%s][%s]]" prefix item-id item-name))
+          ((and (stringp doc-id) (stringp doc-title))
+           (format "%s [[id:%s][%s - %s]]" prefix doc-id doc-title item-name))
+          (nil (error "jm/dt-format-link: couldn't find a valid id")))))
 #+end_src
 
 ** Queries
