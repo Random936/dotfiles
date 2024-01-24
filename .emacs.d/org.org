@@ -200,11 +200,6 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
            (file ,(expand-file-name "project.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                                   "#+title: ${title}\n")
-           :unnarrowed t)
-          ("t" "Todo Item" plain
-           (file ,(expand-file-name "todo.org" jm/org-roam-templates-directory))
-           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                  "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
         `(("d" "Default" entry "* %?" :target
