@@ -241,17 +241,6 @@ function .... () {cd ../../../}
 function ..... () {cd ../../../../}
 function ...... () {cd ../../../../../}
 
-function up() {
-    for ip in $(ifconfig | awk "/inet .*$1/ {print \$2}" | cut -d / -f 1)
-    do
-        for filepath in $(find . -maxdepth 1 -type f -name '[^.]*' | cut -d '/' -f 2-)
-        do
-            echo "http://$ip/$filepath"
-        done
-    done
-    sudo python3 -m http.server 80
-}
-
 # Wordlists
 export rockyou="/usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt"
 export fasttrack="/usr/share/seclists/Passwords/fasttrack.txt"
