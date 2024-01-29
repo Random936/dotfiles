@@ -357,18 +357,6 @@ When installing Vertico, the documentation mentions a few other packages that ad
   (completion-category-overrides '((file (styles basic partial-completion)))))
 #+end_src
 
-** Projectile
-
-/Projectile/ is a package that implements many great features to help with managing multiple coding projects. Some of the nice features include, searching over all project files with ~ripgrep~, testing your project with a quick keybinding, and much more.
-
-#+begin_src emacs-lisp
-(use-package projectile
-  :config
-  (jm/leader-keys "p" projectile-command-map)
-  :init
-  (projectile-mode +1))
-#+end_src
-
 ** Helpful
 
 *Helpful* is a package that improves the builtin Emacs help menus.  The config below installs helpful and sets the keybindings to call helpful functions instead of the default emacs help.
@@ -399,10 +387,11 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
 #+begin_src emacs-lisp
 (use-package dashboard
   :init
-  (setq dashboard-icon-type 'all-the-icons
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+        dashboard-icon-type 'all-the-icons
         dashboard-set-file-icons t
         dashboard-set-heading-icons t
-        initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+        dashboard-projects-backend 'project-el
         dashboard-items '((projects . 5)
                           (recents . 5)
                           (agenda . 5)))
@@ -416,7 +405,6 @@ When using emacs on MacOS, the environment variables are not synced properly and
 
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns x))
   :config (exec-path-from-shell-initialize))
 #+end_src
 
@@ -512,7 +500,8 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
 Ledger is a Unix program that implements a finance tracking system or /ledger/. To implement this into emacs, you can install the ~ledger-mode~ emacs package.
 
 #+begin_src emacs-lisp
-(use-package ledger-mode)
+(use-package ledger-mode
+  :mode ("\\.ledger\\'"))
 #+end_src
 
 * Import Other Files
