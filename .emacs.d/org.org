@@ -33,6 +33,83 @@ This installs the org package and creates a setup function to enable/disable cer
     "oa" '(org-agenda :which-key "Org agenda")))
 #+end_src
 
+* Cosmetics
+
+** Org-Bullets
+
+Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
+
+#+begin_src emacs-lisp
+;; Org-bullets for better headings
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+#+end_src
+
+** Add List Dots
+
+By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+#+begin_src emacs-lisp
+;; Replace - lists with a dot
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+#+end_src
+
+** Font Changes
+
+Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
+
+#+begin_src emacs-lisp
+(with-eval-after-load 'org-faces
+  ;; Set faces for heading size levels
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.0)
+                  (org-level-6 . 1.0)
+                  (org-level-7 . 1.0)
+                  (org-level-8 . 1.0)))
+    (set-face-attribute (car face) nil :font "Fira Code Light" :weight 'regular :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
+  (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
+#+end_src
+
+** Visual Fill Column
+
+Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
+
+#+begin_src emacs-lisp
+;; Set left-right margins with visual-fill-column
+(defun jm/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :after org
+  :hook (org-mode . jm/org-mode-visual-fill))
+#+end_src
+
 * Evil Org
 
 By default, many of the org specific keybindings do not feel intuitive when using evil mode. ~evil-org~ is a package that attempts to fix this by rebinding many of the default org keybindings to work better with Evil mode.
@@ -66,10 +143,16 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 #+begin_src emacs-lisp
 (defun jm/org-roam-refresh-agenda-list ()
   (interactive)
-  (setq org-agenda-files
-        (seq-uniq (mapcar
-                   #'org-roam-node-file
-                   (org-roam-node-list)))))
+  (setq org-agenda-files (org-roam-list-files)))
+
+#+end_src
+
+To use this function, I'll add it to some hooks to make sure to run it before the agenda list is needed.
+
+#+begin_src emacs-lisp
+(advice-add 'org-agenda :before #'jm/org-roam-refresh-agenda-list)
+(advice-add 'org-todo-list :before #'jm/org-roam-refresh-agenda-list)
+(advice-add 'dashboard-get-agenda :before #'jm/org-roam-refresh-agenda-list)
 #+end_src
 
 ** Custom States
@@ -92,92 +175,12 @@ Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will
 (add-hook 'org-todo-repeat-hook #'org-reset-checkbox-state-subtree)
 #+end_src
 
-* Cosmetics
-
-** Org-Bullets
-
-Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
-
-#+begin_src emacs-lisp
-  ; Org-bullets for better headings
-  (use-package org-bullets
-    :after org
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-#+end_src
-
-** Add List Dots
-
-By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
-
-- Bullet point 1
-- Bullet point 2
-- Bullet point 3
-
-#+begin_src emacs-lisp
-  ; Replace - lists with a dot
-  (font-lock-add-keywords 'org-mode
-                            '(("^ *\\([-]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
-
-** Font Changes
-
-Org-faces changes the font size of the headings to make them bigger in the org file. Though this code also changes the font to a variable-pitch font. To make it so that only fixed-pitch fonts are used in things like code blocks, *set-face-attribute* is used below.
-
-#+begin_src emacs-lisp
-  (with-eval-after-load 'org-faces
-      ; Set faces for heading size levels
-      (dolist (face '((org-level-1 . 1.2)
-                      (org-level-2 . 1.1)
-                      (org-level-3 . 1.05)
-                      (org-level-4 . 1.0)
-                      (org-level-5 . 1.0)
-                      (org-level-6 . 1.0)
-                      (org-level-7 . 1.0)
-                      (org-level-8 . 1.0)))
-        (set-face-attribute (car face) nil :font "Fira Code Light" :weight 'regular :height (cdr face)))
-
-      ; Ensure that anything that should be fixed-pitch in Org files appears that way
-      (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-      (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-      (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-      (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-      (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-      (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-      (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-      (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
-
-#+end_src
-
-** Visual Fill Column
-
-Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
-
-#+begin_src emacs-lisp
-  ; Set left-right margins with visual-fill-column
-  (defun jm/org-mode-visual-fill ()
-    (setq visual-fill-column-width 100
-          visual-fill-column-center-text t)
-    (visual-fill-column-mode 1))
-
-  (use-package visual-fill-column
-    :after org
-    :hook (org-mode . jm/org-mode-visual-fill))
-#+end_src
-
 * Org Roam
 
 Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
 
 #+begin_src emacs-lisp
-
 (use-package org-roam
-  :demand t
   :custom
   (org-roam-directory (file-truename "~/Dropbox/org"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
@@ -217,10 +220,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
 
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode)
-  (jm/org-roam-refresh-agenda-list))
-  
-
+  (org-roam-db-autosync-mode))
 #+end_src
 
 * Fix Snippets
