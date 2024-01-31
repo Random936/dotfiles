@@ -144,7 +144,6 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 (defun jm/org-roam-refresh-agenda-list ()
   (interactive)
   (setq org-agenda-files (org-roam-list-files)))
-
 #+end_src
 
 To use this function, I'll add it to some hooks to make sure to run it before the agenda list is needed.
