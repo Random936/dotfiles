@@ -325,6 +325,18 @@ This is a list of installed packages not included in any other category.
   :init (persp-mode))
 #+end_src
 
+** Projectile
+
+Projectile is a package for managing various /projects/ in emacs. It adds functionality to let you interact with various /projects/ such as quickly searching filenames, switching between all projects, grepping all files, etc.
+
+#+begin_src emacs-lisp
+(use-package projectile
+  :bind-keymap
+  ("C-x p" . projectile-command-map)
+  :config
+  (projectile-mode +1))
+#+end_src
+
 ** Vertico
 
 Vertico is a package that implements a drop-down like menu in the mini buffer allowing for much better searching.
@@ -385,9 +397,12 @@ When installing Vertico, the documentation mentions a few other packages that ad
 The Emacs dashboard package provides a nice dashboard when first starting up emacs.
 
 #+begin_src emacs-lisp
+
+;; Fix for when emacs is run as a daemon
+
 (use-package dashboard
   :init
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+  (setq initial-buffer-choice (lambda () (dashboard-open))
         dashboard-icon-type 'all-the-icons
         dashboard-set-file-icons t
         dashboard-set-heading-icons t
@@ -396,7 +411,6 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
                           (recents . 5)
                           (agenda . 5)))
   :config
-  (set-face-attribute 'dashboard-items-face nil :font "Fira Code Retina" :height 140)
   (dashboard-setup-startup-hook))
 #+end_src
 
@@ -409,7 +423,8 @@ When using emacs on MacOS, the environment variables are not synced properly and
   :config (exec-path-from-shell-initialize))
 #+end_src
 
-* Dired
+* Builtin Package Config
+** Dired
 
 Dired is a built-in package in Emacs that allows for basic file navigation. While it serves its purpose, vanilla dired is far from a good file navigator. With some basic customization however, this can be changed.
 
@@ -425,7 +440,7 @@ Dired is a built-in package in Emacs that allows for basic file navigation. Whil
       "l" 'dired-single-buffer))
 #+end_src
 
-** Dired Single
+*** Dired Single
 
 Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a ridiculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
 
@@ -433,7 +448,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
   (use-package dired-single :after dired)
 #+end_src
 
-** All the Icons Dired
+*** All the Icons Dired
 
 ~all-the-icons-dired~ is a dired plugin that adds icons to each of the files.
 
@@ -443,7 +458,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
     :hook dired-mode)
 #+end_src
 
-** Hide Dotfiles
+*** Hide Dotfiles
 
 This hides all dotfiles in dired with the keybinding ~H~.
 
@@ -454,8 +469,7 @@ This hides all dotfiles in dired with the keybinding ~H~.
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))
 #+end_src
-
-* ERC
+** ERC
 
 ERC is a builtin package that adds IRC chatting functionality to emacs.
 
@@ -494,15 +508,6 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
   :config
   (setq erc-image-inline-rescale 300)
   (add-to-list 'erc-modules 'image))
-#+end_src
-
-* Ledger Mode
-
-Ledger is a Unix program that implements a finance tracking system or /ledger/. To implement this into emacs, you can install the ~ledger-mode~ emacs package.
-
-#+begin_src emacs-lisp
-(use-package ledger-mode
-  :mode ("\\.ledger\\'"))
 #+end_src
 
 * Import Other Files
