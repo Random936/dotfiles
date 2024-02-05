@@ -409,7 +409,6 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
         dashboard-icon-type 'all-the-icons
         dashboard-set-file-icons t
         dashboard-set-heading-icons t
-        dashboard-projects-backend 'project-el
         dashboard-items '((projects . 5)
                           (recents . 5)
                           (agenda . 5)))
