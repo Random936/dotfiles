@@ -334,7 +334,10 @@ Projectile is a package for managing various /projects/ in emacs. It adds functi
   :bind-keymap
   ("C-x p" . projectile-command-map)
   :config
-  (projectile-mode +1))
+  (projectile-mode +1)
+  :init
+  (when (file-directory-p "~/Projects")
+    (setq projectile-project-search-path '("~/Projects"))))
 #+end_src
 
 ** Vertico
