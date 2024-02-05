@@ -203,3 +203,18 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
 (use-package ledger-mode
   :mode ("\\.ledger\\'"))
 #+end_src
+
+** Ebuild
+
+Ebuild is the language used for Gentoo packages installed with the ~emerge~ utility. As this package is Gentoo specific, you will have to install it the command below:
+
+#+begin_src bash
+sudo emerge -v app-emacs/ebuild-mode
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package ebuild-mode
+  :ensure nil
+  :defer t
+  :hook (ebuild-mode . lsp-deferred))
+#+end_src
