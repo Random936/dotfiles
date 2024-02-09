@@ -476,6 +476,12 @@ This hides all dotfiles in dired with the keybinding ~H~.
 ERC is a builtin package that adds IRC chatting functionality to emacs.
 
 #+begin_src emacs-lisp
+
+;; Shotcuts for general
+(jm/leader-keys 
+  "cc" '(erc-tls :which-key "Connect to IRC over TLS")
+  "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers"))
+
 (use-package erc
   :ensure nil
   :defer t
@@ -492,11 +498,7 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
 
   ;; Fix for perspective.el not adding ERC buffers to active perspective.
   (add-hook 'erc-join-hook (lambda (&rest args)
-                             (persp-add-buffer (current-buffer))))
-
-  (jm/leader-keys 
-    "cc" '(erc-tls :which-key "Connect to IRC over TLS")
-    "cb" '(erc-switch-to-buffer :which-key "Switch IRC buffers")))
+                             (persp-add-buffer (current-buffer)))))
 #+end_src
 
 To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. I can also use the ~erc-image~ package to render images sent by other users over IRC.
