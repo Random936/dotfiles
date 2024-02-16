@@ -405,7 +405,8 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
 
 (use-package dashboard
   :init
-  (setq initial-buffer-choice (lambda () (dashboard-open))
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
+        dashboard-startup-banner 'logo
         dashboard-icon-type 'all-the-icons
         dashboard-set-file-icons t
         dashboard-set-heading-icons t
@@ -413,6 +414,8 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
                           (recents . 5)
                           (agenda . 5)))
   :config
+  (add-hook 'after-init-hook 'dashboard-refresh-buffer)
+  (add-hook 'server-after-make-frame-hook 'dashboard-refresh-buffer)
   (dashboard-setup-startup-hook))
 #+end_src
 
