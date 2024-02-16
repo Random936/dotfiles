@@ -186,12 +186,39 @@ Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will
 
 Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
 
+** Custom Indexing Functions
+
+Before getting into the main config for Org-roam, I've created a few functions for better indexing nodes stored in the org-roam database. Specifically, these functions separate the org roam dailies nodes from other nodes.
+
 #+begin_src emacs-lisp
+(defun jm/org-roam-find-filter (node)
+  (let* ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
+    (string= (file-name-directory (org-roam-node-file node))
+             directory)))
+
+(defun jm/org-roam-dailies-find ()
+  (interactive)
+  (org-roam-node-find nil nil #'jm/org-roam-find-filter))
+
+(defun jm/org-roam-find ()
+  (interactive)
+  (org-roam-node-find
+   nil nil
+   (lambda (node) (not (jm/org-roam-find-filter node)))))
+#+end_src
+
+** Main Config
+
+Below is the main config for org-roam.
+
+#+begin_src emacs-lisp
+
 (use-package org-roam
   :custom
   (org-roam-directory (file-truename "~/Dropbox/org"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
+         ("C-c n f" . jm/org-roam-find)
+         ("C-c n d" . jm/org-roam-dailies-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ("C-c n o" . org-id-get-create)
@@ -209,7 +236,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
           ("p" "Project" plain
            (file ,(expand-file-name "project.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                                  "#+title: ${title}\n")
+                              "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
         `(("d" "Default" entry "* %?" :target
