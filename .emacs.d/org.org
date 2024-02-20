@@ -265,7 +265,8 @@ Below is the main config for org-roam.
   (unless (file-directory-p jm/org-roam-templates-directory)
     (make-directory jm/org-roam-templates-directory))
 
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (setq org-roam-node-display-template
+        (concat "${title:*} " (propertize "${file:*}" 'face 'org-tag)))
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode))
 #+end_src
