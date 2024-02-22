@@ -77,3 +77,68 @@ These functions are for my org roam daily capture template.
         (push out out-list)))
     (mapconcat #'identity out-list "\n")))
 #+end_src
+
+** Weekly Scorecard
+
+Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how well you've been acting on your plan towards your weekly goal. By seeing how effective you're execution is, you are forced to face the objective truths about your productivity.
+
+- [ ] My test checkbox.
+- [ ] Other checkbox.
+- [X] My test checkbox.
+
+#+begin_src emacs-lisp
+(defun jm/checkbox-checked-p (checkbox)
+  (cond ((eq 'on (org-element-property :checkbox checkbox)) t)
+        ((eq 'off (org-element-property :checkbox checkbox)) nil)
+        ((org-element-property :checkbox checkbox) (error "Invalid checkbox status"))))
+
+(defun jm/catalog-checkboxes (buffer)
+  (with-current-buffer buffer
+    (let* ((filter-fn (lambda (elem) (when (org-element-property :checkbox elem) elem)))
+           (elem-list (org-element-map (org-element-parse-buffer) 'item filter-fn)))
+      (delq nil elem-list))))
+
+(defun jm/score-checkboxes (file-path &optional dictionary)
+  (let ((buffer (find-file-noselect file-path))
+        (was-open (get-file-buffer file-path)))
+    (dolist (box (jm/catalog-checkboxes buffer) dictionary)
+      (with-current-buffer buffer
+        (let* ((start (org-element-property :contents-begin box))
+               (end (- (org-element-property :contents-end box) 1))
+               (key (buffer-substring-no-properties start end))
+               (checked (if (jm/checkbox-checked-p box) 1 0))
+               (pair (assoc key dictionary))
+               (counts (cdr pair)))
+          (if pair
+              (setcdr pair (list (+ checked (car counts)) (1+ (cadr counts))))
+            (push (cons key (list checked 1)) dictionary)))))
+    (unless was-open
+      (kill-buffer buffer))
+    dictionary))
+
+(defun jm/n-day-scorecard (n)
+  (let ((time (time-convert (or (org-capture-get :default-time) (current-time)) 'integer))
+        (dailies-directory (expand-file-name org-roam-dailies-directory org-roam-directory))
+        (dict nil))
+    (dotimes (i n dict)
+      (message (format-time-string "%Y-%m-%d.org" (- time (* i 86400))))
+      (setq dict (jm/score-checkboxes
+                  (expand-file-name
+                   (format-time-string "%Y-%m-%d.org" (- time (* i 86400)))
+                   dailies-directory)
+                  dict)))))
+
+(defun jm/weekly-scorecard (&optional days)
+  (interactive)
+  (let ((table "| Task | Times Completed | Total | Percentage |\n"))
+    (dolist (box (jm/n-day-scorecard (or days 7)) table)
+      (let* ((name (car box))
+             (checked (cadr box))
+             (total (cadr (cdr box)))
+             (percentage (/ (float checked) total)))
+        (setq table
+              (concat table "| " name " | "
+                      (number-to-string checked) " | "
+                      (number-to-string total) " | "
+                      (number-to-string percentage) " |\n"))))))
+#+end_src
