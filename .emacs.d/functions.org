@@ -129,17 +129,22 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
                    dailies-directory)
                   dict)))))
 
-(defun jm/weekly-scorecard (&optional days)
+(defun jm/scorecard (days)
   (interactive)
-  (let ((table "| Task | Completed | Total | Percentage |\n"))
-    (dolist (box (jm/n-day-scorecard (or days 7)) table)
+  (let* ((separator "|---|---|---|---|\n")
+         (table (concat "| Task | Completed | Total | Percentage |\n" separator))
+         (checked-sum 0)
+         (total-sum 0))
+    (dolist (box (jm/n-day-scorecard days) table)
       (let* ((name (car box))
              (checked (cadr box))
              (total (cadr (cdr box)))
-             (percentage (/ (float checked) total)))
-        (setq table
-              (concat table "| " name " | "
-                      (number-to-string checked) " | "
-                      (number-to-string total) " | "
-                      (number-to-string percentage) " |\n"))))))
+             (percentage (* (/ (float checked) total) 100)))
+        (setq total-sum (+ total total-sum)
+              checked-sum (+ checked checked-sum)
+              table (format "%s| %s | %d | %d | %d%% |\n"
+                            table name checked total percentage))))
+    (format "%s%s| Average | %d | %d | %d%% |\n"
+            table separator checked-sum total-sum
+            (* (/ (float checked-sum) total-sum) 100))))
 #+end_src

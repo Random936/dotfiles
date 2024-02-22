@@ -258,8 +258,12 @@ Below is the main config for org-roam.
            (file ,(expand-file-name "reflection.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
            :unnarrowed t)
-          ("s" "Weekly Scorecard" entry
-           (file ,(expand-file-name "scorecard.org" jm/org-roam-templates-directory))
+          ("S" "Weekly Scorecard" entry
+           (file ,(expand-file-name "weekly-scorecard.org" jm/org-roam-templates-directory))
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+           :unnarrowed t)
+          ("s" "Daily Scorecard" entry
+           (file ,(expand-file-name "daily-scorecard.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
            :unnarrowed t)
           ("t" "Todos" entry
