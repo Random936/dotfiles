@@ -104,7 +104,8 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
     (dolist (box (jm/catalog-checkboxes buffer) dictionary)
       (with-current-buffer buffer
         (let* ((start (org-element-property :contents-begin box))
-               (end (- (org-element-property :contents-end box) 1))
+               (end (progn (goto-char start)
+                           (or (- (search-forward "\n" nil t) 1) (point-max))))
                (key (buffer-substring-no-properties start end))
                (checked (if (jm/checkbox-checked-p box) 1 0))
                (pair (assoc key dictionary))
@@ -130,7 +131,7 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
 
 (defun jm/weekly-scorecard (&optional days)
   (interactive)
-  (let ((table "| Task | Times Completed | Total | Percentage |\n"))
+  (let ((table "| Task | Completed | Total | Percentage |\n"))
     (dolist (box (jm/n-day-scorecard (or days 7)) table)
       (let* ((name (car box))
              (checked (cadr box))
