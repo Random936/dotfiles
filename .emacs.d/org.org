@@ -237,7 +237,7 @@ Below is the main config for org-roam.
          ("C-c n o" . org-id-get-create)
 
          ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today)
+         ("C-c n t" . org-roam-dailies-capture-today)
          ("C-c n k" . org-roam-dailies-capture-tomorrow))
   :config
   ;; Config for org-roam capture templates.
@@ -252,9 +252,13 @@ Below is the main config for org-roam.
                               "#+title: ${title}\n")
            :unnarrowed t)))
   (setq org-roam-dailies-capture-templates
-        `(("d" "Default" entry "* %?" :target
-           (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
-          ("t" "Daily Todos" entry
+        `(("d" "Default" entry "* %?"
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
+          ("r" "Reflection" entry
+           (file ,(expand-file-name "reflection.org" jm/org-roam-templates-directory))
+           :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+           :unnarrowed t)
+          ("t" "Todos" entry
            (file ,(expand-file-name "daily.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
            :unnarrowed t)))
