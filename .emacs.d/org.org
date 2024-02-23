@@ -156,7 +156,11 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 #+begin_src emacs-lisp
 (defun jm/org-roam-refresh-agenda-list ()
   (interactive)
-  (setq org-agenda-files (org-roam-list-files)))
+  (let ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
+    (setq org-agenda-files
+          (seq-filter
+           (lambda (file-path) (not (s-starts-with-p directory file-path)))
+           (org-roam-list-files)))))
 #+end_src
 
 To use this function, I'll add it to some hooks to make sure to run it before the agenda list is needed.
@@ -205,7 +209,7 @@ Before getting into the main config for Org-roam, I've created a few functions f
 
 #+begin_src emacs-lisp
 (defun jm/org-roam-find-filter (node)
-  (let* ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
+  (let ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
     (string= (file-name-directory (org-roam-node-file node))
              directory)))
 
@@ -225,10 +229,9 @@ Before getting into the main config for Org-roam, I've created a few functions f
 Below is the main config for org-roam.
 
 #+begin_src emacs-lisp
-
 (use-package org-roam
-  :custom
-  (org-roam-directory (file-truename "~/Dropbox/org"))
+  :init (require 'org-roam-dailies)
+  :custom (org-roam-directory (file-truename "~/Dropbox/org"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . jm/org-roam-find)
          ("C-c n d" . jm/org-roam-dailies-find)
@@ -279,7 +282,6 @@ Below is the main config for org-roam.
 
   (setq org-roam-node-display-template
         (concat "${title:*} " (propertize "${file:*}" 'face 'org-tag)))
-  (require 'org-roam-dailies)
   (org-roam-db-autosync-mode))
 #+end_src
 
