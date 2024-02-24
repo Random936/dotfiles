@@ -37,6 +37,9 @@ These functions are for my org roam daily capture template.
         (item-id (org-id-get-create))
         (doc-title (org-get-title)))
     (format "%s [[id:%s][%s - %s]]" prefix item-id doc-title item-name)))
+
+(defun jm/dt-concat-todos (todo-lists)
+  (string-join (delete "" todo-lists) "\n"))
 #+end_src
 
 ** Queries
@@ -48,17 +51,29 @@ These functions are for my org roam daily capture template.
                 (jm/dt-format-link (or prompt "-"))))
    "TODO=\"TODO\"|TODO=\"IN PROGRESS\""))
 
-(defun jm/dt-get-due-within (days &optional prompt)
-  (let* ((time (or (org-capture-get :default-time) (current-time)))
-         (date (+ (time-convert time 'integer) (* days 86400))))
-    (jm/dt-filter-tasks
-     (lambda () (when (member (org-get-todo-state) '("TODO" "IN PROGRESS"))
-                  (jm/dt-format-link (or prompt "-"))))
-     (format-time-string "DEADLINE<=\"<%Y-%m-%d>\"" date))))
-
 (defun jm/dt-get-status (status &optional prompt)
   (jm/dt-filter-tasks (lambda () (jm/dt-format-link (or prompt "- [ ]")))
                       (concat "TODO=\"" status "\"")))
+
+
+(defconst jm/dt-deadline "DEADLINE")
+(defconst jm/dt-scheduled "SCHEDULED")
+
+(defun jm/dt-get-within (type days &optional prompt)
+  (unless (or (eq type jm/dt-deadline) (eq type jm/dt-scheduled))
+    (error "Invalid type for jm/dt-get-within."))
+  (let* ((time (or (org-capture-get :default-time) (current-time)))
+         (date (+ (time-convert time 'integer) (* days 86400))))
+    (jm/dt-filter-tasks
+     (lambda () (when (member (org-get-todo-state) '("TODO" "WAITING" "IN PROGRESS"))
+                  (jm/dt-format-link (or prompt "-"))))
+     (format-time-string (format "%s<=\"<%%Y-%%m-%%d>\"" type) date))))
+
+(defun jm/dt-get-due-within (days &optional prompt)
+  (jm/dt-get-within jm/dt-deadline days prompt))
+
+(defun jm/dt-get-scheduled-within (days &optional prompt)
+  (jm/dt-get-within jm/dt-scheduled days prompt))
 #+end_src
 
 ** Dynamic Habits
@@ -75,7 +90,7 @@ These functions are for my org roam daily capture template.
     (dolist (habit habits out-list)
       (when-let (out (jm/dt-habit habit))
         (push out out-list)))
-    (mapconcat #'identity out-list "\n")))
+    (string-join out-list "\n")))
 #+end_src
 
 ** Weekly Scorecard
