@@ -8,7 +8,7 @@ Shortcut to goto todays org-roam dailies document.
 
 #+begin_src emacs-lisp
 (defun jm/org-roam-goto-day (days)
-  (let* ((rel-time (+ (time-convert (current-time) 'integer) (* days 86400)))
+  (let* ((rel-time (time-add (current-time) (days-to-time days)))
          (path (format-time-string "%Y-%m-%d.org" rel-time))
          (full-path (file-name-concat org-roam-directory "daily" path)))
     (if (file-exists-p full-path)
@@ -39,7 +39,7 @@ These functions are for my org roam daily capture template.
     (format "%s [[id:%s][%s - %s]]" prefix item-id doc-title item-name)))
 
 (defun jm/dt-concat-todos (todo-lists)
-  (string-join (delete "" todo-lists) "\n"))
+  (string-join (delete "" (delete-dups todo-lists)) "\n"))
 #+end_src
 
 ** Queries
@@ -63,11 +63,11 @@ These functions are for my org roam daily capture template.
   (unless (or (eq type jm/dt-deadline) (eq type jm/dt-scheduled))
     (error "Invalid type for jm/dt-get-within."))
   (let* ((time (or (org-capture-get :default-time) (current-time)))
-         (date (+ (time-convert time 'integer) (* days 86400))))
+         (date (time-add time (days-to-time days))))
     (jm/dt-filter-tasks
      (lambda () (when (member (org-get-todo-state) '("TODO" "WAITING" "IN PROGRESS"))
                   (jm/dt-format-link (or prompt "-"))))
-     (format (format-time-string "%%s<=\"<%Y-%m-%d>\"" date) type))))
+     (concat type (format-time-string "<=\"<%Y-%m-%d>\"" date)))))
 
 (defun jm/dt-get-due-within (days &optional prompt)
   (jm/dt-get-within jm/dt-deadline days prompt))
@@ -131,17 +131,14 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
     dictionary))
 
 (defun jm/n-day-scorecard (n &optional start-time)
-  (let ((time (time-convert
-               (or start-time
-                   (org-capture-get :default-time)
-                   (current-time))
-               'integer))
+  (let ((time (or start-time (org-capture-get :default-time) (current-time)))
         (dailies-directory (expand-file-name org-roam-dailies-directory org-roam-directory))
         (dict nil))
     (dotimes (i n dict)
       (setq dict (jm/score-checkboxes
                   (expand-file-name
-                   (format-time-string "%Y-%m-%d.org" (- time (* i 86400)))
+                   (format-time-string "%Y-%m-%d.org"
+                                       (time-subtract time (days-to-time i)))
                    dailies-directory)
                   dict)))))
 
