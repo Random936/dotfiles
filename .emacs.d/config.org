@@ -411,7 +411,7 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
                           (recents . 5)
                           (agenda . 5)))
   :config
-  (add-hook 'after-init-hook 'dashboard-refresh-buffer)
+  (set-face-attribute 'dashboard-items-face nil :font "Fira Code Retina" :weight 'regular :height 140)
   (dashboard-setup-startup-hook))
 #+end_src
 
