@@ -30,7 +30,7 @@ These functions are for my org roam daily capture template.
 #+begin_src emacs-lisp
 (defun jm/dt-filter-tasks (helper query)
   (let ((entries (org-map-entries helper query 'agenda)))
-    (mapconcat #'identity (delq nil entries) "\n")))
+    (string-join (delq nil entries) "\n")))
 
 (defun jm/dt-format-link (prefix)
   (let ((item-name (org-entry-get nil "ITEM"))
