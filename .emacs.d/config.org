@@ -404,7 +404,7 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
   :init
   (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*"))
         dashboard-startup-banner 'logo
-        dashboard-icon-type 'all-the-icons
+        dashboard-icon-type 'nerd-icons
         dashboard-set-file-icons t
         dashboard-set-heading-icons t
         dashboard-items '((projects . 5)
