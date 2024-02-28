@@ -39,7 +39,10 @@ These functions are for my org roam daily capture template.
     (format "%s [[id:%s][%s - %s]]" prefix item-id doc-title item-name)))
 
 (defun jm/dt-concat-todos (todo-lists)
-  (string-join (delete "" (delete-dups todo-lists)) "\n"))
+  (let ((todos nil))
+    (dolist (todo todo-lists todos)
+      (setq todos (append todos (string-lines todo))))
+    (string-join (delete "" (delete-dups todos)) "\n")))
 #+end_src
 
 ** Queries
