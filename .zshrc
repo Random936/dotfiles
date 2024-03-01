@@ -207,7 +207,7 @@ if [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
 elif [ -f /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh ]; then
     source /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh
 else
-    echo "key-bidings.zsh not installed"
+    echo "key-bindings.zsh not installed"
 fi
 
 if [ -f "/usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh" ]; then
