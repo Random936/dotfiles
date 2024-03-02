@@ -114,44 +114,39 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
            (elem-list (org-element-map (org-element-parse-buffer) 'item filter-fn)))
       (delq nil elem-list))))
 
-(defun jm/score-checkboxes (file-path &optional dictionary)
-  (let ((buffer (find-file-noselect file-path))
-        (was-open (get-file-buffer file-path)))
-    (dolist (box (jm/catalog-checkboxes buffer) dictionary)
-      (with-current-buffer buffer
-        (let* ((start (org-element-property :contents-begin box))
-               (end (progn (goto-char start)
-                           (or (- (search-forward "\n" nil t) 1) (point-max))))
-               (key (buffer-substring-no-properties start end))
-               (checked (if (jm/checkbox-checked-p box) 1 0))
-               (pair (assoc key dictionary))
-               (counts (cdr pair)))
-          (if pair
-              (setcdr pair (list (+ checked (car counts)) (1+ (cadr counts))))
-            (push (cons key (list checked 1)) dictionary)))))
-    (unless was-open
-      (kill-buffer buffer))
-    dictionary))
+(defun jm/score-checkboxes (buffer &optional dictionary)
+  (dolist (box (jm/catalog-checkboxes buffer) dictionary)
+    (with-current-buffer buffer
+      (let* ((start (org-element-property :contents-begin box))
+             (end (progn (goto-char start)
+                         (or (- (search-forward "\n" nil t) 1) (point-max))))
+             (key (buffer-substring-no-properties start end))
+             (checked (if (jm/checkbox-checked-p box) 1 0))
+             (pair (assoc key dictionary))
+             (counts (cdr pair)))
+        (if pair
+            (setcdr pair (list (+ checked (car counts)) (1+ (cadr counts))))
+          (push (cons key (list checked 1)) dictionary))))))
 
 (defun jm/n-day-scorecard (n &optional start-time)
   (let ((time (or start-time (org-capture-get :default-time) (current-time)))
         (dailies-directory (expand-file-name org-roam-dailies-directory org-roam-directory))
         (dict nil))
     (dotimes (i n dict)
-      (setq dict (jm/score-checkboxes
-                  (expand-file-name
-                   (format-time-string "%Y-%m-%d.org"
-                                       (time-subtract time (days-to-time i)))
-                   dailies-directory)
-                  dict)))))
+      (let* ((day (time-subtract time (days-to-time i)))
+             (file-name (format-time-string "%Y-%m-%d.org" day))
+             (file-path (expand-file-name file-name dailies-directory))
+             (open (get-file-buffer file-path))
+             (buffer (find-file-noselect file-path)))
+        (setq dict (jm/score-checkboxes buffer dict))
+        (unless open (kill-buffer buffer))))))
 
-(defun jm/scorecard (days &optional start-time)
-  (interactive)
+(defun jm/scorecard-table (tasks)
   (let* ((separator "|---|---|---|---|\n")
          (table (concat "| Task | Completed | Total | Percentage |\n" separator))
          (checked-sum 0)
          (total-sum 0))
-    (dolist (box (jm/n-day-scorecard days start-time) table)
+    (dolist (box tasks table)
       (let* ((name (car box))
              (checked (cadr box))
              (total (cadr (cdr box)))
@@ -163,4 +158,19 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
     (format "%s%s| Average | %d | %d | %d%% |\n"
             table separator checked-sum total-sum
             (* (/ (float checked-sum) total-sum) 100))))
+
+(defun jm/scorecard (days &optional start-time)
+  (interactive)
+  (jm/scorecard-table (jm/n-day-scorecard days start-time)))
+
+(defun jm/scorecard-from-heading ()
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (org-back-to-heading-or-point-min)
+      (org-narrow-to-subtree)
+      (let* ((score (jm/score-checkboxes (current-buffer)))
+             (table (jm/scorecard-table score)))
+        (org-end-of-subtree)
+        (insert "\n" table "\n")))))
 #+end_src
