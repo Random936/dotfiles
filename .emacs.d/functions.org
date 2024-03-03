@@ -173,4 +173,7 @@ Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how
              (table (jm/scorecard-table score)))
         (org-end-of-subtree)
         (insert "\n" table "\n")))))
+
+(jm/leader-keys
+  "os" '(jm/scorecard-from-heading :which-key "Open/create yesterday's daily notes file"))
 #+end_src
