@@ -4,7 +4,7 @@ set $mod Mod4
 font pango:monospace 8
 
 # Configure betterlockscreen
-exec --no-startup-id "betterlockscreen --fx dim -u $HOME/Pictures"
+exec --no-startup-id "betterlockscreen --fx dim -u $HOME/Pictures/wallpaper-*"
 bindsym $mod+Shift+x exec "betterlockscreen -l dim -w"
 
 # Use pactl to adjust volume in PulseAudio.
