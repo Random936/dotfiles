@@ -201,7 +201,10 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
 
 #+begin_src emacs-lisp
 (use-package ledger-mode
-  :mode ("\\.ledger\\'"))
+  :mode ("\\.ledger\\'")
+  :config
+  (setq ledger-report-use-strict t
+        ledger-accounts-file (file-truename "~/Dropbox/Ledger/accounts.ledger")))
 #+end_src
 
 ** Ebuild
