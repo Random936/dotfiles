@@ -195,18 +195,6 @@ To install the corresponding LSP, you need to install ~yls~. Using the command ~
   :hook (lsp-literate-mode . lsp-deferred))
 #+end_src
 
-** Ledger
-
-Ledger is a Unix program that implements a finance tracking system or /ledger/. To implement this into emacs, you can install the ~ledger-mode~ emacs package.
-
-#+begin_src emacs-lisp
-(use-package ledger-mode
-  :mode ("\\.ledger\\'")
-  :config
-  (setq ledger-report-use-strict t
-        ledger-accounts-file (file-truename "~/Dropbox/Ledger/accounts.ledger")))
-#+end_src
-
 ** Ebuild
 
 Ebuild is the language used for Gentoo packages installed with the ~emerge~ utility. As this package is Gentoo specific, you will have to install it the command below:

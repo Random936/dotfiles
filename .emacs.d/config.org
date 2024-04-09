@@ -416,6 +416,23 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
   (dashboard-setup-startup-hook))
 #+end_src
 
+** Ledger
+
+Ledger is a Unix program that implements a finance tracking system or /ledger/. To implement this into emacs, you can install the ~ledger-mode~ emacs package.
+
+#+begin_src emacs-lisp
+(use-package ledger-mode
+  :mode ("\\.ledger\\'")
+  :config
+  (setq ledger-report-use-strict t
+        ledger-master-file (file-truename "~/Dropbox/Ledger/toc.ledger")
+        ledger-accounts-file (file-truename "~/Dropbox/Ledger/accounts.ledger"))
+  (setq ledger-reports `(("balance" ,(format "%%(binary) -f %s bal" ledger-master-file))
+                         ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
+                         ("account" ,(format "%%(binary) -f %s reg %%(account)" ledger-master-file))
+                         ("relative balance" "%(binary) -f %(ledger-file) bal"))))
+#+end_src
+
 ** MacOS Environment Fix
 
 When using emacs on MacOS, the environment variables are not synced properly and therefore require a separate package to fix this. In this case, this package is the ~exec-path-from-shell~.
