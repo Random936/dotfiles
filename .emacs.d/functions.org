@@ -8,12 +8,13 @@ Shortcut to goto todays org-roam dailies document.
 
 #+begin_src emacs-lisp
 (defun jm/dailies-file-p ()
-  (let ((file-base (file-name-base (buffer-file-name))))
+  (when-let ((file (buffer-file-name))
+             (file-base (file-name-base (buffer-file-name))))
     (s-matches-p "^[0-9]+-[0-9]+-[0-9]+$" file-base)))
 
 (defun jm/org-roam-goto-day (days)
   (let* ((base-time (if (and (jm/dailies-file-p) (not (eq days 0)))
-                      (date-to-time (file-name-base (buffer-file-name)))
+                        (date-to-time (file-name-base (buffer-file-name)))
                       (current-time)))
          (rel-time (time-add base-time (days-to-time days)))
          (path (format-time-string "%Y-%m-%d.org" rel-time))
