@@ -427,10 +427,10 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
   (setq ledger-report-use-strict t
         ledger-master-file (file-truename "~/Dropbox/Ledger/toc.ledger")
         ledger-accounts-file (file-truename "~/Dropbox/Ledger/accounts.ledger"))
-  (setq ledger-reports `(("balance" ,(format "%%(binary) -f %s bal" ledger-master-file))
+  (setq ledger-reports `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
                          ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
                          ("account" ,(format "%%(binary) -f %s reg %%(account)" ledger-master-file))
-                         ("relative balance" "%(binary) -f %(ledger-file) bal"))))
+                         ("monthly bal" ,(format "%%(binary) -f %s bal -p 'this month'" ledger-master-file)))))
 #+end_src
 
 ** MacOS Environment Fix
