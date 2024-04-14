@@ -433,6 +433,19 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
                          ("monthly bal" ,(format "%%(binary) -f %s bal -p 'this month'" ledger-master-file)))))
 #+end_src
 
+** Alert
+
+Alert is another library that better implements system notifications through emacs. As I use both MacOS and Linux, notifications don't work out of the box for both systems. Using alert, I can change this by selecting a working notify system for each OS.
+
+#+begin_src emacs-lisp
+(use-package alert
+  :config
+  (setq alert-default-style
+        (if (eq system-type 'darwin)
+            'osx-notifier
+          'libnotify)))
+#+end_src
+
 ** MacOS Environment Fix
 
 When using emacs on MacOS, the environment variables are not synced properly and therefore require a separate package to fix this. In this case, this package is the ~exec-path-from-shell~.
@@ -502,21 +515,25 @@ ERC is a builtin package that adds IRC chatting functionality to emacs.
 (use-package erc
   :ensure nil
   :defer t
+  :custom
+  (erc-nick "random936")
+  (erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "MODE"
+                             "353" "324" "329" "332" "333" "353" "477"))
+  (erc-autojoin-channels-alist '((".*\.libera\.chat" "#emacs" "#gentoo" "#systemcrafters")))
+  (erc-fill-column 120)
+  (erc-fill-function 'erc-fill-static)
+  (erc-fill-static-center 20)
+  (erc-kill-buffer-on-part t)
+  (erc-kill-queries-on-quit t)
+  (erc-kill-server-buffer-on-quit t)
   :config
-  (setq erc-nick "random936"
-        erc-track-exclude-types '("JOIN" "NICK" "PART" "QUIT" "353")
-        erc-autojoin-channels-alist '((".*\.libera\.chat" "#emacs" "#gentoo" "#systemcrafters"))
-        erc-fill-column 120
-        erc-fill-function 'erc-fill-static
-        erc-fill-static-center 20
-        erc-kill-buffer-on-part t
-        erc-kill-queries-on-quit t
-        erc-kill-server-buffer-on-quit t)
-
+  (add-to-list 'erc-modules 'notifications)
   ;; Fix for perspective.el not adding ERC buffers to active perspective.
   (add-hook 'erc-join-hook (lambda (&rest args)
                              (persp-add-buffer (current-buffer)))))
 #+end_src
+
+*** ERC Extensions
 
 To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ package. I can also use the ~erc-image~ package to render images sent by other users over IRC.
 
@@ -530,6 +547,17 @@ To highlight each nickname with a different color, I can use the ~erc-hl-nicks~ 
   :config
   (setq erc-image-inline-rescale 300)
   (add-to-list 'erc-modules 'image))
+#+end_src
+
+*** ERC Alert Integration
+
+Alert is a notification system that works with MacOS, however it is not integrated by default. To fix this, you need to create a function to hook with the ERC text matching.
+
+#+begin_src emacs-lisp
+(defun jm/erc-alert-integration (match-type nick message)
+  (alert message :title (format "%s in %s" nick (buffer-name)) :category 'erc))
+
+(add-hook 'erc-text-matched-hook 'jm/erc-alert-integration)
 #+end_src
 
 * Import Other Files
