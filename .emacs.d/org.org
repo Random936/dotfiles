@@ -231,7 +231,9 @@ Below is the main config for org-roam.
 #+begin_src emacs-lisp
 (use-package org-roam
   :init (require 'org-roam-dailies)
-  :custom (org-roam-directory (file-truename "~/Dropbox/org"))
+  :custom
+  (org-roam-directory (file-truename "~/Nextcloud/org"))
+  (org-roam-node-display-template "${title:60} ${file-title}")
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . jm/org-roam-find)
          ("C-c n d" . jm/org-roam-dailies-find)

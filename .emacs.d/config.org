@@ -425,8 +425,8 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
   :mode ("\\.ledger\\'")
   :config
   (setq ledger-report-use-strict t
-        ledger-master-file (file-truename "~/Dropbox/Ledger/toc.ledger")
-        ledger-accounts-file (file-truename "~/Dropbox/Ledger/accounts.ledger"))
+        ledger-master-file (file-truename "~/Nextcloud/Ledger/toc.ledger")
+        ledger-accounts-file (file-truename "~/Nextcloud/Ledger/accounts.ledger"))
   (setq ledger-reports `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
                          ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
                          ("account" ,(format "%%(binary) -f %s reg %%(account)" ledger-master-file))
