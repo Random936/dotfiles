@@ -252,3 +252,10 @@ alias open='xdg-open'
 alias tryhackme="sudo openvpn ~/.tryhackme.ovpn"
 alias listen="rlwrap nc -lnvp"
 alias reload="source ~/.zshrc"
+
+# Environment variable stuff for libyara development on macos
+if [[ -d "/opt/homebrew" ]]; then
+    export PATH="/opt/homebrew/sbin:$PATH"
+    export YARA_LIBRARY_PATH="$(brew --prefix)/lib"
+    export YARA_INCLUDE_DIR="$(brew --prefix)/include"
+fi
