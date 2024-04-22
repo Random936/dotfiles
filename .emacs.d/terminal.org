@@ -28,9 +28,9 @@ Multi-vterm is a package that adds the capability to easily create multiple vter
   :after vterm
   :config
   (jm/leader-keys
-    "vn" '(multi-vterm-next :which-key "Go to next vterm window")
-    "vp" '(multi-vterm-next :which-key "Go to previous vterm window")
-    "vc" '(multi-vterm :which-key "Create new vterm terminal")))
+    "vj" '(multi-vterm-next :which-key "Go to next vterm window")
+    "vk" '(multi-vterm-next :which-key "Go to previous vterm window")
+    "vn" '(multi-vterm :which-key "Create new vterm terminal")))
 #+end_src
 
 * Change Terminal Font
