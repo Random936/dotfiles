@@ -16,7 +16,8 @@ This installs the org package and creates a setup function to enable/disable cer
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
-  (setq org-ellipsis " ▾"
+  (setq jm/inbox-file "~/Nextcloud/org/inbox.org"
+        org-ellipsis " ▾"
         org-hide-emphasis-markers t
         org-src-preserve-indentation t
 
@@ -29,10 +30,15 @@ This installs the org package and creates a setup function to enable/disable cer
 
         ;; Org agenda timestamp formatting
         org-display-custom-times t
-        org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p"))
+        org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p")
+
+        ;; Capture templates
+        org-capture-templates '(("i" "Inbox" entry (file jm/inbox-file) "* %?\n")))
 
   (jm/leader-keys
-    "oa" '(org-agenda :which-key "Org agenda")))
+    "oa" '(org-agenda :which-key "Org agenda")
+    "oc" '(org-capture :which-key "Org capture")
+    "oi" '((lambda () (interactive) (find-file jm/inbox-file)) :which-key "Open inbox file")))
 #+end_src
 
 * Cosmetics
