@@ -129,7 +129,12 @@ Install ~ccls~ with homebrew using the following command.
 #+begin_src emacs-lisp
 (use-package rustic
   :defer t
-  :hook (rust-mode . lsp-deferred))
+  :hook (rust-mode . lsp-deferred)
+  :init
+  (let ((brew-prefix (string-trim (shell-command-to-string "brew --prefix"))))
+    (when (and (memq window-system '(mac ns x)) brew-prefix (f-directory-p brew-prefix))
+      (setenv "YARA_LIBRARY_PATH" (expand-file-name "lib" brew-prefix))
+      (setenv "YARA_INCLUDE_DIR" (expand-file-name "include" brew-prefix)))))
 #+end_src
 
 ** C# 

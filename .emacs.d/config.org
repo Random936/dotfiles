@@ -452,7 +452,9 @@ When using emacs on MacOS, the environment variables are not synced properly and
 
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
+  :config
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 #+end_src
 
 * Builtin Package Config
