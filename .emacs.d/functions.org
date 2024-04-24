@@ -44,7 +44,9 @@ These functions are for my org roam daily capture template.
   (let ((item-name (org-entry-get nil "ITEM"))
         (item-id (org-id-get-create))
         (doc-title (org-get-title)))
-    (format "%s [[id:%s][%s - %s]]" prefix item-id doc-title item-name)))
+    (if doc-title
+        (format "%s [[id:%s][%s - %s]]" prefix item-id doc-title item-name)
+    (format "%s [[id:%s][%s]]" prefix item-id item-name))))
 
 (defun jm/dt-concat-todos (todo-lists)
   (let ((todos nil))
