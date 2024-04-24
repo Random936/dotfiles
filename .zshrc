@@ -183,44 +183,28 @@ if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
 
-# Load zplug and extensions
-if [ -f "$HOME/.zplug/init.zsh" ]; then
-    source "$HOME/.zplug/init.zsh"
-elif [ -f "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh" ]; then
-    source "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh"
-fi
+# Function that goes thorugh each argument and attempts to source it if it exists.
+function attempt-source() {
+    for arg in "$@"; do
+        if [ -f "$arg" ]; then
+            source "$arg"
+            return
+        fi
+    done
 
+    echo "Failed to source $(basename $1)"
+}
+
+# Load zplug and extensions
+attempt-source "$HOME/.zplug/init.zsh" "/usr/share/zplug/init.zsh" "/opt/homebrew/Cellar/zplug/2.4.2/init.zsh"
 zplug romkatv/powerlevel10k, as:theme, depth:1
 zplug load
 
 # Source completion and highlighting scripts
-if [ -f "/usr/share/fzf/completion.zsh" ]; then
-    source "/usr/share/fzf/completion.zsh"
-elif [ -f /opt/homebrew/Cellar/fzf/*/shell/completion.zsh ]; then
-    source /opt/homebrew/Cellar/fzf/*/shell/completion.zsh
-else
-    echo "completion.zsh not installed"
-fi
-
-if [ -f "/usr/share/fzf/key-bindings.zsh" ]; then
-    source /usr/share/fzf/key-bindings.zsh
-elif [ -f /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh ]; then
-    source /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh
-else
-    echo "key-bindings.zsh not installed"
-fi
-
-if [ -f "/usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh" ]; then
-    source /usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh
-elif [ -f "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-    echo "zsh-autosuggestions.zsh not installed"
-fi
-
-if [ -f "/usr/share/doc/pkgfile/command-not-found.zsh" ]; then
-    source /usr/share/doc/pkgfile/command-not-found.zsh
-fi
+attempt-source "/usr/share/fzf/completion.zsh" "/usr/share/doc/fzf/examples/completion.zsh" "/usr/share/doc/fzf/examples/completion.zsh" /opt/homebrew/Cellar/fzf/*/shell/completion.zsh
+attempt-source "/usr/share/fzf/key-bindings.zsh" "/usr/share/doc/fzf/examples/key-bindings.zsh" /opt/homebrew/Cellar/fzf/*/shell/key-bindings.zsh
+attempt-source "/usr/share/zsh/site-functions/zsh-syntax-highlighting.zsh" "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" "/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+#attempt-source "/usr/share/doc/pkgfile/command-not-found.zsh"
 
 # Fix arch linux valgrind issue.
 [[ $(uname -r) == *"arch"* ]] && export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
