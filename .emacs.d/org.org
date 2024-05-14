@@ -192,7 +192,8 @@ Adds custom states to tasks such as ~IN PROGRESS~, ~CANCELLED~, etc. I've also a
          "WAITING(w)"
          "|"
          "DONE(d)"
-         "CANCELLED(c)")))
+         "CANCELLED(c)"
+         "FAILED(f)")))
 
 (setq org-clock-in-switch-to-state "IN PROGRESS")
 #+end_src
@@ -259,6 +260,11 @@ Below is the main config for org-roam.
            :unnarrowed t)
           ("p" "Project" plain
            (file ,(expand-file-name "project.org" jm/org-roam-templates-directory))
+           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n")
+           :unnarrowed t)
+          ("y" "12 Week Year" plain
+           (file ,(expand-file-name "12-week-year.org" jm/org-roam-templates-directory))
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
                               "#+title: ${title}\n")
            :unnarrowed t)))
