@@ -15,10 +15,11 @@ MaildirStore gmail-local
 Subfolders Verbatim
 Path ~/.mail/
 Inbox ~/.mail/Inbox
+Trash ~/.mail/Trash
 
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
-Patterns * ![Gmail]*
+Patterns * ![Gmail]* !Archive
 Create Both
 SyncState *
