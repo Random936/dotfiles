@@ -76,7 +76,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   (setq mu4e-change-filenames-when-moving t)
 
   ;; Extend header view max message count.
-  (setq mu4e-search-results-limit 10000)
+  (setq mu4e-search-results-limit 2000)
 
   ;; Fix message citation style for gmail.
   (setq message-cite-style message-cite-style-gmail)
@@ -88,7 +88,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   (setq mu4e-get-mail-command "mbsync -a")
   (setq mu4e-maildir "~/.mail")
 
-  ;; Config mu4e folders and bookmarks
+  ;; Config mu4e folders
   (setq mu4e-drafts-folder "/Drafts"
         mu4e-sent-folder "/Sent"
         mu4e-trash-folder "/Trash"
@@ -103,8 +103,9 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject)) "/Club")
            (t "/Archive"))))
 
+  ;; Config mu4e bookmarks
   (setq mu4e-bookmarks
-        '((:name "Filtered unread messages" :query "flag:unread AND maildir:/Archive AND NOT flag:trashed" :key ?u)
+        '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
           (:name "All unread messages" :query "flag:unread" :key ?U)
           (:name "Today's messages" :query "date:today..now" :key ?t)
           (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
