@@ -1,0 +1,9 @@
+
+* Dotfiles Repo
+
+To install these dotfiles, you can use gnu stow. Running the following command will automatically create symlinks for every file in this repo.
+#+begin_src bash
+git clone https://github.com/Random936/dotfiles
+cd dotfiles/
+stow .
+#+end_src
