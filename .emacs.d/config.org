@@ -286,7 +286,7 @@ Evil is a package that adds vim keybindings to Emacs.
     (evil-set-initial-state 'dashboard-mode 'normal))
 #+end_src
 
-** Evil Collection
+*** Evil Collection
 
 Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybindings.
 
@@ -294,6 +294,20 @@ Evil collection is a package that replaces the bad ~evil-want-keybinding~ keybin
   (use-package evil-collection
     :after evil
     :config (evil-collection-init))
+#+end_src
+
+*** Evil Numbers
+
+The /Evil Numbers/ package implements the ability to increment or decrement numbers as you would with vim using ~C-a~ and ~C-x~.
+
+#+begin_src emacs-lisp
+(use-package evil-numbers
+  :after evil
+  :config
+  (evil-define-key '(normal visual) 'global (kbd "C-c =") 'evil-numbers/inc-at-pt)
+  (evil-define-key '(normal visual) 'global (kbd "C-c -") 'evil-numbers/dec-at-pt)
+  (evil-define-key '(normal visual) 'global (kbd "C-c C-=") 'evil-numbers/inc-at-pt-incremental)
+  (evil-define-key '(normal visual) 'global (kbd "C-c C--") 'evil-numbers/dec-at-pt-incremental))
 #+end_src
 
 ** Undo-Tree
