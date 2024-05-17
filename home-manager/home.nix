@@ -6,9 +6,8 @@
 
   home.packages = with pkgs; [
     meslo-lgs-nf
+    neofetch
   ];
-
-  home.file.".p10k.zsh".source = ../dotfiles/.p10k.zsh;
 
   programs = {
     home-manager.enable = true;
@@ -28,6 +27,14 @@
       enableCompletion = true;
       enableAutosuggestions = true;
       syntaxHighlighting.enable = true;
+      shellAliases = {
+        update-system = "sudo nixos-rebuild switch --flake ~/dotfiles";
+        update-user = "home-manager switch --flake ~/dotfiles";
+      };
+
+      plugins = [
+        { name = "powerlevel10k-config"; src = ../dotfiles; file = ".p10k.zsh"; }
+      ];
 
       zplug = {
         enable = true;
