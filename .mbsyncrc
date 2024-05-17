@@ -19,6 +19,6 @@ Inbox ~/.mail/Inbox
 Channel gmail
 Far :gmail-remote:
 Near :gmail-local:
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail" "[Gmail]/Trash"
+Patterns * ![Gmail]*
 Create Both
 SyncState *
