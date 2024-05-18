@@ -154,7 +154,7 @@ client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
 exec --no-startup-id "lxpolkit &" # start authentication agent (prompt)
-exec --no-startup-id "xcompmgr &" # startup composition manager (transparency)
+exec --no-startup-id "picom &" # startup composition manager (transparency)
 exec --no-startup-id "polybar" # status bar
 exec --no-startup-id "$HOME/.scripts/autostart_desktop.sh &" # run autostart desktop apps
 exec --no-startup-id "emacs --daemon &" # startup emacs daemon

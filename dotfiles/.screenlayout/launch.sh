@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function load_script() {
     if [ -f "$1" ]; then

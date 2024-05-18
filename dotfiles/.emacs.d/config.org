@@ -194,7 +194,7 @@ Colors parenthesis for better lisp syntax highlighting.
 
 #+begin_src emacs-lisp
   (use-package rainbow-delimiters
-    :hook prog-mode)
+    :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 
 ** Line Numbers
@@ -503,7 +503,7 @@ Vanilla dired opens a new buffer for every new directory it visits. When managin
 #+begin_src emacs-lisp
   (use-package all-the-icons-dired
     :after dired
-    :hook dired-mode)
+    :hook (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
 *** Hide Dotfiles
@@ -512,7 +512,7 @@ This hides all dotfiles in dired with the keybinding ~H~.
 
 #+begin_src emacs-lisp
 (use-package dired-hide-dotfiles
-  :hook dired-mode
+  :hook (dired-mode . dired-hide-dotfiles-mode)
   :config
   (evil-collection-define-key 'normal 'dired-mode-map
     "H" 'dired-hide-dotfiles-mode))

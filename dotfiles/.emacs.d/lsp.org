@@ -214,3 +214,12 @@ sudo emerge -v app-emacs/ebuild-mode
   :defer t
   :hook (ebuild-mode . lsp-deferred))
 #+end_src
+
+** Nix
+
+Nix is the language used by NixOS and the Nix package manager.
+
+#+begin_src emacs-lisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src

@@ -111,16 +111,10 @@
   environment.systemPackages = with pkgs; [
     vim
     git
-    tmux
-    clang
-    emacs
-    microsoft-edge
+    picom
+    cmake
     emacsPackages.vterm
     emacsPackages.mu4e
-    isync
-    bitwarden
-    bitwarden-cli
-    nextcloud-client
   ];
   system.stateVersion = "23.11";
 

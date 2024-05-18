@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Dynamically load background with feh
 feh_command="feh --bg-fill"
