@@ -150,7 +150,7 @@ Pretty self explanatory.
 
 #+begin_src emacs-lisp
   (defun jm/set-font-faces ()
-      (set-face-attribute 'default nil :font "Fira Code Retina" :height 140))
+      (set-face-attribute 'default nil :font "Fira Code" :height 140))
 #+end_src
 
 Adding a fix for fonts when running Emacs as a daemon.

@@ -15,17 +15,18 @@
     bitwarden-cli
     bitwarden
     discord
-    isync
-    emacsPackages.all-the-icons-nerd-fonts
+    meslo-lgs-nf
+    fira-code
   ];
 
   home.file = {
-    ".scripts".source = ../dotfiles/.scripts;
     ".mbsyncrc".source = ../dotfiles/.mbsyncrc;
     ".Xresources".source = ../dotfiles/.Xresources;
-    ".screenlayout".source = ../dotfiles/.screenlayout;
+    ".scripts/brightness.sh".source = ../dotfiles/.scripts/brightness.sh;
+    ".scripts/autostart_desktop.sh".source = ../dotfiles/.scripts/autostart_desktop.sh;
+    ".screenlayout/launch.sh".source = ../dotfiles/.screenlayout/launch.sh;
+    ".screenlayout/wallpapers.sh".source = ../dotfiles/.screenlayout/wallpapers.sh;
     ".config/i3/config".source = ../dotfiles/.config/i3/config;
-    ".local/share/fonts".source = ../dotfiles/.local/share/fonts;
     ".config/rofi/config.rasi".source = ../dotfiles/.config/rofi/config.rasi;
     ".config/polybar/config.ini".source = ../dotfiles/.config/polybar/config.ini;
 
@@ -41,11 +42,10 @@
 
   programs = {
     home-manager.enable = true;
-    emacs.enable = true;
+    command-not-found.enable = true;
     zoxide.enable = true;
     eza.enable = true;
     fzf.enable = true;
-    command-not-found.enable = true;
 
     git = {
       enable = true;

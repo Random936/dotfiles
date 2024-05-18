@@ -3,10 +3,6 @@ set $mod Mod4
 # Set font
 font pango:monospace 8
 
-# Configure betterlockscreen
-exec --no-startup-id "betterlockscreen --fx dim -u $HOME/Pictures/wallpaper-*"
-bindsym $mod+Shift+x exec "betterlockscreen -l dim -w"
-
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -142,8 +138,8 @@ bindsym l resize shrink width 10 px or 10 ppt
 bindsym $mod+r mode "resize"
 
 # Brightness keys setup
-bindsym XF86MonBrightnessDown exec --no-startup-id "doas $HOME/.scripts/brightness.sh -5"
-bindsym XF86MonBrightnessUp exec --no-startup-id "doas $HOME/.scripts/brightness.sh 5"
+bindsym XF86MonBrightnessDown exec --no-startup-id "sudo $HOME/.scripts/brightness.sh -5"
+bindsym XF86MonBrightnessUp exec --no-startup-id "sudo $HOME/.scripts/brightness.sh 5"
 
 # Window Cosmetic Changes
 gaps inner 5
@@ -153,8 +149,8 @@ client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 
 # Startup Applications
-exec --no-startup-id "lxpolkit &" # start authentication agent (prompt)
+exec_always  --no-startup-id "$HOME/.screenlayout/launch.sh &" # setup screen layout and wallpapers
+exec_always  --no-startup-id "$HOME/.scripts/autostart_desktop.sh &" # run autostart desktop apps
+exec --no-startup-id "polybar &" # status bar
 exec --no-startup-id "picom &" # startup composition manager (transparency)
-exec --no-startup-id "polybar" # status bar
-exec --no-startup-id "$HOME/.scripts/autostart_desktop.sh &" # run autostart desktop apps
 exec --no-startup-id "emacs --daemon &" # startup emacs daemon

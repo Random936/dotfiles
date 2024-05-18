@@ -112,10 +112,16 @@
     vim
     git
     picom
+    emacs
+    mu
     cmake
-    emacsPackages.vterm
+    isync
+    ispell
     emacsPackages.mu4e
+    emacsPackages.vterm
+    emacsPackages.all-the-icons
+    emacsPackages.nerd-icons
   ];
-  system.stateVersion = "23.11";
 
+  system.stateVersion = "23.11";
 }

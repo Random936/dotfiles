@@ -72,6 +72,8 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   :load-path jm/mu4e-load-path
   :bind ("C-x m" . mu4e)
   :config
+  (setq mu4e-mu-binary (executable-find "mu"))
+
   ;; Avoids syncing issues.
   (setq mu4e-change-filenames-when-moving t)
 
