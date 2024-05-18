@@ -112,16 +112,15 @@
     vim
     git
     picom
-    emacs
-    mu
-    cmake
-    isync
-    ispell
-    emacsPackages.mu4e
-    emacsPackages.vterm
-    emacsPackages.all-the-icons
-    emacsPackages.nerd-icons
   ];
+
+  fonts.packages = with pkgs; [
+    fira-code
+    fira-code-symbols
+    meslo-lgs-nf
+  ];
+
+  services.emacs.enable = true;
 
   system.stateVersion = "23.11";
 }

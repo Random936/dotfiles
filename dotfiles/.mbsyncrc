@@ -1,12 +1,12 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User jadenprovost@gmail.com
-PassCmd "pass emacs/gmail"
+PassCmd "bw-load && bw get password 'Emacs Gmail'"
 SSLType IMAPS
 SSLVersions TLSv1.2
 AuthMechs PLAIN
 SystemCertificates no
-CertificateFile ~/.mail/certificates/ca-certificates.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore gmail-remote
 Account gmail

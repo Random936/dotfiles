@@ -4,7 +4,16 @@
     homeDirectory = "/home/random";
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Materia-dark";
+      package = pkgs.materia-theme;
+    };
+  };
+
   nixpkgs.config.allowUnfree = true;
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     feh
     clang
@@ -15,13 +24,82 @@
     bitwarden-cli
     bitwarden
     discord
-    meslo-lgs-nf
+
+    # Emacs
+    cmake
+    isync
+    ispell
+    mu
+
+    # fonts
     fira-code
+    fira-code-symbols
+    meslo-lgs-nf
   ];
+
+  programs = {
+    home-manager.enable = true;
+    command-not-found.enable = true;
+    zoxide.enable = true;
+    eza.enable = true;
+    fzf.enable = true;
+
+    emacs = {
+      enable = true;
+      extraPackages = epkgs: with epkgs; [
+        mu4e
+        vterm
+        all-the-icons
+        nerd-icons
+      ];
+    };
+
+    git = {
+      enable = true;
+      userName = "Random936";
+      userEmail = "randomdude936@gmail.com";
+    };
+
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      syntaxHighlighting.enable = true;
+      history.size = 100000000;
+
+      shellAliases = {
+        update-system = "sudo nixos-rebuild switch --flake ~/dotfiles";
+        update-user = "home-manager switch --flake ~/dotfiles";
+        update-all = "update-system && update-user";
+      };
+
+      plugins = [
+        {
+          name = "custom-functions";
+          src = ../dotfiles;
+          file = ".functions.zsh";
+        }
+        {
+          name = "powerlevel10k-config";
+          src = ../dotfiles;
+          file = ".p10k.zsh";
+        }
+      ];
+
+      zplug = {
+        enable = true;
+        plugins = [
+          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+        ];
+      };
+
+    };
+  };
 
   home.file = {
     ".mbsyncrc".source = ../dotfiles/.mbsyncrc;
     ".Xresources".source = ../dotfiles/.Xresources;
+    ".functions.zsh".source = ../dotfiles/.functions.zsh;
     ".scripts/brightness.sh".source = ../dotfiles/.scripts/brightness.sh;
     ".scripts/autostart_desktop.sh".source = ../dotfiles/.scripts/autostart_desktop.sh;
     ".screenlayout/launch.sh".source = ../dotfiles/.screenlayout/launch.sh;
@@ -40,48 +118,6 @@
     ".emacs.d/lsp.org".source = ../dotfiles/.emacs.d/lsp.org;
   };
 
-  programs = {
-    home-manager.enable = true;
-    command-not-found.enable = true;
-    zoxide.enable = true;
-    eza.enable = true;
-    fzf.enable = true;
-
-    git = {
-      enable = true;
-      userName = "Random936";
-      userEmail = "randomdude936@gmail.com";
-    };
-
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      enableAutosuggestions = true;
-      syntaxHighlighting.enable = true;
-
-      shellAliases = {
-        update-system = "sudo nixos-rebuild switch --flake ~/dotfiles";
-        update-user = "home-manager switch --flake ~/dotfiles";
-        update-all = "update-system && update-user";
-      };
-
-      plugins = [
-        {
-          name = "powerlevel10k-config";
-          src = ../dotfiles;
-          file = ".p10k.zsh";
-        }
-      ];
-
-      zplug = {
-        enable = true;
-        plugins = [
-          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
-        ];
-      };
-
-    };
-  };
 
   home.stateVersion = "23.05";
 }

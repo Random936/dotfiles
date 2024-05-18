@@ -59,17 +59,8 @@ mu index
 From here, I can continue onto configuring the ~mu4e~ emacs package.
 #+begin_src emacs-lisp
 
-;; Check which load-path exists for multi-platform support.
-(setq jm/mu4e-load-path
-      (let ((linux-path "/usr/share/emacs/site-lisp/mu4e")
-            (macos-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e"))
-        (cond ((file-exists-p linux-path) linux-path)
-              ((file-exists-p macos-path) macos-path)
-              (t (error "No mu4e load-path present. Is mu4e installed?")))))
-
 (use-package mu4e
   :ensure nil
-  :load-path jm/mu4e-load-path
   :bind ("C-x m" . mu4e)
   :config
   (setq mu4e-mu-binary (executable-find "mu"))
@@ -97,6 +88,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
         mu4e-refile-folder
         (lambda (msg)
           (cond
+           ((member (car (mu4e-string-to-flags "T")) (mu4e-message-field msg :flags)) "/Trash")
            ((mu4e-message-contact-field-matches msg :from "no-reply@piazza.com") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "notifications@instructure.com") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "no-reply@gradescope.com") "/UCSC")
