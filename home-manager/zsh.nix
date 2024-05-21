@@ -12,6 +12,8 @@
     history.size = 100000000;
 
     shellAliases = {
+      cd = "z";
+      ls = "eza";
       update-system = "sudo nixos-rebuild switch --flake ~/dotfiles";
       update-user = "home-manager switch --flake ~/dotfiles";
       update-all = "update-system && update-user";
