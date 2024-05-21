@@ -112,6 +112,10 @@
     vim
     git
     picom
+    microsoft-edge
+    nextcloud-client
+    bitwarden-cli
+    bitwarden
   ];
 
   fonts.packages = with pkgs; [

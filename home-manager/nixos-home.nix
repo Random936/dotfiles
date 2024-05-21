@@ -11,16 +11,16 @@
     ./zsh.nix
   ];
 
+  home.packages = with pkgs; [
+    feh
+  ];
+
   gtk = {
     enable = true;
     theme = {
       name = "Materia-dark";
       package = pkgs.materia-theme;
     };
-  };
-
-  programs = {
-    command-not-found.enable = true;
   };
 
   home.file = {

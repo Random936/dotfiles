@@ -3,26 +3,9 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    feh
     clang
     cargo
     neofetch
-    #microsoft-edge
-    #nextcloud-client
-    #bitwarden-cli
-    #bitwarden
-    #discord
-
-    # Emacs
-    cmake
-    isync
-    ispell
-    mu
-
-    # fonts
-    fira-code
-    fira-code-symbols
-    meslo-lgs-nf
   ];
 
   programs = {

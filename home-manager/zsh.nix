@@ -1,4 +1,9 @@
 { inputs, config, pkgs, ... }: {
+
+  home.packages = with pkgs; [
+    meslo-lgs-nf
+  ];
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;

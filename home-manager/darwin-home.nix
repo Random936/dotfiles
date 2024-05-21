@@ -7,10 +7,9 @@
 
   imports = [
     ./common.nix
+    ./emacs.nix
     ./zsh.nix
   ];
-
-  programs.emacs.package = pkgs.emacs-macport;
 
   home.stateVersion = "23.11";
 }
