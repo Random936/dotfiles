@@ -328,6 +328,17 @@ Undo tree's use is self explanatory. While the built-in Emacs undo system is fin
 
 This is a list of installed packages not included in any other category.
 
+** MacOS Environment Fix
+
+When using emacs on MacOS, the environment variables are not synced properly and therefore require a separate package to fix this. In this case, this package is the ~exec-path-from-shell~.
+
+#+begin_src emacs-lisp
+;(use-package exec-path-from-shell
+  ;:config
+  ;(when (memq window-system '(mac ns x))
+    ;(exec-path-from-shell-initialize)))
+#+end_src
+
 ** Perspective
 
 *Perspective* is a package to help with managing buffers. It allows for multiple /workspaces/ or /perspectives/ which each contain their own sub list of buffers. 
@@ -458,17 +469,6 @@ Alert is another library that better implements system notifications through ema
         (if (eq system-type 'darwin)
             'osx-notifier
           'libnotify)))
-#+end_src
-
-** MacOS Environment Fix
-
-When using emacs on MacOS, the environment variables are not synced properly and therefore require a separate package to fix this. In this case, this package is the ~exec-path-from-shell~.
-
-#+begin_src emacs-lisp
-(use-package exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
 #+end_src
 
 * Builtin Package Config
