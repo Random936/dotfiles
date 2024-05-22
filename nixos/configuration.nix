@@ -112,19 +112,8 @@
     vim
     git
     picom
-    microsoft-edge
-    nextcloud-client
-    bitwarden-cli
-    bitwarden
-  ];
-
-  fonts.packages = with pkgs; [
-    fira-code
-    fira-code-symbols
-    meslo-lgs-nf
   ];
 
   services.emacs.enable = true;
-
   system.stateVersion = "23.11";
 }

@@ -13,6 +13,9 @@
 
   home.packages = with pkgs; [
     feh
+    microsoft-edge
+    nextcloud-client
+    bitwarden
   ];
 
   gtk = {
