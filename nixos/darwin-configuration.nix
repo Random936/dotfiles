@@ -9,7 +9,6 @@
     git
     iterm2
     discord
-    docker
   ];
 
   homebrew = {
@@ -23,6 +22,7 @@
       "tailscale"
       "nextcloud"
       "nordvpn"
+      "docker"
     ];
   };
 

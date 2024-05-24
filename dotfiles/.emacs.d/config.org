@@ -485,7 +485,8 @@ Dired is a built-in package in Emacs that allows for basic file navigation. Whil
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
       "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer))
+      "l" 'dired-single-buffer
+      "T" 'dired-create-empty-file))
 #+end_src
 
 *** Dired Single
