@@ -19,6 +19,8 @@
     bitwarden
   ];
 
+  services.emacs.enable = true;
+
   dconf = {
     enable = true;
     settings = {
@@ -47,7 +49,6 @@
     ".config/polybar/config.ini".source = ../dotfiles/.config/polybar/config.ini;
 
   };
-
 
   home.stateVersion = "23.11";
 }
