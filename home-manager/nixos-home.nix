@@ -13,10 +13,20 @@
 
   home.packages = with pkgs; [
     feh
+    dconf
     microsoft-edge
     nextcloud-client
     bitwarden
   ];
+
+  dconf = {
+    enable = true;
+    settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+  };
 
   gtk = {
     enable = true;
