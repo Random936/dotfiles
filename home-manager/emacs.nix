@@ -32,4 +32,6 @@
     ".emacs.d/lsp.org".source = ../dotfiles/.emacs.d/lsp.org;
     ".mbsyncrc".source = ../dotfiles/.mbsyncrc;
   };
+
+  services.emacs.enable = true;
 }

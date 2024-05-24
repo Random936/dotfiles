@@ -114,6 +114,5 @@
     picom
   ];
 
-  services.emacs.enable = true;
   system.stateVersion = "23.11";
 }
