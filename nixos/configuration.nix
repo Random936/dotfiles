@@ -16,9 +16,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # General setup
+  # Networking
   networking.hostName = "randomctf"; # Define your hostname.
-  networking.networkmanager.enable = true;
+  networking.wireless.iwd.enable = true;
+  networking.networkmanager =  {
+    enable = true;
+    wifi.backend = "iwd";
+  };
+
+  # General setup
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {

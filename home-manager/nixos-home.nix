@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     feh
     dconf
+    discord
     microsoft-edge
     nextcloud-client
     bitwarden
