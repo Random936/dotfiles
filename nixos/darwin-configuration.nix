@@ -18,11 +18,13 @@
     ];
     casks = [
       "microsoft-edge"
+      "instantview"
       "bitwarden"
       "tailscale"
       "nextcloud"
       "nordvpn"
       "docker"
+      "vlc"
     ];
   };
 
