@@ -150,7 +150,7 @@ Pretty self explanatory.
 
 #+begin_src emacs-lisp
   (defun jm/set-font-faces ()
-      (set-face-attribute 'default nil :font "Fira Code" :height 140))
+      (set-face-attribute 'default nil :font "Fira Code Light" :height 140))
 #+end_src
 
 Adding a fix for fonts when running Emacs as a daemon.
@@ -437,7 +437,7 @@ The Emacs dashboard package provides a nice dashboard when first starting up ema
                           (recents . 5)
                           (agenda . 5)))
   :config
-  (set-face-attribute 'dashboard-items-face nil :font "Fira Code" :weight 'regular :height 140)
+  (set-face-attribute 'dashboard-items-face nil :font "Fira Code Light" :weight 'regular :height 140)
   (dashboard-setup-startup-hook))
 #+end_src
 
