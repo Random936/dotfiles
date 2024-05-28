@@ -15,6 +15,7 @@
     feh
     dconf
     discord
+    pavucontrol
     microsoft-edge
     nextcloud-client
     bitwarden
