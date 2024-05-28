@@ -206,6 +206,14 @@ Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will
 (add-hook 'org-todo-repeat-hook #'org-reset-checkbox-state-subtree)
 #+end_src
 
+** Automatically Add Todo UUIDs
+
+#+begin_src emacs-lisp
+(add-hook 'org-after-todo-state-change-hook
+        (lambda () (when (org-get-todo-state)
+                        (org-id-get-create))))
+#+end_src
+
 * Org Roam
 
 Org-roam is a plain-text knowledge management system. It brings some of Roam's more powerful features into the Org-mode ecosystem such as org-file linking, etc.
