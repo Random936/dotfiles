@@ -8,7 +8,6 @@
     manix
     clang
     cargo
-    barrier
     ripgrep
     gnumake
     neofetch
