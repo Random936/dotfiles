@@ -23,6 +23,7 @@
       "tailscale"
       "nextcloud"
       "nordvpn"
+      "spotify"
       "docker"
       "vlc"
     ];

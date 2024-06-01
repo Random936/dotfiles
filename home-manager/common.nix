@@ -12,7 +12,6 @@
     ripgrep
     gnumake
     neofetch
-    spotify
     bitwarden-cli
   ]);
 
