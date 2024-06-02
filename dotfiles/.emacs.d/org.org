@@ -109,7 +109,7 @@ Visual fill column is a package that allows you to center text and add borders t
 #+begin_src emacs-lisp
 ;; Set left-right margins with visual-fill-column
 (defun jm/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
+  (setq visual-fill-column-width 160
         visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 
