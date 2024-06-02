@@ -81,16 +81,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
+  # Enable sound with 
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+  hardware.pulseaudio.enable = true;
 
   # Change default shell to zsh.
   users.defaultUserShell = pkgs.zsh;
@@ -118,6 +111,7 @@
     vim
     git
     picom
+    killall
   ];
 
   system.stateVersion = "23.11";
