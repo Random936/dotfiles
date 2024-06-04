@@ -32,6 +32,14 @@
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
+  # Keyboard and Mouse
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+  };
+
+  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = true;
+
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
