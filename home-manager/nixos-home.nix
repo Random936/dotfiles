@@ -14,7 +14,6 @@
   home.packages = with pkgs; [
     feh
     dconf
-    spotify
     discord
     pavucontrol
     microsoft-edge
