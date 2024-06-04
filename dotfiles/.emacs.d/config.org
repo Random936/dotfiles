@@ -452,11 +452,12 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
   (setq ledger-report-use-strict t
         ledger-master-file (file-truename "~/Nextcloud/Ledger/toc.ledger")
         ledger-accounts-file (file-truename "~/Nextcloud/Ledger/accounts.ledger"))
-  (setq ledger-reports `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
-                         ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
-                         ("account" ,(format "%%(binary) -f %s reg %%(account)" ledger-master-file))
-                         ("monthly bal" ,(format "%%(binary) -f %s bal -p 'this month'" ledger-master-file))
-                         ("daily bal" ,(format "%%(binary) -f %s bal -p 'today'" ledger-master-file)))))
+  (setq ledger-reports
+        `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
+          ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
+          ("account" ,(format "%%(binary) -f %s reg %%(account)" ledger-master-file))
+          ("monthly bal" ,(format "%%(binary) -f %s bal -p 'this month'" ledger-master-file))
+          ("daily bal" ,(format "%%(binary) -f %s bal -p 'today'" ledger-master-file)))))
 #+end_src
 
 ** Alert

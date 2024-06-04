@@ -99,12 +99,15 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((mu4e-message-contact-field-matches msg :from "noreply@everbridge.net") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from ".*office.*@ucsc.edu") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "madocast@ucsc.edu") "/UCSC")
+           ((mu4e-message-contact-field-matches msg :from "ucsc_ucues@ucop.edu") "/UCSC")
 
            ;; Finance
            ((mu4e-message-contact-field-matches msg :from "onlinebanking@ealerts.bankofamerica.com") "/Finance")
            ((mu4e-message-contact-field-matches msg :from "no.reply.alerts@chase.com") "/Finance")
            ((mu4e-message-contact-field-matches msg :from "noreply@robinhood.com") "/Finance")
            ((mu4e-message-contact-field-matches msg :from "venmo@venmo.com") "/Finance")
+           ((mu4e-message-contact-field-matches msg :from "donotreply@officeally.com") "/Finance")
+           ((mu4e-message-contact-field-matches msg :from "online.communications@alerts.comcast.net") "/Finance")
 
 
            ;; Packages/Shipping
