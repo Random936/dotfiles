@@ -91,6 +91,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((member (car (mu4e-string-to-flags "T")) (mu4e-message-field msg :flags)) "/Trash")
 
            ;; UCSC
+           ((mu4e-message-contact-field-matches msg :bcc "undergrad@ucsc.edu") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "noreply@YuJa.com") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "no-reply@piazza.com") "/UCSC")
            ((mu4e-message-contact-field-matches msg :from "notifications@instructure.com") "/UCSC")
