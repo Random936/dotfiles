@@ -18,6 +18,7 @@
     ];
     casks = [
       "microsoft-edge"
+      "scroll-reverser"
       "instantview"
       "bitwarden"
       "tailscale"
@@ -33,7 +34,6 @@
   nix.package = pkgs.nix;
 
   # Keyboard and Mouse
-  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
