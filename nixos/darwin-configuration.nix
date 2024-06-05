@@ -37,6 +37,7 @@
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
+    swapLeftCommandAndLeftAlt = true;
   };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
