@@ -33,7 +33,7 @@
   nix.package = pkgs.nix;
 
   # Keyboard and Mouse
-  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = true;
+  system.defaults.NSGlobalDomain."com.apple.swipescrolldirection" = false;
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
