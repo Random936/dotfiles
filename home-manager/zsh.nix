@@ -14,9 +14,10 @@
     shellAliases = {
       cd = "z";
       ls = "eza";
-      update-system = "sudo nixos-rebuild switch --flake ~/dotfiles";
-      update-user = "home-manager switch --flake ~/dotfiles";
-      update-all = "update-system && update-user";
+      update-darwin = "darwin-rebuild switch --flake ~/dotfiles";
+      update-conf = "sudo nixos-rebuild switch --flake ~/dotfiles";
+      update-home = "home-manager switch --flake ~/dotfiles";
+      update-all = "update-conf && update-home";
     };
 
     plugins = [

@@ -4,14 +4,20 @@
   fonts.fontconfig.enable = true;
 
   home.packages = (with pkgs; [
-    btop
+    # Utilities
     tmux
+    btop
     manix
+    ripgrep
+    neofetch
+
+    # Dev tools
     clang
     cargo
-    ripgrep
+    python3
     gnumake
-    neofetch
+
+    # Other
     bitwarden-cli
   ]);
 
