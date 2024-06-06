@@ -258,6 +258,7 @@ Below is the main config for org-roam.
 
          ;; Dailies
          ("C-c n t" . org-roam-dailies-capture-today)
+         ("C-c n y" . org-roam-dailies-capture-yesterday)
          ("C-c n k" . org-roam-dailies-capture-tomorrow))
   :config
   ;; Config for org-roam capture templates.

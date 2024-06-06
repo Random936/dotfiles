@@ -16,7 +16,7 @@
     dconf
     discord
     pavucontrol
-    microsoft-edge
+    google-chrome
     nextcloud-client
     bitwarden
   ];

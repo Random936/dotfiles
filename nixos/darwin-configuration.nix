@@ -17,7 +17,7 @@
       "coreutils"
     ];
     casks = [
-      "microsoft-edge"
+      "google-chrome"
       "scroll-reverser"
       "instantview"
       "bitwarden"
