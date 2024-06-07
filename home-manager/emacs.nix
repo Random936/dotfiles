@@ -1,14 +1,21 @@
 { inputs, config, pkgs, ... }: {
   home.packages = with pkgs; [
+    # Build deps
     cmake
+
+    # Additional packages for functionality
     isync
     ispell
     ledger
     texliveFull
     mu
 
+    # Fonts
     fira-code
     fira-code-symbols
+
+    # LSP Servers
+    python311Packages.python-lsp-server
   ];
 
   programs.emacs = {
