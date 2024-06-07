@@ -114,6 +114,9 @@
     killall
   ];
 
+  # Install additional programs
+  programs.thunar.enable = true;
+
   # Enable sshd service.
   services.openssh.enable = true;
 

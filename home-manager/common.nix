@@ -8,6 +8,7 @@
     tmux
     btop
     manix
+    p7zip
     ripgrep
     neofetch
 
