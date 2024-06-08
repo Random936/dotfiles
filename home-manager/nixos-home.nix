@@ -40,6 +40,13 @@
     };
   };
 
+  programs.obs-studio = {
+    enables = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      obs-backgroundremoval
+    ];
+  };
+
   home.file = {
     ".Xresources".source = ../dotfiles/.Xresources;
     ".scripts/brightness.sh".source = ../dotfiles/.scripts/brightness.sh;

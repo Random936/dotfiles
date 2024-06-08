@@ -27,6 +27,9 @@
       "nordvpn"
       "docker"
       "vlc"
+
+      "obs"
+      "obs-backgroundremoval"
     ];
   };
 
