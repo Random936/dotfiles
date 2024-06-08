@@ -10,7 +10,7 @@
     manix
     p7zip
     ripgrep
-    neofetch
+    fastfetch
     bitwarden-cli
 
     # Dev tools
