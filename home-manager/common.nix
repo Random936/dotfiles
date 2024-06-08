@@ -3,7 +3,7 @@
   nixpkgs.config.allowUnfree = true;
   fonts.fontconfig.enable = true;
 
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     # Utilities
     tmux
     btop
@@ -11,6 +11,7 @@
     p7zip
     ripgrep
     neofetch
+    bitwarden-cli
 
     # Dev tools
     clang
@@ -18,9 +19,23 @@
     python3
     gnumake
 
-    # Other
-    bitwarden-cli
-  ]);
+    # Hacking
+    nmap
+    john
+    ffuf
+    nikto
+    sqlmap
+    wpscan
+    thc-hydra
+    exploitdb
+    feroxbuster
+    (wordlists.override {
+      lists = with pkgs; [
+        rockyou
+        seclists
+      ];
+    })
+  ];
 
   programs = {
     home-manager.enable = true;
