@@ -255,11 +255,7 @@ Below is the main config for org-roam.
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ("C-c n o" . org-id-get-create)
-
-         ;; Dailies
-         ("C-c n t" . org-roam-dailies-capture-today)
-         ("C-c n y" . org-roam-dailies-capture-yesterday)
-         ("C-c n k" . org-roam-dailies-capture-tomorrow))
+         ("C-c n t" . jm/org-roam-capture-day))
   :config
   ;; Config for org-roam capture templates.
   (setq jm/org-roam-templates-directory (expand-file-name "templates" org-roam-directory)

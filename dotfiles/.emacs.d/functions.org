@@ -12,6 +12,12 @@ Shortcut to goto todays org-roam dailies document.
              (file-base (file-name-base (buffer-file-name))))
     (s-matches-p "^[0-9]+-[0-9]+-[0-9]+$" file-base)))
 
+(defun jm/org-roam-capture-day ()
+  (interactive)
+  (if (jm/dailies-file-p)
+      (org-roam-dailies--capture (date-to-time (file-name-base (buffer-file-name))))
+    (org-roam-dailies-capture-today)))
+
 (defun jm/org-roam-goto-day (days)
   (let* ((base-time (if (and (jm/dailies-file-p) (not (eq days 0)))
                         (date-to-time (file-name-base (buffer-file-name)))
