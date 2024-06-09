@@ -25,7 +25,6 @@
     ffuf
     nikto
     sqlmap
-    wpscan
     thc-hydra
     exploitdb
     feroxbuster
@@ -54,4 +53,6 @@
   home.file = {
     ".functions.zsh".source = ../dotfiles/.functions.zsh;
   };
+
+  home.stateVersion = "24.05";
 }

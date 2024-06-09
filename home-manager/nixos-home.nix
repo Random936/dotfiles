@@ -58,6 +58,4 @@
     ".config/polybar/config.ini".source = ../dotfiles/.config/polybar/config.ini;
 
   };
-
-  home.stateVersion = "23.11";
 }

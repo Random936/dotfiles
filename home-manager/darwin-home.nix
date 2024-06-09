@@ -18,5 +18,4 @@ in
   ];
 
   home.file.".tmux/plugins/tpm".source = "${mypkgs.tpm}";
-  home.stateVersion = "23.11";
 }
