@@ -41,7 +41,7 @@
   };
 
   programs.obs-studio = {
-    enables = true;
+    enable = true;
     plugins = with pkgs.obs-studio-plugins; [
       obs-backgroundremoval
     ];
