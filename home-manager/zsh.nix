@@ -20,6 +20,10 @@
       update-all = "update-conf && update-home";
     };
 
+    initExtra = ''
+    export PATH=$PATH:~/.cargo/bin
+    '';
+
     plugins = [
       {
         name = "custom-functions";

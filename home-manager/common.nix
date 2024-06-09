@@ -20,6 +20,7 @@
     gnumake
 
     # Hacking
+    yara
     nmap
     john
     ffuf
