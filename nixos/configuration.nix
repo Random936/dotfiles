@@ -72,10 +72,10 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
-    xkbOptions = "caps:escape";
+    variant = "";
+    options = "caps:escape";
   };
 
   # Enable CUPS to print documents.
@@ -105,8 +105,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     vim
     git

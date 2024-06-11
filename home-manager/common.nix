@@ -4,10 +4,15 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    # Utilities
-    tmux
-    btop
+    # Nix specific utilities
     manix
+    nix-tree
+
+    # Utilities
+    jq
+    tmux
+    ncdu
+    btop
     p7zip
     ripgrep
     fastfetch
