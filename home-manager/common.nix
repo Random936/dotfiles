@@ -17,6 +17,7 @@
     ripgrep
     fastfetch
     bitwarden-cli
+    openvpn
 
     # Dev tools
     clang

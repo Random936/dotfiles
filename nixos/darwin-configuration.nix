@@ -7,8 +7,6 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     git
-    iterm2
-    discord
   ];
 
   homebrew = {
@@ -24,8 +22,10 @@
       "bitwarden"
       "tailscale"
       "nextcloud"
+      "discord"
       "nordvpn"
       "docker"
+      "iterm2"
       "vlc"
 
       "obs"
