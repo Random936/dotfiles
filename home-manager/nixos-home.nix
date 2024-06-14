@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     feh
     dconf
+    docker
     discord
     pavucontrol
     google-chrome

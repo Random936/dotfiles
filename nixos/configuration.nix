@@ -93,12 +93,15 @@
     syntaxHighlighting.enable = true;
   };
 
+  # Docker configuration
+  virtualisation.docker.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.random = {
     isNormalUser = true;
     useDefaultShell = true;
     description = "random";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
   };
 
