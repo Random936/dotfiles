@@ -1,7 +1,7 @@
 IMAPAccount gmail
 Host imap.gmail.com
 User jadenprovost@gmail.com
-PassCmd "export BW_SESSION=$(cat $HOME/.bw_session) && bw get password 'Emacs Gmail'"
+PassCmd "bw --session $(cat $HOME/.bw_session) --nointeraction get password 'Emacs Gmail'"
 SSLType IMAPS
 SSLVersions TLSv1.2
 AuthMechs PLAIN
