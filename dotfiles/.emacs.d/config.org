@@ -381,6 +381,7 @@ When installing Vertico, the documentation mentions a few other packages that ad
 - ~savehist~ - One feature of Vertico that is really helpful is it's seamless integration with the built-in emacs package, ~savehist~, to save command history when navigating.
 - ~marginalia~ - Similar to the definition of /marginalia/, this emacs package implements descriptions besides each option in Vertico completion. Some examples of this would be definitions for Elisp functions, more verbose file information, etc.
 - ~orderless~ - By default, Vertico starts its completion from the start of the search the same way as default emacs completion. The ~orderless~ package changes this by implementing a nicer completion that searches for any similar options based on the provided search terms.
+- ~consult~ - Adds a bunch of helpful search and navigation commands such as recursive file grepping, etc.
 
 #+begin_src emacs-lisp
 (use-package savehist
@@ -396,6 +397,13 @@ When installing Vertico, the documentation mentions a few other packages that ad
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package consult
+  :after vertico
+  :config
+  (jm/leader-keys 
+    "pg" 'consult-grep
+    "pf" 'consult-find))
 #+end_src
 
 ** Helpful
