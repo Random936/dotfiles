@@ -21,6 +21,7 @@
 
     # Dev tools
     clang
+    clang-tools
     cargo
     python3
     gnumake

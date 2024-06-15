@@ -110,7 +110,8 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((mu4e-message-contact-field-matches msg :from "venmo@venmo.com") "/Finance")
            ((mu4e-message-contact-field-matches msg :from "donotreply@officeally.com") "/Finance")
            ((mu4e-message-contact-field-matches msg :from "online.communications@alerts.comcast.net") "/Finance")
-
+           ((mu4e-message-contact-field-matches msg :from "orders@eat.grubhub.com") "/Finance")
+           ((mu4e-message-contact-field-matches msg :from "noreply@online.wingstop.com") "/Finance")
 
            ;; Packages/Shipping
            ((mu4e-message-contact-field-matches msg :from "return@amazon.com") "/Packages")
