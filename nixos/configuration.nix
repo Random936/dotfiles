@@ -49,6 +49,17 @@
     powerManagement.finegrained = false;
     open = false; # Don't use open source kernel.
     nvidiaSettings = true;
+
+    prime = {
+
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   # Fix issue with Nvidia display scaling.
