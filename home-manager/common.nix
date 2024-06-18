@@ -10,6 +10,9 @@
 
     # Utilities
     jq
+    bc
+    wget
+    curl
     tmux
     ncdu
     btop
@@ -17,6 +20,7 @@
     ripgrep
     fastfetch
     bitwarden-cli
+    cli-visualizer
     openvpn
 
     # Dev tools
