@@ -104,9 +104,6 @@
     syntaxHighlighting.enable = true;
   };
 
-  # Docker configuration
-  virtualisation.docker.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.random = {
     isNormalUser = true;
@@ -132,6 +129,10 @@
 
   # Enable sshd service.
   services.openssh.enable = true;
+
+  # Enable virtualization features
+  virtualisation.docker.enable = true;
+  virtualisation.vmware.host.enable = true;
 
   system.stateVersion = "24.05";
 }

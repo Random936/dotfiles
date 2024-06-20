@@ -15,7 +15,10 @@
     feh
     dconf
     docker
+    cdrkit
     discord
+    tailscale
+    wireshark
     pavucontrol
     google-chrome
     nextcloud-client
