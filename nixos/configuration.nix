@@ -127,8 +127,9 @@
   # Install additional programs
   programs.thunar.enable = true;
 
-  # Enable sshd service.
+  # Enable services.
   services.openssh.enable = true;
+  services.tailscale.enable = true;
 
   # Enable virtualization features
   virtualisation.docker.enable = true;
