@@ -13,6 +13,10 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  boot.extraModprobeConfig = ''
+  options snd-hda-intel model=dell-headset-multi
+  '';
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f4f207c5-08d5-4848-920c-76e99280b04c";
       fsType = "ext4";
