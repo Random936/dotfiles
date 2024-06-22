@@ -22,6 +22,12 @@
 
     initExtra = ''
     export PATH=$PATH:~/.cargo/bin
+    function ..      { cd .. }
+    function ...     { cd ../.. }
+    function ....    { cd ../../.. }
+    function .....   { cd ../../../../.. }
+    function ......  { cd ../../../../../.. }
+    function ....... { cd ../../../../../../.. }
     '';
 
     plugins = [
