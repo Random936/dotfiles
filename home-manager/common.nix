@@ -11,6 +11,7 @@
     # Utilities
     jq
     bc
+    file
     wget
     curl
     tmux
