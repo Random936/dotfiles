@@ -120,6 +120,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((mu4e-message-contact-field-matches msg :from "shipment-tracking@amazon.com") "/Packages")
            ((mu4e-message-contact-field-matches msg :from "safeway@p.safeway.com") "/Packages")
            ((mu4e-message-contact-field-matches msg :from "cvs@cvs.narvar.com") "/Packages")
+           ((mu4e-message-contact-field-matches msg :from "ebay@ebay.com") "/Packages")
 
            ;; Slug Security Club
            ((mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu") "/Club")

@@ -15,6 +15,7 @@
     fira-code-symbols
 
     # LSP Servers
+    yaml-language-server
     python311Packages.python-lsp-server
   ];
 
