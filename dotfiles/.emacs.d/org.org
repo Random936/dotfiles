@@ -16,7 +16,7 @@ This installs the org package and creates a setup function to enable/disable cer
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
-  (setq jm/inbox-file "~/Nextcloud/org/inbox.org"
+  (setq jm/inbox-file "~/Seafile/org/inbox.org"
         org-ellipsis " ▾"
         org-hide-emphasis-markers t
         org-src-preserve-indentation t

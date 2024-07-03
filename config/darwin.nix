@@ -18,10 +18,10 @@
     casks = [
       "google-chrome"
       "scroll-reverser"
+      "seafile-client"
       "instantview"
       "bitwarden"
       "tailscale"
-      "nextcloud"
       "discord"
       "nordvpn"
       "docker"

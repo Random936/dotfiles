@@ -38,7 +38,7 @@
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
       modules = [
-        ./config/darwin-configuration.nix
+        ./config/darwin.nix
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;

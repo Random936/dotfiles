@@ -21,7 +21,6 @@
     ripgrep
     fastfetch
     bitwarden-cli
-    cli-visualizer
     openvpn
 
     # Dev tools
