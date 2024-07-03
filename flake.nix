@@ -18,7 +18,13 @@
     nixosConfigurations.randomctf = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
-      modules = [ ./nixos/configuration.nix ];
+      modules = [ ./config/shared.nix ./config/omen.nix ];
+    };
+
+    nixosConfigurations.nixos-dev = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [ ./config/shared.nix ./config/vm.nix ];
     };
 
     homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
@@ -32,7 +38,7 @@
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
       modules = [
-        ./nixos/darwin-configuration.nix
+        ./config/darwin-configuration.nix
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
