@@ -20,7 +20,7 @@
     wireshark
     pavucontrol
     google-chrome
-    nextcloud-client
+    seafile-client
     bitwarden
   ];
 

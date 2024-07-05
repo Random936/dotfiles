@@ -61,7 +61,6 @@
     };
   };
 
-
   home.file = {
     ".functions.zsh".source = ../dotfiles/.functions.zsh;
   };
