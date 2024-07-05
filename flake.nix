@@ -21,14 +21,15 @@
       modules = [
         ./config/shared.nix
         ./config/omen.nix
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs.user = "random";
-          modules = [
-            ./home/headful-nixos.nix
-          ];
-        }
       ];
+    };
+
+    homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs.user = "random";
+        modules = [
+          ./home/headful-nixos.nix
+        ];
     };
 
     nixosConfigurations.media = nixpkgs.lib.nixosSystem {
@@ -36,13 +37,14 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./config/media.nix
-        home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages."x86_64-linux";
-          extraSpecialArgs.user = "media";
-          modules = [
-            ./home/headless-nixos.nix
-          ];
-        }
+      ];
+    };
+
+    homeConfigurations.media = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs.user = "media";
+      modules = [
+        ./home/headless-nixos.nix
       ];
     };
 
