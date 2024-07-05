@@ -7,7 +7,6 @@
     isync
     ispell
     ledger
-    texliveFull
     mu
 
     # Fonts
