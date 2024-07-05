@@ -1,9 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
-let
-  mypkgs = import ../packages/all-packages.nix {
-    inherit pkgs lib config;
-  };
-in
+{ inputs, config, pkgs, ... }:
 {
 
   home = {
@@ -16,6 +11,4 @@ in
     ./emacs.nix
     ./zsh.nix
   ];
-
-  home.file.".tmux/plugins/tpm".source = "${mypkgs.tpm}";
 }

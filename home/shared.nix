@@ -1,4 +1,9 @@
-{ inputs, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, ... }:
+let
+  mypkgs = import ../packages/all-packages.nix {
+    inherit pkgs lib config;
+  };
+in {
 
   nixpkgs.config.allowUnfree = true;
   fonts.fontconfig.enable = true;
@@ -46,6 +51,8 @@
 
   home.file = {
     ".functions.zsh".source = ../dotfiles/.functions.zsh;
+    ".tmux/plugins/tpm".source = "${mypkgs.tpm}";
+    ".tmux.conf".source = ../dotfiles/.tmux.conf;
   };
 
   home.stateVersion = "24.05";
