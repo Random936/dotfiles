@@ -23,6 +23,7 @@
         ./config/omen.nix
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs.user = "random";
           modules = [
             ./home/headful-nixos.nix
           ];
@@ -30,14 +31,14 @@
       ];
     };
 
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.media = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./config/shared.nix
-        ./config/headless.nix
+        ./config/media.nix
         home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs.user = "media";
           modules = [
             ./home/headless-nixos.nix
           ];

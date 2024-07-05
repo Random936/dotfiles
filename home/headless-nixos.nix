@@ -1,8 +1,8 @@
-{ inputs, config, pkgs, ... }: {
+{ inputs, config, pkgs, user, ... }: {
 
   home = {
-    username = "random";
-    homeDirectory = "/home/random";
+    username = "${user}";
+    homeDirectory = "/home/${user}";
   };
 
   imports = [
