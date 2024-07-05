@@ -6,5 +6,5 @@
   ];
 
   users.users.media = import ./user.nix;
-  networking.hostname = "r330-media";
+  networking.hostName = "r330-media";
 }
