@@ -30,7 +30,7 @@
     homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       modules = [
-        ./home-manager/nixos-home.nix
+        ./home/nixos.nix
       ];
     };
 
@@ -50,7 +50,7 @@
     homeConfigurations.jadenmaxwell = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."aarch64-darwin";
       modules = [
-        ./home-manager/darwin-home.nix
+        ./home/darwin.nix
       ];
     };
   };

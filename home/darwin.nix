@@ -12,7 +12,7 @@ in
   };
 
   imports = [
-    ./common.nix
+    ./shared.nix
     ./emacs.nix
     ./zsh.nix
   ];
