@@ -28,7 +28,7 @@
       extraPackages = with pkgs; [
         rofi
         polybar
-        rxvt-unicode
+        alacritty
         arandr
       ];
     };
