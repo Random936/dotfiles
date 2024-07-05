@@ -18,19 +18,30 @@
     nixosConfigurations.randomctf = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
-      modules = [ ./config/shared.nix ./config/omen.nix ];
+      modules = [
+        ./config/shared.nix
+        ./config/omen.nix
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          modules = [
+            ./home/headful-nixos.nix
+          ];
+        }
+      ];
     };
 
-    nixosConfigurations.nixos-dev = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
-      modules = [ ./config/shared.nix ./config/vm.nix ];
-    };
-
-    homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
       modules = [
-        ./home/nixos.nix
+        ./config/shared.nix
+        ./config/headless.nix
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          modules = [
+            ./home/headless-nixos.nix
+          ];
+        }
       ];
     };
 

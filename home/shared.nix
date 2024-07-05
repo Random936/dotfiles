@@ -1,5 +1,5 @@
-{ inputs, config, pkgs, ... }:
-{
+{ inputs, config, pkgs, ... }: {
+
   nixpkgs.config.allowUnfree = true;
   fonts.fontconfig.enable = true;
 
@@ -29,23 +29,6 @@
     cargo
     python3
     gnumake
-
-    # Hacking
-    yara
-    nmap
-    john
-    ffuf
-    nikto
-    sqlmap
-    thc-hydra
-    exploitdb
-    feroxbuster
-    (wordlists.override {
-      lists = with pkgs; [
-        rockyou
-        seclists
-      ];
-    })
   ];
 
   programs = {
