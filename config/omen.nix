@@ -2,11 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }: {
 
-{
   imports = [
     ../hardware/omen.nix
+    ./headful.nix
   ];
 
   # Bootloader.
@@ -15,6 +15,9 @@
 
   # Set hostname
   networking.hostName = "randomctf";
+
+  # Create user
+  users.users.random = import ./user.nix;
 
   # Enable Nvidia drivers
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -45,6 +48,4 @@
 
   # Enable VMWare Workstation
   virtualisation.vmware.host.enable = true;
-
-  system.stateVersion = "24.05";
 }
