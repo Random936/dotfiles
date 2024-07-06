@@ -32,7 +32,7 @@
         ];
     };
 
-    nixosConfigurations.media = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."r330-media" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
