@@ -56,7 +56,7 @@
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.jadenmaxwell = import ./home-manager/darwin-home.nix;
+          home-manager.users.jadenmaxwell = import ./home/darwin.nix;
         }
       ];
     };
