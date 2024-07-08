@@ -20,6 +20,10 @@
       update-all = "update-conf && update-home";
     };
 
+    initExtraBeforeCompInit = ''
+    [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+    '';
+
     initExtra = ''
     export PATH=$PATH:~/.cargo/bin
     function ..      { cd .. }
