@@ -65,6 +65,10 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   :config
   (setq mu4e-mu-binary (executable-find "mu"))
 
+  ;; Disable hard line wrapping
+  (setq mu4e-compose-format-flowed t)
+  (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines -1)))
+
   ;; Avoids syncing issues.
   (setq mu4e-change-filenames-when-moving t)
 
@@ -91,60 +95,69 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
            ((member (car (mu4e-string-to-flags "T")) (mu4e-message-field msg :flags)) "/Trash")
 
            ;; UCSC
-           ((mu4e-message-contact-field-matches msg :bcc "undergrad@ucsc.edu") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "noreply@YuJa.com") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "no-reply@piazza.com") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "notifications@instructure.com") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "no-reply@gradescope.com") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "notification@edstem.org") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "noreply@everbridge.net") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from ".*office.*@ucsc.edu") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "madocast@ucsc.edu") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "ucsc_ucues@ucop.edu") "/UCSC")
-           ((mu4e-message-contact-field-matches msg :from "ebeshear@ucsc.edu") "/UCSC")
+           ((or (mu4e-message-contact-field-matches msg :bcc "undergrad@ucsc.edu")
+                (mu4e-message-contact-field-matches msg :from '("noreply@YuJa.com"
+                                                                "no-reply@piazza.com"
+                                                                "notifications@instructure.com"
+                                                                "no-reply@gradescope.com"
+                                                                "notification@edstem.org"
+                                                                "noreply@everbridge.net"
+                                                                ".*office.*@ucsc.edu"
+                                                                "madocast@ucsc.edu"
+                                                                "ucsc_ucues@ucop.edu"
+                                                                "ebeshear@ucsc.edu"))) "/UCSC")
 
-           ;; Finance
-           ((mu4e-message-contact-field-matches msg :from "onlinebanking@ealerts.bankofamerica.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "no.reply.alerts@chase.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "noreply@robinhood.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "venmo@venmo.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "donotreply@officeally.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "online.communications@alerts.comcast.net") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "orders@eat.grubhub.com") "/Finance")
-           ((mu4e-message-contact-field-matches msg :from "noreply@online.wingstop.com") "/Finance")
+            ;; Work Related
+            ((mu4e-message-contact-field-matches msg :from '(".*-noreply@linkedin.com")) "/Work")
 
-           ;; Packages/Shipping
-           ((mu4e-message-contact-field-matches msg :from "return@amazon.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "auto-confirm@amazon.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "order-update@amazon.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "shipment-tracking@amazon.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "safeway@p.safeway.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "cvs@cvs.narvar.com") "/Packages")
-           ((mu4e-message-contact-field-matches msg :from "ebay@ebay.com") "/Packages")
+            ;; Finance
+            ((or (s-equals-p "Your receipt from Apple." (mu4e-message-field msg :subject))
+                 (s-equals-p "1010 Pacific - Payment Confirmation" (mu4e-message-field msg :subject))
+                 (mu4e-message-contact-field-matches msg :from '("onlinebanking@ealerts.bankofamerica.com"
+                                                                 "no.reply.alerts@chase.com"
+                                                                 "noreply@robinhood.com"
+                                                                 "venmo@venmo.com"
+                                                                 "donotreply@officeally.com"
+                                                                 "online.communications@alerts.comcast.net"
+                                                                 "orders@eat.grubhub.com"
+                                                                 "noreply@online.wingstop.com"))) "/Finance")
+            ;; Packages/Shipping
+            ((mu4e-message-contact-field-matches msg :from '("return@amazon.com"
+                                                             "auto-confirm@amazon.com"
+                                                             "order-update@amazon.com"
+                                                             "shipment-tracking@amazon.com"
+                                                             "safeway@p.safeway.com"
+                                                             "cvs@cvs.narvar.com"
+                                                             "ebay@ebay.com"
+                                                             "pkginfo@ups.com"
+                                                             "info@techmikeny.com"
+                                                             "tracking@shipstation.com")) "/Packages")
 
-           ;; Slug Security Club
-           ((mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu") "/Club")
-           ((s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject)) "/Club")
-           (t "/Archive"))))
+            ;; Slug Security Club
+            ((or (mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu")
+                 (s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject))) "/Club")
 
-  ;; Config mu4e bookmarks
-  (setq mu4e-bookmarks
-        '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
-          (:name "All unread messages" :query "flag:unread" :key ?U)
-          (:name "Today's messages" :query "date:today..now" :key ?t)
-          (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
-          (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+            (t "/Archive"))))
 
-  (setq mu4e-maildir-shortcuts
-        '((:maildir "/Inbox" :key ?i)
-          (:maildir "/Archive" :key ?a)
-          (:maildir "/Drafts" :key ?d)
-          (:maildir "/Sent" :key ?s)
-          (:maildir "/Trash" :key ?t)
-          (:maildir "/Finance" :key ?f)
-          (:maildir "/Packages" :key ?p)
-          (:maildir "/Club" :key ?c)
-          (:maildir "/UCSC" :key ?u))))
+        ;; Config mu4e bookmarks
+        (setq mu4e-bookmarks
+              '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
+                (:name "All unread messages" :query "flag:unread" :key ?U)
+                (:name "Today's messages" :query "date:today..now" :key ?t)
+                (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+                (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+
+        (setq mu4e-maildir-shortcuts
+              '((:maildir "/Inbox" :key ?i)
+                (:maildir "/Archive" :key ?a)
+                (:maildir "/Drafts" :key ?d)
+                (:maildir "/Sent" :key ?s)
+                (:maildir "/Trash" :key ?t)
+                (:maildir "/Finance" :key ?f)
+                (:maildir "/Packages" :key ?p)
+                (:maildir "/Work" :key ?w)
+                (:maildir "/Club" :key ?c)
+                (:maildir "/UCSC" :key ?u))))
 #+end_src
 
 Adding some configuration to correct ~mu4e~'s default values.
