@@ -14,6 +14,7 @@
     onActivation.cleanup = "zap";
     brews = [
       "coreutils"
+      "watch"
     ];
     casks = [
       "google-chrome"
@@ -24,12 +25,8 @@
       "tailscale"
       "discord"
       "nordvpn"
-      "docker"
       "iterm2"
       "vlc"
-
-      "obs"
-      "obs-backgroundremoval"
     ];
   };
 
