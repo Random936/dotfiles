@@ -14,6 +14,8 @@
     fira-code-symbols
 
     # LSP Servers
+    ccls
+    rust-analyzer
     yaml-language-server
     python311Packages.python-lsp-server
   ];
