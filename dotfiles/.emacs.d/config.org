@@ -458,8 +458,8 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
   :mode ("\\.ledger\\'")
   :config
   (setq ledger-report-use-strict t
-        ledger-master-file (file-truename "~/Seafile/Storage/Ledger/toc.ledger")
-        ledger-accounts-file (file-truename "~/Seafile/Storage/Ledger/accounts.ledger"))
+        ledger-master-file (file-truename "~/Seafile/Ledger/toc.ledger")
+        ledger-accounts-file (file-truename "~/Seafile/Ledger/accounts.ledger"))
   (setq ledger-reports
         `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
           ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
