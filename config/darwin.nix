@@ -21,7 +21,6 @@
       "scroll-reverser"
       "seafile-client"
       "instantview"
-      "bitwarden"
       "tailscale"
       "discord"
       "nordvpn"

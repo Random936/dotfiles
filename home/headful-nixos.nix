@@ -22,7 +22,6 @@
     pavucontrol
     google-chrome
     seafile-client
-    bitwarden
   ];
 
   services.emacs.enable = true;
