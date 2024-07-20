@@ -14,10 +14,13 @@
     fira-code-symbols
 
     # LSP Servers
+    nil
     ccls
     rust-analyzer
     yaml-language-server
-    python311Packages.python-lsp-server
+    python3Packages.python-lsp-server
+    nodePackages.typescript-language-server
+    nodePackages.vscode-json-languageserver
   ];
 
   programs.emacs = {

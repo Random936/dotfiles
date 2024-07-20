@@ -220,6 +220,13 @@ sudo emerge -v app-emacs/ebuild-mode
 Nix is the language used by NixOS and the Nix package manager.
 
 #+begin_src emacs-lisp
+(use-package lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :demand t
+  :custom (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
+
 (use-package nix-mode
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :hook (nix-mode . lsp-deferred))
 #+end_src
