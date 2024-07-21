@@ -24,7 +24,9 @@ Below I am installing the actual package and adding some basic configuration.
     :init (setq lsp-keymap-prefix "C-c l") ; Lsp mode prefix
     :hook (lsp-mode . jm/lsp-mode-setup)
     :commands (lsp lsp-deferred) ; Startup commands
-    :config (lsp-enable-which-key-integration t))
+    :config
+    (lsp-enable-which-key-integration t)
+    (setq lsp-enable-snippet nil))
 #+end_src
 
 ** Lsp Additional Packages
