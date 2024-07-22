@@ -31,7 +31,6 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    vim
     git
     killall
   ];

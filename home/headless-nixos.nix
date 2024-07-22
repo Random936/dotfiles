@@ -7,7 +7,7 @@
 
   imports = [
     ./shared.nix
-    ./emacs.nix
+    ./neovim.nix
     ./zsh.nix
   ];
 

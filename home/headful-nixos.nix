@@ -8,6 +8,7 @@
   imports = [
     ./shared.nix
     ./hacking.nix
+    ./neovim.nix
     ./emacs.nix
     ./zsh.nix
   ];
