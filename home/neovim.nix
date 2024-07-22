@@ -2,10 +2,15 @@
   programs.neovim = {
     enable = true;
     vimAlias = true;
-  };
+    coc =  {
+      enable = true;
+      settings = {
+        "diagnostic.checkCurrentLine" = true;
+      };
+    };
 
-  home.file = {
-    ".config/nvim/init.vim".source = ../dotfiles/.config/nvim/init.vim;
-    ".config/nvim/coc-settings.json".source = ../dotfiles/.config/nvim/init.vim;
+    plugins = with pkgs.vimPlugins; [
+      vim-airline
+    ];
   };
 }
