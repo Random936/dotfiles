@@ -48,4 +48,8 @@
 
   # Enable VMWare Workstation
   virtualisation.vmware.host.enable = true;
+
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }
