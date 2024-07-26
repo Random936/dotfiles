@@ -13,6 +13,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Supported Filesystems
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Set hostname
   networking.hostName = "randomctf";
 
