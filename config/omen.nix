@@ -49,6 +49,9 @@
   services.xserver.dpi = 96;
   environment.variables.GDK_SCALE = "0.5";
 
+  # Ignore laptop lid closing when connected to power.
+  services.logind.lidSwitchExternalPower = "ignore";
+
   # Enable VMWare Workstation
   virtualisation.vmware.host.enable = true;
 

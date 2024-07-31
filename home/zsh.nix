@@ -15,9 +15,9 @@
       cd = "z";
       ls = "eza";
       update-darwin = "darwin-rebuild switch --flake ~/dotfiles";
-      update-conf = "sudo nixos-rebuild switch --flake ~/dotfiles";
+      update-config = "sudo nixos-rebuild switch --flake ~/dotfiles";
       update-home = "home-manager switch --flake ~/dotfiles";
-      update-all = "update-conf && update-home";
+      update-all = "update-config && update-home";
     };
 
     initExtraBeforeCompInit = ''
