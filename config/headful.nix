@@ -29,6 +29,7 @@
         rofi
         polybar
         alacritty
+        autorandr
         arandr
       ];
     };
