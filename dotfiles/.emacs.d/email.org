@@ -107,57 +107,58 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
                                                                 "ucsc_ucues@ucop.edu"
                                                                 "ebeshear@ucsc.edu"))) "/UCSC")
 
-            ;; Work Related
-            ((mu4e-message-contact-field-matches msg :from '(".*-noreply@linkedin.com")) "/Work")
+           ;; Work Related
+           ((mu4e-message-contact-field-matches msg :from '(".*-noreply@linkedin.com"
+                                                            "donotreply@indeed.com")) "/Work")
 
-            ;; Finance
-            ((or (s-equals-p "Your receipt from Apple." (mu4e-message-field msg :subject))
-                 (s-equals-p "1010 Pacific - Payment Confirmation" (mu4e-message-field msg :subject))
-                 (mu4e-message-contact-field-matches msg :from '("onlinebanking@ealerts.bankofamerica.com"
-                                                                 "no.reply.alerts@chase.com"
-                                                                 "noreply@robinhood.com"
-                                                                 "venmo@venmo.com"
-                                                                 "donotreply@officeally.com"
-                                                                 "online.communications@alerts.comcast.net"
-                                                                 "orders@eat.grubhub.com"
-                                                                 "noreply@online.wingstop.com"))) "/Finance")
-            ;; Packages/Shipping
-            ((mu4e-message-contact-field-matches msg :from '("return@amazon.com"
-                                                             "auto-confirm@amazon.com"
-                                                             "order-update@amazon.com"
-                                                             "shipment-tracking@amazon.com"
-                                                             "safeway@p.safeway.com"
-                                                             "cvs@cvs.narvar.com"
-                                                             "ebay@ebay.com"
-                                                             "pkginfo@ups.com"
-                                                             "info@techmikeny.com"
-                                                             "tracking@shipstation.com")) "/Packages")
+           ;; Finance
+           ((or (s-equals-p "Your receipt from Apple." (mu4e-message-field msg :subject))
+                (s-equals-p "1010 Pacific - Payment Confirmation" (mu4e-message-field msg :subject))
+                (mu4e-message-contact-field-matches msg :from '("onlinebanking@ealerts.bankofamerica.com"
+                                                                "no.reply.alerts@chase.com"
+                                                                "noreply@robinhood.com"
+                                                                "venmo@venmo.com"
+                                                                "donotreply@officeally.com"
+                                                                "online.communications@alerts.comcast.net"
+                                                                "orders@eat.grubhub.com"
+                                                                "noreply@online.wingstop.com"))) "/Finance")
+           ;; Packages/Shipping
+           ((mu4e-message-contact-field-matches msg :from '("return@amazon.com"
+                                                            "auto-confirm@amazon.com"
+                                                            "order-update@amazon.com"
+                                                            "shipment-tracking@amazon.com"
+                                                            "safeway@p.safeway.com"
+                                                            "cvs@cvs.narvar.com"
+                                                            "ebay@ebay.com"
+                                                            "pkginfo@ups.com"
+                                                            "info@techmikeny.com"
+                                                            "tracking@shipstation.com")) "/Packages")
 
-            ;; Slug Security Club
-            ((or (mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu")
-                 (s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject))) "/Club")
+           ;; Slug Security Club
+           ((or (mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu")
+                (s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject))) "/Club")
 
-            (t "/Archive"))))
+           (t "/Archive"))))
 
-        ;; Config mu4e bookmarks
-        (setq mu4e-bookmarks
-              '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
-                (:name "All unread messages" :query "flag:unread" :key ?U)
-                (:name "Today's messages" :query "date:today..now" :key ?t)
-                (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
-                (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+  ;; Config mu4e bookmarks
+  (setq mu4e-bookmarks
+        '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
+          (:name "All unread messages" :query "flag:unread" :key ?U)
+          (:name "Today's messages" :query "date:today..now" :key ?t)
+          (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+          (:name "Flagged messages" :query "flag:flagged" :key ?f)))
 
-        (setq mu4e-maildir-shortcuts
-              '((:maildir "/Inbox" :key ?i)
-                (:maildir "/Archive" :key ?a)
-                (:maildir "/Drafts" :key ?d)
-                (:maildir "/Sent" :key ?s)
-                (:maildir "/Trash" :key ?t)
-                (:maildir "/Finance" :key ?f)
-                (:maildir "/Packages" :key ?p)
-                (:maildir "/Work" :key ?w)
-                (:maildir "/Club" :key ?c)
-                (:maildir "/UCSC" :key ?u))))
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/Inbox" :key ?i)
+          (:maildir "/Archive" :key ?a)
+          (:maildir "/Drafts" :key ?d)
+          (:maildir "/Sent" :key ?s)
+          (:maildir "/Trash" :key ?t)
+          (:maildir "/Finance" :key ?f)
+          (:maildir "/Packages" :key ?p)
+          (:maildir "/Work" :key ?w)
+          (:maildir "/Club" :key ?c)
+          (:maildir "/UCSC" :key ?u))))
 #+end_src
 
 Adding some configuration to correct ~mu4e~'s default values.
