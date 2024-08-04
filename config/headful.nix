@@ -31,6 +31,7 @@
         alacritty
         autorandr
         arandr
+        xsel
       ];
     };
 
