@@ -23,6 +23,7 @@
     pavucontrol
     google-chrome
     seafile-client
+    wireguard-tools
   ];
 
   services.emacs.enable = true;
