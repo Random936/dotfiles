@@ -18,4 +18,44 @@
       prefixLength = 24;
     }
   ];
+
+  # Nextcloud Setup
+  services.nextcloud = {
+      enable = true;
+      configureRedis = true;
+      database.createLocally = true;
+      autoUpdateApps.enable = true;
+      https = true;
+
+      hostName = "nextcloud.randomctf.com";
+      datadir = "/mnt/storage/nextcloud";
+      maxUploadSize = "50G";
+
+      settings.overwriteprotocol = "https";
+
+      config = {
+          dbtype = "mysql";
+          adminpassFile = "/var/nextcloud-admin-pass";
+      };
+  };
+
+  # NGINX Reverse Proxy Setup
+  services.nginx = {
+    enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    virtualHosts.${config.services.nextcloud.hostName} = {
+      enableACME = true;
+      forceSSL = true;
+    };
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    certs = {
+        ${config.services.nextcloud.hostName}.email = "admin@randomctf.com";
+    };
+  };
 }
