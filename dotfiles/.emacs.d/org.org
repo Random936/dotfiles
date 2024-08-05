@@ -16,7 +16,7 @@ This installs the org package and creates a setup function to enable/disable cer
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
-  (setq jm/inbox-file "~/Seafile/org/inbox.org"
+  (setq jm/inbox-file "~/Nextcloud/org/inbox.org"
         org-ellipsis " ▾"
         org-hide-emphasis-markers t
         org-src-preserve-indentation t
@@ -247,7 +247,7 @@ Below is the main config for org-roam.
 (use-package org-roam
   :init (require 'org-roam-dailies)
   :custom
-  (org-roam-directory (file-truename "~/Seafile/org"))
+  (org-roam-directory (file-truename "~/Nextcloud/org"))
   (org-roam-node-display-template "${title:60} ${file-title}")
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . jm/org-roam-find)

@@ -19,8 +19,8 @@
     casks = [
       "google-chrome"
       "scroll-reverser"
-      "seafile-client"
       "instantview"
+      "nextcloud"
       "tailscale"
       "discord"
       "nordvpn"

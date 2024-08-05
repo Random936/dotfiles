@@ -22,7 +22,7 @@
     wireshark
     pavucontrol
     google-chrome
-    seafile-client
+    nextcloud-client
     wireguard-tools
   ];
 
