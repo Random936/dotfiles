@@ -31,7 +31,10 @@
       datadir = "/mnt/storage/nextcloud";
       maxUploadSize = "50G";
 
-      settings.overwriteprotocol = "https";
+      settings = {
+          overwriteprotocol = "https";
+          htaccess.rewriteBase = "/";
+      };
 
       config = {
           dbtype = "mysql";
@@ -42,10 +45,6 @@
   # NGINX Reverse Proxy Setup
   services.nginx = {
     enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
     virtualHosts.${config.services.nextcloud.hostName} = {
       enableACME = true;
       forceSSL = true;
