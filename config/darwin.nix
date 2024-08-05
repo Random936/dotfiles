@@ -23,7 +23,6 @@
       "nextcloud"
       "tailscale"
       "discord"
-      "nordvpn"
       "iterm2"
       "vlc"
     ];
