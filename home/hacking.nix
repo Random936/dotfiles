@@ -6,11 +6,20 @@
     nmap
     john
     ffuf
+    amass
     nikto
     sqlmap
+    wpscan
+    openssl
+    remmina
+    inetutils
     thc-hydra
     exploitdb
+    responder
+    burpsuite
+    evil-winrm
     feroxbuster
+    crackmapexec
     (wordlists.override {
       lists = with pkgs; [
         rockyou
