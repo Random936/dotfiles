@@ -10,8 +10,7 @@
     mu
 
     # Fonts
-    fira-code
-    fira-code-symbols
+    iosevka
 
     # LSP Servers
     nil
