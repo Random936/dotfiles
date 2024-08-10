@@ -32,6 +32,8 @@
     function .....   { cd ../../../../.. }
     function ......  { cd ../../../../../.. }
     function ....... { cd ../../../../../../.. }
+    function bw-copy { bw-load && bw get password "$1" | xsel --clipboard -i }
+    function bw-clear { echo -n "" | xsel --clipboard }
     '';
 
     plugins = [
