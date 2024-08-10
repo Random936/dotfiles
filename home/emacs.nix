@@ -10,7 +10,7 @@
     mu
 
     # Fonts
-    iosevka
+    maple-mono
 
     # LSP Servers
     nil
