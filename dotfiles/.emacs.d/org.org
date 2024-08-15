@@ -16,7 +16,7 @@ This installs the org package and creates a setup function to enable/disable cer
 (use-package org
   :hook (org-mode . jm/org-mode-setup)
   :config
-  (setq jm/inbox-file "~/Nextcloud/org/inbox.org"
+  (setq jm/inbox-file (expand-file-name "inbox.org" jm/notes-directory)
         org-ellipsis " ▾"
         org-pretty-entities t
         org-hide-emphasis-markers t
@@ -219,7 +219,7 @@ Below is the main config for org-roam.
 (use-package org-roam
   :init (require 'org-roam-dailies)
   :custom
-  (org-roam-directory (file-truename "~/Nextcloud/org"))
+  (org-roam-directory jm/notes-directory)
   (org-roam-node-display-template "${title:60} ${file-title}")
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . jm/org-roam-find)
@@ -272,6 +272,17 @@ Below is the main config for org-roam.
     (make-directory jm/org-roam-templates-directory))
 
   (org-roam-db-autosync-mode))
+#+end_src
+
+** Consult Integration
+
+Consult Org Roam is a package that integrates searching from consult with ~org-roam~ which adds functionality such as full text searches over notes.
+
+#+begin_src emacs-lisp
+(use-package consult-org-roam
+  :after org-roam
+  :bind (("C-c n s" . consult-org-roam-search))
+  :init (consult-org-roam-mode 1))
 #+end_src
 
 * Fix Snippets

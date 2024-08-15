@@ -2,6 +2,15 @@
 
 General configuration is configuration of vanilla Emacs. This includes making Emacs more minimal.
 
+** Global Constants
+
+Constants used throughout my emacs config.
+
+#+begin_src emacs-lisp
+(defconst jm/cloud-root "~/Nextcloud")
+(defconst jm/notes-directory (expand-file-name "org" jm/cloud-root))
+#+end_src
+
 ** Disable Error Bell
 
 Disable error bell and visual bell. Visual bell would be nice on Linux, but on mac it is just annoying so I removed it temp.
@@ -460,8 +469,8 @@ Ledger is a Unix program that implements a finance tracking system or /ledger/. 
   :mode ("\\.ledger\\'")
   :config
   (setq ledger-report-use-strict t
-        ledger-master-file (file-truename "~/Nextcloud/Ledger/toc.ledger")
-        ledger-accounts-file (file-truename "~/Nextcloud/Ledger/accounts.ledger"))
+        ledger-master-file (expand-file-name "Ledger/toc.ledger" jm/cloud-root)
+        ledger-accounts-file (expand-file-name "Ledger/accounts.ledger" jm/cloud-root))
   (setq ledger-reports
         `(("bal" ,(format "%%(binary) -f %s bal" ledger-master-file))
           ("budget" ,(format "%%(binary) -f %s --budget -p 'this month' bal Expenses" ledger-master-file))
