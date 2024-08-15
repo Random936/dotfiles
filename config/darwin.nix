@@ -13,12 +13,13 @@
     enable = true;
     onActivation.cleanup = "zap";
     brews = [
+      "wireguard-tools"
       "coreutils"
       "watch"
     ];
     casks = [
-      "google-chrome"
       "scroll-reverser"
+      "google-chrome"
       "instantview"
       "nextcloud"
       "tailscale"

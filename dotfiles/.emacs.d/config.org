@@ -425,6 +425,8 @@ When installing Vertico, the documentation mentions a few other packages that ad
 
 #+begin_src emacs-lisp
 (use-package magit
+  :bind (("C-x g" . magit-status)
+         ("C-x C-g" . magit-status))
   :config
   (jm/leader-keys "gc" 'magit-clone))
 #+end_src

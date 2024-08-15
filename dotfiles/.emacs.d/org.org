@@ -18,6 +18,7 @@ This installs the org package and creates a setup function to enable/disable cer
   :config
   (setq jm/inbox-file "~/Nextcloud/org/inbox.org"
         org-ellipsis " ▾"
+        org-pretty-entities t
         org-hide-emphasis-markers t
         org-src-preserve-indentation t
 
@@ -43,33 +44,20 @@ This installs the org package and creates a setup function to enable/disable cer
 
 * Cosmetics
 
-** Org-Bullets
+** Org-Modern
 
-Org-bullets is a package that adds bullets to each heading instead of asterisks. It just makes org files nicer to look at.
+Org-Modern is a package that adds several features to emacs to make it look more /modern/.
 
 #+begin_src emacs-lisp
-;; Org-bullets for better headings
-(use-package org-bullets
+(use-package org-modern
   :after org
-  :hook (org-mode . org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-star 'replace
+        org-modern-replace-stars '("◉" "○" "●" "○" "●" "○" "●")))
 #+end_src
 
-** Add List Dots
-
-By default lists are started with a hyphen, though this doesn't really match the aesthetic of the rest of the org file. Due to that, I added this line which replaces the hyphen with a dot.
-
-- Bullet point 1
-- Bullet point 2
-- Bullet point 3
-
-#+begin_src emacs-lisp
-;; Replace - lists with a dot
-(font-lock-add-keywords 'org-mode
-                        '(("^ *\\([-]\\) "
-                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-#+end_src
+Some examples:
 
 ** Font Changes
 
@@ -100,22 +88,6 @@ Org-faces changes the font size of the headings to make them bigger in the org f
   (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
   (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
   (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
-#+end_src
-
-** Visual Fill Column
-
-Visual fill column is a package that allows you to center text and add borders to the sides of an org file. By default org files are displayed completely to the left side of the page like normal text files.
-
-#+begin_src emacs-lisp
-;; Set left-right margins with visual-fill-column
-(defun jm/org-mode-visual-fill ()
-  (setq visual-fill-column-width 160
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package visual-fill-column
-  :after org
-  :hook (org-mode . jm/org-mode-visual-fill))
 #+end_src
 
 ** Syntax Highlighting in Latex Exports
