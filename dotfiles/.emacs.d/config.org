@@ -39,6 +39,12 @@ Change location of custom file. This will stop *custom* from appending to the co
   (load custom-file)
 #+end_src
 
+** Disable Docstring Warnings
+
+#+begin_src emacs-lisp
+(setq byte-compile-warnings '(not docstrings))
+#+end_src
+
 ** Move Backup File
 
 This moves the backup files so that Emacs doesn't clutter up directories with backup files.
