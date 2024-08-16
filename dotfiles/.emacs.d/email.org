@@ -32,15 +32,6 @@ Select all items listen here – ⌘ + a
 Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
 #+end_src
 
-* Authentication with Pass
-
-Pass is a password manager made to be used on the Linux command line. To integrate /pass/ with Emacs, I can install the ~auth-source-pass~ package.
-
-#+begin_src emacs-lisp
-(use-package auth-source-pass
-  :init (auth-source-pass-enable))
-#+end_src
-
 * Mu4e
 
 In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of Emacs.
