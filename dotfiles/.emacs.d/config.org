@@ -106,6 +106,17 @@ Below are a few configuration changes to avoid TRAMP freezes when attempting to 
 (setq tramp-remote-shell-args "-c")
 #+end_src
 
+** Updating PATH from User Shell
+
+This package fixes issues with the path on MacOS by pulling the ~$PATH~ variable from the user's shell.
+
+#+begin_src emacs-lisp
+(use-package exec-path-from-shell
+  :init
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
+#+end_src
+
 * Package Manager
 
 Emacs and packages. Pretty much a requirement.
