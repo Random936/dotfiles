@@ -51,7 +51,8 @@ Org-Modern is a package that adds several features to emacs to make it look more
 #+begin_src emacs-lisp
 (use-package org-modern
   :after org
-  :hook (org-mode . org-modern-mode)
+  :hook ((org-mode . org-modern-mode)
+         (org-agenda-finalize . org-modern-agenda))
   :config
   (setq org-modern-star 'replace
         org-modern-replace-stars '("◉" "○" "●" "○" "●" "○" "●")))
