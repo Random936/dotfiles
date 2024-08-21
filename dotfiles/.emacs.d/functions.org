@@ -67,11 +67,11 @@ These functions are for my org roam daily capture template.
 (defun jm/dt-get-priority (priority &optional prompt)
   (jm/dt-filter-tasks
    (lambda () (when (equal priority (org-entry-get nil "PRIORITY"))
-                (jm/dt-format-link (or prompt "-"))))
+                (jm/dt-format-link (or prompt "+"))))
    "TODO=\"TODO\"|TODO=\"IN PROGRESS\""))
 
 (defun jm/dt-get-status (status &optional prompt)
-  (jm/dt-filter-tasks (lambda () (jm/dt-format-link (or prompt "- [ ]")))
+  (jm/dt-filter-tasks (lambda () (jm/dt-format-link (or prompt "+ [ ]")))
                       (concat "TODO=\"" status "\"")))
 
 
@@ -85,7 +85,7 @@ These functions are for my org roam daily capture template.
          (date (time-add time (days-to-time days))))
     (jm/dt-filter-tasks
      (lambda () (when (member (org-get-todo-state) '("TODO" "WAITING" "IN PROGRESS"))
-                  (jm/dt-format-link (or prompt "-"))))
+                  (jm/dt-format-link (or prompt "+"))))
      (concat type (format-time-string "<=\"<%Y-%m-%d>\"" date)))))
 
 (defun jm/dt-get-due-within (days &optional prompt)
@@ -116,9 +116,9 @@ These functions are for my org roam daily capture template.
 
 Taken from the book /12 Week Year/, the weekly scorecard is a way to measure how well you've been acting on your plan towards your weekly goal. By seeing how effective you're execution is, you are forced to face the objective truths about your productivity.
 
-- [ ] My test checkbox.
-- [ ] Other checkbox.
-- [X] My test checkbox.
++ [ ] My test checkbox.
++ [ ] Other checkbox.
++ [X] My test checkbox.
 
 #+begin_src emacs-lisp
 (defun jm/checkbox-checked-p (checkbox)
