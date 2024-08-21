@@ -1,40 +1,5 @@
 Org is a package that allows you to create files like this one that look nice while also being able to run code. In this file, the code being run is stored in code blocks and all other text is disregarded.
 
-* Function Definitions
-** Refresh Org Agenda Files
-
-Creates a function to refresh the ~org-agenda-files~ variable to be set to include all org roam notes files.
-
-#+begin_src emacs-lisp
-(defun jm/org-roam-refresh-agenda-list ()
-  (interactive)
-  (let ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
-    (setq org-agenda-files
-          (seq-filter
-           (lambda (file-path) (not (s-starts-with-p directory file-path)))
-           (org-roam-list-files)))))
-#+end_src
-** Custom Org-Roam Indexing Functions
-
-Before getting into the main config for Org-roam, I've created a few functions for better indexing nodes stored in the org-roam database. Specifically, these functions separate the org roam dailies nodes from other nodes.
-
-#+begin_src emacs-lisp
-(defun jm/org-roam-find-filter (node)
-  (let ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
-    (string= (file-name-directory (org-roam-node-file node))
-             directory)))
-
-(defun jm/org-roam-dailies-find ()
-  (interactive)
-  (org-roam-node-find nil nil #'jm/org-roam-find-filter))
-
-(defun jm/org-roam-find ()
-  (interactive)
-  (org-roam-node-find
-   nil nil
-   (lambda (node) (not (jm/org-roam-find-filter node)))))
-#+end_src
-
 * Org Setup
 
 This installs the org package and creates a setup function to enable/disable certain functionalities.
@@ -209,7 +174,7 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ("C-c n o" . org-id-get-create)
-         ("C-c n t" . jm/org-roam-capture-day))
+         ("C-c n t" . jm/org-roam-capture-today))
   :config
   ;; Config for org-roam capture templates.
   (setq jm/org-roam-templates-directory (expand-file-name "templates" org-roam-directory)
