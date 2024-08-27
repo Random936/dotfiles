@@ -9,6 +9,7 @@
     ./shared.nix
     ./hacking.nix
     ./neovim.nix
+    ./games.nix
     ./emacs.nix
     ./zsh.nix
   ];
@@ -22,8 +23,9 @@
     wireshark
     pavucontrol
     google-chrome
-    nextcloud-client
     wireguard-tools
+    nextcloud-client
+    nvtopPackages.full
   ];
 
   services.emacs.enable = true;

@@ -30,7 +30,6 @@
     nvidiaSettings = true;
 
     prime = {
-
       offload = {
         enable = true;
         enableOffloadCmd = true;
@@ -44,6 +43,13 @@
   # Fix issue with Nvidia display scaling.
   services.xserver.dpi = 96;
   environment.variables.GDK_SCALE = "0.5";
+
+  # Install OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 
   # Ignore laptop lid closing when connected to power.
   services.logind.lidSwitchExternalPower = "ignore";
