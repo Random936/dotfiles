@@ -12,6 +12,9 @@
   # Supported Filesystems
   boot.supportedFilesystems = [ "ntfs" ];
 
+  # Add kernel drivers for HP Omen Laptop (Fan Control and other)
+  boot.kernelModules = [ "hp-wmi" ];
+
   # Set hostname
   networking.hostName = "randomctf";
 
