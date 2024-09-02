@@ -6,6 +6,5 @@ function load_script() {
     fi
 }
 
-load_script "$HOME/.screenlayout/layout.sh" # screen layout script
 load_script "$HOME/.screenlayout/wallpapers.sh" # wallpapers script
 
