@@ -9,7 +9,6 @@
     ./shared.nix
     ./hacking.nix
     ./neovim.nix
-    ./games.nix
     ./emacs.nix
     ./zsh.nix
   ];
