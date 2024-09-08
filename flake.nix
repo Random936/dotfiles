@@ -15,6 +15,9 @@
   };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ... } @ inputs: {
+
+    # Nixos Configurations
+
     nixosConfigurations.randomctf = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -24,27 +27,11 @@
       ];
     };
 
-    homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        extraSpecialArgs.user = "random";
-        modules = [
-          ./home/headful-nixos.nix
-        ];
-    };
-
     nixosConfigurations."r330-media" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
         ./config/media.nix
-      ];
-    };
-
-    homeConfigurations.sampledb = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
-      extraSpecialArgs.user = "sampledb";
-      modules = [
-        ./home/headless-nixos.nix
       ];
     };
 
@@ -56,6 +43,25 @@
       ];
     };
 
+    nixosConfigurations."r330-logging" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./config/logging.nix
+      ];
+    };
+
+
+    # Home-Manager Configurations
+
+    homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs.user = "random";
+        modules = [
+          ./home/headful-nixos.nix
+        ];
+    };
+
     homeConfigurations.media = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       extraSpecialArgs.user = "media";
@@ -63,6 +69,25 @@
         ./home/headless-nixos.nix
       ];
     };
+
+    homeConfigurations.sampledb = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs.user = "sampledb";
+      modules = [
+        ./home/headless-nixos.nix
+      ];
+    };
+
+    homeConfigurations.logging = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs.user = "logging";
+      modules = [
+        ./home/headless-nixos.nix
+      ];
+    };
+
+
+    # Darwin Configuration 
 
     darwinConfigurations."Jadens-MacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
