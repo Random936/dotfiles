@@ -22,4 +22,15 @@
   environment.systemPackages = with pkgs; [
     suricata
   ];
+
+  systemd.services.suricata = {
+    enable = true;
+    description = "Suricata IDS/IPS";
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      type = "simple";
+      ExecStart = "${pkgs.suricata}/bin/suricata -c '/home/logging/suricata.yaml' -i ens18";
+      Restart = "on-failure";
+    };
+  };
 }
