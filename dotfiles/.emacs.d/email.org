@@ -32,7 +32,8 @@ Select all items listen here – ⌘ + a
 Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
 #+end_src
 
-* Mu4e
+** Mu4e Installation
+
 
 In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of Emacs.
 
@@ -41,13 +42,49 @@ yay -S mu
 #+end_src
 
 After installing the ~mu~ client, I also need to run a initial index using the following command:
+
 #+begin_src bash
 mbsync -a
 mu init --maildir=~/.mail --my-address=jadenprovost@gmail.com
 mu index
 #+end_src
 
-From here, I can continue onto configuring the ~mu4e~ emacs package.
+* Custom Functions
+
+#+begin_src emacs-lisp
+(defconst jm/email-filters-path "~/.mail/filters.json")
+
+(defun jm/any-string-match-p (needles haystack)
+  (when (listp needles)
+    (let (result)
+      (dolist (needle needles result)
+        (setq result (or result (s-matches-p needle haystack)))))))
+
+(defun jm/load-email-filters (msg)
+  (let ((filters (append (json-read-file jm/email-filters-path) nil))
+        (trash-flag (member
+                     (car (mu4e-string-to-flags "T"))
+                     (mu4e-message-field msg :flags)))
+        folder)
+    (if trash-flag
+        "/Trash"
+      (dolist (filter filters)
+        (let ((subject (mu4e-message-field msg :subject))
+              (filter-folder (cdr (assoc-string "folder" filter)))
+              (subject-filters (append (cdr (assoc-string "subject" filter)) nil))
+              (from-filters (append (cdr (assoc-string "from-contact" filter)) nil))
+              (bcc-filters (append (cdr (assoc-string "bcc-contact" filter)) nil)))
+          (when (or (jm/any-string-match-p subject-filters subject)
+                    (mu4e-message-contact-field-matches msg :from from-filters)
+                    (mu4e-message-contact-field-matches msg :bcc bcc-filters))
+            (setq folder filter-folder))))
+      (if folder folder "/Archive"))))
+#+end_src
+
+* Mu4e
+
+This section contains the ~mu4e~ emacs specific configuration.
+
 #+begin_src emacs-lisp
 
 (use-package mu4e
@@ -80,56 +117,7 @@ From here, I can continue onto configuring the ~mu4e~ emacs package.
   (setq mu4e-drafts-folder "/Drafts"
         mu4e-sent-folder "/Sent"
         mu4e-trash-folder "/Trash"
-        mu4e-refile-folder
-        (lambda (msg)
-          (cond
-           ((member (car (mu4e-string-to-flags "T")) (mu4e-message-field msg :flags)) "/Trash")
-
-           ;; UCSC
-           ((or (mu4e-message-contact-field-matches msg :bcc "undergrad@ucsc.edu")
-                (mu4e-message-contact-field-matches msg :from '("noreply@YuJa.com"
-                                                                "no-reply@piazza.com"
-                                                                "notifications@instructure.com"
-                                                                "no-reply@gradescope.com"
-                                                                "notification@edstem.org"
-                                                                "noreply@everbridge.net"
-                                                                ".*office.*@ucsc.edu"
-                                                                "madocast@ucsc.edu"
-                                                                "ucsc_ucues@ucop.edu"
-                                                                "ebeshear@ucsc.edu"))) "/UCSC")
-
-           ;; Work Related
-           ((mu4e-message-contact-field-matches msg :from '(".*-noreply@linkedin.com"
-                                                            "donotreply@indeed.com")) "/Work")
-
-           ;; Finance
-           ((or (s-equals-p "Your receipt from Apple." (mu4e-message-field msg :subject))
-                (s-equals-p "1010 Pacific - Payment Confirmation" (mu4e-message-field msg :subject))
-                (mu4e-message-contact-field-matches msg :from '("onlinebanking@ealerts.bankofamerica.com"
-                                                                "no.reply.alerts@chase.com"
-                                                                "noreply@robinhood.com"
-                                                                "venmo@venmo.com"
-                                                                "donotreply@officeally.com"
-                                                                "online.communications@alerts.comcast.net"
-                                                                "orders@eat.grubhub.com"
-                                                                "noreply@online.wingstop.com"))) "/Finance")
-           ;; Packages/Shipping
-           ((mu4e-message-contact-field-matches msg :from '("return@amazon.com"
-                                                            "auto-confirm@amazon.com"
-                                                            "order-update@amazon.com"
-                                                            "shipment-tracking@amazon.com"
-                                                            "safeway@p.safeway.com"
-                                                            "cvs@cvs.narvar.com"
-                                                            "ebay@ebay.com"
-                                                            "pkginfo@ups.com"
-                                                            "info@techmikeny.com"
-                                                            "tracking@shipstation.com")) "/Packages")
-
-           ;; Slug Security Club
-           ((or (mu4e-message-contact-field-matches msg :from "jinoh@ucsc.edu")
-                (s-starts-with-p "[SlugSec" (mu4e-message-field msg :subject))) "/Club")
-
-           (t "/Archive"))))
+        mu4e-refile-folder #'jm/load-email-filters)
 
   ;; Config mu4e bookmarks
   (setq mu4e-bookmarks
