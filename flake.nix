@@ -55,11 +55,11 @@
     # Home-Manager Configurations
 
     homeConfigurations.random = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages."x86_64-linux";
-        extraSpecialArgs.user = "random";
-        modules = [
-          ./home/headful-nixos.nix
-        ];
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      extraSpecialArgs.user = "random";
+      modules = [
+        ./home/headful-nixos.nix
+      ];
     };
 
     homeConfigurations.media = home-manager.lib.homeManagerConfiguration {
@@ -87,7 +87,7 @@
     };
 
 
-    # Darwin Configuration 
+    # Darwin Configuration
 
     darwinConfigurations."Jadens-MacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
