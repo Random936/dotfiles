@@ -52,7 +52,7 @@ mu index
 * Custom Functions
 
 #+begin_src emacs-lisp
-(defconst jm/email-filters-path "~/.mail/filters.json")
+(defconst jm/email-filters-path "~/Nextcloud/filters.json")
 
 (defun jm/any-string-match-p (needles haystack)
   (when (listp needles)
@@ -91,27 +91,22 @@ This section contains the ~mu4e~ emacs specific configuration.
   :ensure nil
   :bind ("C-x m" . mu4e)
   :config
-  (setq mu4e-mu-binary (executable-find "mu"))
-
-  ;; Disable hard line wrapping
-  (setq mu4e-compose-format-flowed t)
   (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines -1)))
 
-  ;; Avoids syncing issues.
-  (setq mu4e-change-filenames-when-moving t)
-
-  ;; Extend header view max message count.
-  (setq mu4e-search-results-limit 2000)
+  (setq mu4e-mu-binary (executable-find "mu")
+        mu4e-change-filenames-when-moving t ; Avoids syncing issues.
+        mu4e-search-results-limit 2000 ; Extend header view max message count.
+        mu4e-compose-format-flowed t) ; Disable hard line wrapping
 
   ;; Fix message citation style for gmail.
-  (setq message-cite-style message-cite-style-gmail)
-  (setq message-citation-line-format "On %a, %b %d, %Y at %H:%M %p %f wrote:")
-  (setq message-citation-line-function 'message-insert-formatted-citation-line)
+  (setq message-cite-style message-cite-style-gmail
+        message-citation-line-format "On %a, %b %d, %Y at %H:%M %p %f wrote:"
+        message-citation-line-function 'message-insert-formatted-citation-line)
 
   ;; Refresh mail every X seconds. Set to 5 minutes currently
-  (setq mu4e-update-interval (* 5 60))
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-maildir "~/.mail")
+  (setq mu4e-update-interval (* 5 60)
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-maildir "~/.mail")
 
   ;; Config mu4e folders
   (setq mu4e-drafts-folder "/Drafts"
@@ -139,7 +134,7 @@ This section contains the ~mu4e~ emacs specific configuration.
           (:maildir "/Club" :key ?c)
           (:maildir "/UCSC" :key ?u)
           (:maildir "/Newsletters" :key ?n)
-          (:maildir "/Automated" :key ?A)))
+          (:maildir "/Automated" :key ?A))))
 #+end_src
 
 Adding some configuration to correct ~mu4e~'s default values.
