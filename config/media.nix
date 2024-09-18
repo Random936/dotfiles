@@ -5,6 +5,16 @@
     ./headless.nix
   ];
 
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.opengl.enable = true;
+  hardware.nvidia = {
+      open = false;
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      nvidiaSettings = true;
+  };
+
   users.users.media = import ./user.nix;
   networking.hostName = "r330-media";
 
@@ -12,7 +22,7 @@
   networking.defaultGateway = "192.168.100.1";
   networking.nameservers = [ "192.168.100.1" ];
   networking.firewall.allowedTCPPorts = [ 80 443 32400 ];
-  networking.interfaces.ens18.ipv4.addresses = [
+  networking.interfaces.enp6s18.ipv4.addresses = [
     {
       address = "192.168.100.5";
       prefixLength = 24;

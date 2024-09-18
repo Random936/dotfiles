@@ -24,9 +24,11 @@ in {
     btop
     p7zip
     ripgrep
+    openvpn
+    pciutils
     fastfetch
     bitwarden-cli
-    openvpn
+    nvtopPackages.full
 
     # Dev tools
     clang
