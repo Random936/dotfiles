@@ -5,16 +5,6 @@
     ./headless.nix
   ];
 
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware.opengl.enable = true;
-  hardware.nvidia = {
-      open = false;
-      modesetting.enable = true;
-      powerManagement.enable = false;
-      powerManagement.finegrained = false;
-      nvidiaSettings = true;
-  };
-
   users.users.media = import ./user.nix;
   networking.hostName = "r330-media";
 
@@ -28,6 +18,36 @@
       prefixLength = 24;
     }
   ];
+
+
+  # Setup drivers for NVIDIA GPU
+  services.xserver = {
+      enable = false;
+      videoDrivers = [ "nvidia" ];
+  };
+
+  hardware = {
+    nvidia = {
+      open = false;
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      nvidiaSettings = true;
+    };
+
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
+  };
+
+  # Plex Setup
+  services.plex = {
+      enable = true;
+      openFirewall = true;
+      user = "media";
+      dataDir = "/mnt/storage/plex";
+  };
 
   # Nextcloud Setup
   services.nextcloud = {
