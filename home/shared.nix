@@ -28,7 +28,6 @@ in {
     pciutils
     fastfetch
     bitwarden-cli
-    nvtopPackages.full
 
     # Dev tools
     clang
