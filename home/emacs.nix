@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     # Build deps
     cmake
+    libtool
 
     # Additional packages for functionality
     isync
