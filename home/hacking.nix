@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }: {
+{ pkgs, ... }: {
 
   # Hacking specific packages.
   home.packages = with pkgs; [
