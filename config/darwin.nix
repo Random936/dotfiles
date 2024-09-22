@@ -66,27 +66,48 @@
     shift + cmd - k : yabai -m window --swap north
     shift + cmd - l : yabai -m window --swap east
 
-    # Move Window to Space #
-    cmd - 1 : yabai -m window --space 1;
-    cmd - 2 : yabai -m window --space 2;
-    cmd - 3 : yabai -m window --space 3;
-    cmd - 4 : yabai -m window --space 4;
-    cmd - 5 : yabai -m window --space 5;
-    cmd - 6 : yabai -m window --space 6;
-    cmd - 7 : yabai -m window --space 7;
-    cmd - 8 : yabai -m window --space 8;
-    cmd - 9 : yabai -m window --space 9;
-    cmd - 0 : yabai -m window --space 0;
+    # Focus on Space #
+    cmd - 1 : yabai -m space --focus 1
+    cmd - 2 : yabai -m space --focus 2
+    cmd - 3 : yabai -m space --focus 3
+    cmd - 4 : yabai -m space --focus 4
+    cmd - 5 : yabai -m space --focus 5
+    cmd - 6 : yabai -m space --focus 6
+    cmd - 7 : yabai -m space --focus 7
+    cmd - 8 : yabai -m space --focus 8
+    cmd - 9 : yabai -m space --focus 9
 
-    # Flip Window Axis
-    shift + cmd - y : yabai -m space --mirror y-axis
-    shift + cmd - x : yabai -m space --mirror x-axis
+    # Move Window to Space #
+    shift + cmd - 1 : yabai -m window --space 1
+    shift + cmd - 2 : yabai -m window --space 2
+    shift + cmd - 3 : yabai -m window --space 3
+    shift + cmd - 4 : yabai -m window --space 4
+    shift + cmd - 5 : yabai -m window --space 5
+    shift + cmd - 6 : yabai -m window --space 6
+    shift + cmd - 7 : yabai -m window --space 7
+    shift + cmd - 8 : yabai -m window --space 8
+    shift + cmd - 9 : yabai -m window --space 9
+
+    # Create/Destroy windows
+    shift + cmd - c : yabai -m space --create
+    shift + cmd - d : yabai -m space --destroy
+
+    # Toggle window split
+    cmd - e : yabai -m window --toggle split
 
     # Full Screen Window
     cmd - f : yabai -m window --toggle zoom-fullscreen
 
+    # Close window with i3 keybinding
+    cmd - q : yabai -m window --close
+
+    # Application shortcuts
+    shift + cmd - e : emacs
+    shift + cmd - f : osascript -e 'tell application "Google Chrome" to make new window'
+    cmd - return : osascript -e 'tell application "iTerm2" to create window with default profile'
+
     # Reload skhd config
-    shift + cmd - r : echo "Reloading skhd config" && skhd --reload
+    shift + cmd - r : ${pkgs.skhd}/bin/skhd -r
     '';
   };
 
@@ -95,34 +116,14 @@
     enableScriptingAddition = true;
 
     config = {
+      layout                       = "bsp";
+      mouse_follows_focus          = "on";
       focus_follows_mouse          = "autoraise";
-      mouse_follows_focus          = "off";
       window_placement             = "second_child";
-      window_opacity               = "off";
-      window_opacity_duration      = "0.0";
-      window_border                = "on";
-      window_border_placement      = "inset";
-      window_border_width          = 2;
-      window_border_radius         = 3;
-      active_window_border_topmost = "off";
-      window_topmost               = "on";
-      window_shadow                = "float";
-      active_window_border_color   = "0xff5c7e81";
-      normal_window_border_color   = "0xff505050";
-      insert_window_border_color   = "0xffd75f5f";
-      active_window_opacity        = "1.0";
-      normal_window_opacity        = "1.0";
-      split_ratio                  = "0.50";
       auto_balance                 = "on";
       mouse_modifier               = "fn";
       mouse_action1                = "move";
       mouse_action2                = "resize";
-      layout                       = "bsp";
-      top_padding                  = 10;
-      bottom_padding               = 10;
-      left_padding                 = 10;
-      right_padding                = 10;
-      window_gap                   = 10;
     };
 
     extraConfig = ''

@@ -22,7 +22,6 @@ in {
     tmux
     ncdu
     btop
-    iotop
     iftop
     p7zip
     ripgrep
