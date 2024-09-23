@@ -40,6 +40,10 @@
     swapLeftCommandAndLeftAlt = true;
   };
 
+  # MacOS Changes
+  system.defaults.dock.autohide = true;
+  system.startup.chime = false;
+
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
 
