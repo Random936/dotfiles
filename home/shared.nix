@@ -16,6 +16,7 @@ in {
     # Utilities
     jq
     bc
+    dig
     file
     wget
     curl

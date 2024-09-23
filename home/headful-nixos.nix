@@ -17,7 +17,6 @@
     feh
     dconf
     docker
-    cdrkit
     discord
     wireshark
     pavucontrol

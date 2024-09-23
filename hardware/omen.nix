@@ -10,8 +10,10 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  # Added kernel drivers for HP Omen Laptop
+  boot.kernelModules = [ "kvm-intel" "hp-wmi" ];
 
   boot.extraModprobeConfig = ''
   options snd-hda-intel model=dell-headset-multi

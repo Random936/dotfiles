@@ -34,7 +34,10 @@ Below I am installing the actual package and adding some basic configuration.
 #+begin_src emacs-lisp
   (use-package lsp-ui
     :hook (lsp-mode . lsp-ui-mode)
-    :config (setq lsp-ui-sideline-show-diagnostics t))
+    :config
+    (setq lsp-ui-sideline-enable t
+          lsp-ui-show-diagnostics t
+          lsp-ui-doc-enable t))
 #+end_src
 
 ** Company Mode
