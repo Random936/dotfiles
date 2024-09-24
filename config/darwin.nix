@@ -6,6 +6,7 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
+    nextcloud-client
     git
   ];
 
@@ -21,7 +22,6 @@
       "scroll-reverser"
       "google-chrome"
       "instantview"
-      "nextcloud"
       "tailscale"
       "discord"
       "iterm2"

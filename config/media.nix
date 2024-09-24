@@ -35,9 +35,10 @@
       nvidiaSettings = true;
     };
 
-    graphics = {
+    opengl = {
       enable = true;
-      enable32Bit = true;
+      driSupport = true;
+      driSupport32Bit = true;
     };
   };
 
