@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
 
   imports = [
     ../hardware/omen.nix
@@ -15,6 +15,9 @@
   # Hostname and User
   networking.hostName = "randomctf";
   users.users.random = import ./user.nix;
+
+  # Temporary fix for service failure.
+  systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
   # Enable Nvidia drivers
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -43,10 +46,9 @@
   environment.variables.GDK_SCALE = "0.5";
 
   # Install OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   # Ignore laptop lid closing when connected to power.
