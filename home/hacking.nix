@@ -12,7 +12,6 @@
     wpscan
     openssl
     remmina
-    netexec
     inetutils
     thc-hydra
     exploitdb
@@ -20,6 +19,7 @@
     burpsuite
     evil-winrm
     feroxbuster
+    crackmapexec
     (wordlists.override {
       lists = with pkgs; [
         rockyou
