@@ -43,9 +43,10 @@
   environment.variables.GDK_SCALE = "0.5";
 
   # Install OpenGL
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
-    enable32Bit = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
 
   # Ignore laptop lid closing when connected to power.
