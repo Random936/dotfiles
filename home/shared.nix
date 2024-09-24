@@ -29,7 +29,6 @@ in {
     openvpn
     pciutils
     fastfetch
-    bitwarden-cli
 
     # Dev tools
     clang

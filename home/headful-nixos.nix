@@ -21,6 +21,7 @@
     wireshark
     pavucontrol
     google-chrome
+    bitwarden-cli
     wireguard-tools
     nextcloud-client
     nvtopPackages.full
