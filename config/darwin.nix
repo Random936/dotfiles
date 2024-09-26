@@ -21,10 +21,10 @@
       "scroll-reverser"
       "google-chrome"
       "instantview"
-      "nextcloud"
       "tailscale"
       "discord"
       "iterm2"
+      "zoom"
       "vlc"
     ];
   };
@@ -32,6 +32,9 @@
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
+
+  # Enable rosetta
+  virtualisation.rosetta.enable = true;
 
   # Keyboard and Mouse
   system.keyboard = {
