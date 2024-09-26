@@ -23,15 +23,24 @@
     nodePackages.vscode-json-languageserver
   ];
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacs29;
-    extraPackages = epkgs: with epkgs; [
-      mu4e
-      vterm
-      all-the-icons
-      nerd-icons
-    ];
+  programs = {
+    # For integration with shell.nix files
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
+
+    emacs = {
+      enable = true;
+      package = pkgs.emacs29;
+      extraPackages = epkgs: with epkgs; [
+        mu4e
+        vterm
+        all-the-icons
+        nerd-icons
+      ];
+    };
   };
 
   home.file = {

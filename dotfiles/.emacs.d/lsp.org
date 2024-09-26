@@ -61,6 +61,16 @@ Company is a package that automatically finds completions instead of making the 
     :init (global-flycheck-mode))
 #+end_src
 
+** Direnv for Nix-Shell Integration
+
+Direnv is a program that will automatically run ~nix-shell~ when a ~.envrc~ file is found. Using the ~emacs-direnv~ package, you can more easily integrate nix into your development environment.
+
+#+begin_src emacs-lisp
+(use-package direnv
+  :config
+  (direnv-mode))
+#+end_src
+
 * Language Servers
 
 This will include any language server packages and configuration.
