@@ -2,8 +2,8 @@ IMAPAccount gmail
 Host imap.gmail.com
 User jadenprovost@gmail.com
 PassCmd "bw --session $(cat $HOME/.bw_session) --nointeraction get password 'Emacs Gmail'"
-SSLType IMAPS
-SSLVersions TLSv1.2
+TLSType IMAPS
+TLSVersions TLSv1.2
 AuthMechs PLAIN
 SystemCertificates no
 CertificateFile /etc/ssl/certs/ca-certificates.crt
