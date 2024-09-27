@@ -87,4 +87,10 @@
         ${config.services.nextcloud.hostName}.email = "admin@randomctf.com";
     };
   };
+
+  # Enable Tailscale
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
 }
