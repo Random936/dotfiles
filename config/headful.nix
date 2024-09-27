@@ -19,9 +19,6 @@
     jack.enable = true;
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable the X11 windowing system and i3 window manager.
   environment.pathsToLink = [ "/libexec" ];
   services.xserver = {
@@ -56,5 +53,4 @@
 
   # Install additional programs
   programs.thunar.enable = true;
-
 }
