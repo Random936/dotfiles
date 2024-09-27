@@ -33,8 +33,10 @@
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
-  # Enable rosetta
-  virtualisation.rosetta.enable = true;
+  # Extra activation scripts
+  system.activationScripts.extraActivation.text = ''
+  softwareupdate --install-rosetta --agree-to-license
+  '';
 
   # Keyboard and Mouse
   system.keyboard = {
