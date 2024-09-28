@@ -14,6 +14,7 @@
     onActivation.cleanup = "zap";
     brews = [
       "wireguard-tools"
+      "bitwarden-cli"
       "coreutils"
       "watch"
     ];
@@ -21,6 +22,7 @@
       "scroll-reverser"
       "google-chrome"
       "instantview"
+      "bitwarden"
       "tailscale"
       "discord"
       "iterm2"
@@ -106,6 +108,8 @@
 
     # Full Screen Window
     cmd - f : yabai -m window --toggle zoom-fullscreen
+    ctrl - f : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' \
+                         -e 'tell application "System Events" to tell process frontApp to click menu item "Find…" of menu 1 of menu item "Find" of menu "Edit" of menu bar item "Edit" of menu bar 1'
 
     # Close window with i3 keybinding
     cmd - q : yabai -m window --close
