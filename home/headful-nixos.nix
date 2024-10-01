@@ -17,8 +17,10 @@
     feh
     dconf
     docker
+    zoom-us
     discord
     wireshark
+    flameshot
     pavucontrol
     google-chrome
     bitwarden-cli

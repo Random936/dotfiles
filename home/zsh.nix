@@ -14,6 +14,12 @@
     shellAliases = {
       cd = "z";
       ls = "eza";
+      awkuniq = "sort | uniq";
+      histogram = "awkuniq -c | sort -nr";
+      json-less = "jq -C . | less -M";
+      csv2json = "python -c 'import csv, json, sys; print(json.dumps([dict(r) for r in csv.DictReader(sys.stdin)]))'";
+
+      # Nix Specific aliases
       update-darwin = "darwin-rebuild switch --flake ~/dotfiles";
       update-config = "sudo nixos-rebuild switch --flake ~/dotfiles";
       update-home = "home-manager switch --flake ~/dotfiles";
