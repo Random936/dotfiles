@@ -40,6 +40,10 @@
     function ....... { cd ../../../../../../.. }
     function bw-copy { bw-load && bw get password "$1" | xsel --clipboard -i }
     function bw-clear { echo -n "" | xsel --clipboard }
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+       source <(/opt/homebrew/bin/brew shellenv)
+    fi
     '';
 
     plugins = [

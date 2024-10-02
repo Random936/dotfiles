@@ -140,6 +140,8 @@
     };
 
     extraConfig = ''
+    yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+    yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
     yabai -m rule --add app="^System Settings$" manage=off
     yabai -m rule --add app="^Calculator$" manage=off
     '';
