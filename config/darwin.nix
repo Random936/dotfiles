@@ -101,14 +101,13 @@
 
     # Create/Destroy windows
     shift + cmd - c : yabai -m space --create
-    shift + cmd - d : yabai -m space --destroy
 
     # Toggle window split
     cmd - e : yabai -m window --toggle split
 
     # Full Screen Window
     cmd - f : yabai -m window --toggle zoom-fullscreen
-    ctrl - f : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' \
+    alt - f : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' \
                          -e 'tell application "System Events" to tell process frontApp to click menu item "Find…" of menu 1 of menu item "Find" of menu "Edit" of menu bar item "Edit" of menu bar 1'
 
     # Close window with i3 keybinding
@@ -116,7 +115,8 @@
 
     # Application shortcuts
     shift + cmd - e : emacs
-    shift + cmd - f : osascript -e 'tell application "Google Chrome" to make new window'
+    shift + cmd - f : open -n -a "Google Chrome"
+    shift + cmd - d : open -n -a "Discord"
     cmd - return : osascript -e 'tell application "iTerm2" to create window with default profile'
 
     # Reload skhd config
