@@ -19,6 +19,9 @@ bindsym $mod+Shift+f exec "google-chrome-stable"
 bindsym $mod+Shift+e exec "emacsclient -c"
 bindsym $mod+Shift+d exec "discord"
 
+# Lock screen with i3lock-fancy
+bindsym $mod+Shift+x exec "i3lock-fancy"
+
 # kill focused window
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
@@ -147,6 +150,9 @@ new_window pixel 3
 client.focused #555555 #555555 #ffffff #333333 #0000ff
 client.focused_inactive #333333 #222222 #888888 #292d2e #eeeeee
 client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
+
+# Auto lock the screen after X minutes
+exec "xautolock -detectsleep -time 3 -locker i3lock-fancy"
 
 # Startup Applications
 exec_always  --no-startup-id "$HOME/.screenlayout/launch.sh &" # setup screen layout and wallpapers

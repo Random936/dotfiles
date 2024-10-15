@@ -12,9 +12,11 @@
   # Supported Filesystems
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Hostname and User
-  networking.hostName = "randomctf";
+  # Import default user config
   users.users.random = import ./user.nix;
+
+  # Networking
+  networking.hostName = "randomctf";
 
   # Temporary fix for service failure.
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

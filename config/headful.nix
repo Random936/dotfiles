@@ -32,6 +32,8 @@
         rofi
         polybar
         alacritty
+        i3lock-fancy
+        xautolock
         autorandr
         arandr
         xsel
