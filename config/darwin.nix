@@ -99,19 +99,19 @@
     shift + cmd - 8 : yabai -m window --space 8
     shift + cmd - 9 : yabai -m window --space 9
 
-    # Create/Destroy windows
-    shift + cmd - c : yabai -m space --create
-
     # Toggle window split
     cmd - e : yabai -m window --toggle split
 
     # Full Screen Window
     cmd - f : yabai -m window --toggle zoom-fullscreen
     alt - f : osascript -e 'tell application "System Events" to set frontApp to name of first application process whose frontmost is true' \
-                         -e 'tell application "System Events" to tell process frontApp to click menu item "Find…" of menu 1 of menu item "Find" of menu "Edit" of menu bar item "Edit" of menu bar 1'
+                        -e 'tell application "System Events" to tell process frontApp to click menu item "Find…" of menu 1 of menu item "Find" of menu "Edit" of menu bar item "Edit" of menu bar 1'
 
     # Close window with i3 keybinding
     cmd - q : yabai -m window --close
+
+    # Close space
+    shift + cmd - w : yabai -m space --destroy
 
     # Application shortcuts
     shift + cmd - e : emacs
@@ -144,6 +144,7 @@
     yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
     yabai -m rule --add app="^System Settings$" manage=off
     yabai -m rule --add app="^Calculator$" manage=off
+    yabai -m rule --add app="^iPhone Mirroring$" manage=off
     '';
   };
 
