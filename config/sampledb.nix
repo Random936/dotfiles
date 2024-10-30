@@ -14,7 +14,7 @@
   networking.firewall.allowedTCPPorts = [ 80 443 32400 ];
   networking.interfaces.ens18.ipv4.addresses = [
     {
-      address = "192.168.100.7";
+      address = "192.168.100.42";
       prefixLength = 24;
     }
   ];

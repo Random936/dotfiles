@@ -14,7 +14,7 @@
   networking.firewall.allowedTCPPorts = [ 80 443 32400 ];
   networking.interfaces.enp6s18.ipv4.addresses = [
     {
-      address = "192.168.100.5";
+      address = "192.168.100.40";
       prefixLength = 24;
     }
   ];
@@ -89,8 +89,9 @@
   };
 
   # Enable Tailscale
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
+  services.tailscale.enable = true;
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
   };
 }
