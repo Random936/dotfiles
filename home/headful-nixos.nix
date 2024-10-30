@@ -22,6 +22,7 @@
     wireshark
     flameshot
     pavucontrol
+    virt-viewer
     google-chrome
     bitwarden-cli
     wireguard-tools
