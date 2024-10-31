@@ -3,22 +3,13 @@
   imports = [
     ../hardware/media.nix
     ./headless.nix
+    (import ./networking.nix { 
+      hostname = "sampledb-dev";
+      ip_address = "192.168.100.40"; 
+    })
   ];
 
   users.users.media = import ./user.nix;
-  networking.hostName = "r330-media";
-
-  # Conigure a static IP address.
-  networking.defaultGateway = "192.168.100.1";
-  networking.nameservers = [ "192.168.100.1" ];
-  networking.firewall.allowedTCPPorts = [ 80 443 32400 ];
-  networking.interfaces.enp6s18.ipv4.addresses = [
-    {
-      address = "192.168.100.40";
-      prefixLength = 24;
-    }
-  ];
-
 
   # Setup drivers for NVIDIA GPU
   services.xserver = {

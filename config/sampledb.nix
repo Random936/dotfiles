@@ -3,19 +3,11 @@
   imports = [
     ../hardware/sampledb.nix
     ./headless.nix
+    (import ./networking.nix { 
+      hostname = "sampledb-dev";
+      ip_address = "192.168.100.42"; 
+    })
   ];
 
   users.users.sampledb = import ./user.nix;
-  networking.hostName = "sampledb-dev";
-
-  # Conigure a static IP address.
-  networking.defaultGateway = "192.168.100.1";
-  networking.nameservers = [ "192.168.100.1" ];
-  networking.firewall.allowedTCPPorts = [ 80 443 32400 ];
-  networking.interfaces.ens18.ipv4.addresses = [
-    {
-      address = "192.168.100.42";
-      prefixLength = 24;
-    }
-  ];
 }
