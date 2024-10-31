@@ -17,6 +17,7 @@
 
   # Networking
   networking.hostName = "randomctf";
+  networking.nameservers = [ "192.168.100.1" "8.8.8.8" "8.8.4.4" ];
 
   # Temporary fix for service failure.
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

@@ -23,6 +23,7 @@
     flameshot
     pavucontrol
     virt-viewer
+    libreoffice
     google-chrome
     bitwarden-cli
     wireguard-tools
