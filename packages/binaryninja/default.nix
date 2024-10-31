@@ -3,12 +3,12 @@
   buildFHSEnv,
   writeScript,
   pkgs,
-  python3
+  python311
 }:
 buildFHSEnv rec {
   name = "binaryninja";
 
-  python = python3.withPackages (ps: with ps; [
+  python = python311.withPackages (ps: with ps; [
     torch
     pip
   ]);
@@ -47,18 +47,14 @@ buildFHSEnv rec {
     ];
 
   runScript = writeScript "binaryninja.sh" ''
-    set -e
-    # Create a temporary directory for the symlink
-    mkdir -p "$HOME/.binaryninja/libs"
-    ln -sf ${python}/lib/libpython3.so "$HOME/.binaryninja/libs/libpython.so"
+  set -e
 
-    # Export environment variables
-    export PATH="${python}/bin:$PATH"
-    export PYTHONPATH="${python}/lib/python3.12/site-packages:$PYTHONPATH"
-    export LD_LIBRARY_PATH="$HOME/.binaryninja/libs:${python}/lib:$LD_LIBRARY_PATH"
+  # Export environment variables
+  export PATH="${python}/bin:$PATH"
+  export PYTHONPATH="${python}/lib/python3.12/site-packages:$PYTHONPATH"
 
-    # Run Binary Ninja
-    exec "$HOME/.binaryninja/binaryninja" "$@"
+  # Run Binary Ninja
+  exec "$HOME/.binaryninja/binaryninja" "$@"
   '';
 
   meta = {
