@@ -35,7 +35,8 @@ This installs the org package and creates a setup function to enable/disable cer
         org-time-stamp-custom-formats '("%m-%d-%y %a" . "%m-%d-%y %a %I:%M %p")
 
         ;; Capture templates
-        org-capture-templates '(("i" "Inbox" entry (file jm/inbox-file) "* %?\n")))
+        org-capture-templates '(("i" "Inbox" entry (file jm/inbox-file)
+                                 "* TODO %^{Task}\nSCHEDULED: %^t")))
 
   (jm/leader-keys
     "oa" '(org-agenda :which-key "Org agenda")
