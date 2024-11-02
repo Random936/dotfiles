@@ -14,14 +14,17 @@
     onActivation.cleanup = "zap";
     taps = [
       "nikitabobko/tap"
+      "FelixKratz/formulae"
     ];
     brews = [
       "wireguard-tools"
       "bitwarden-cli"
+      "sketchybar"
       "coreutils"
       "watch"
     ];
     casks = [
+      "font-hack-nerd-font"
       "scroll-reverser"
       "google-chrome"
       "instantview"
@@ -52,8 +55,16 @@
   };
 
   # MacOS Changes
-  system.defaults.dock.autohide = true;
-  system.startup.chime = false;
+  system = {
+    startup.chime = false;
+    defaults = {
+      dock.autohide = true;
+      NSGlobalDomain = {
+        "com.apple.mouse.tapBehavior" = 1;
+        _HIHideMenuBar = true;
+      };
+    };
+  };
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;

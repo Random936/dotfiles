@@ -1,18 +1,36 @@
-# Reference: https://github.com/i3/i3/blob/next/etc/config
-# i3 doesn't have "normalizations" feature that why we disable them here.
-# But the feature is very helpful.
-# Normalizations eliminate all sorts of weird tree configurations that don't make sense.
-# Give normalizations a chance and enable them back.
+start-at-login = true
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Sketchybar Integration
+after-startup-command = ['exec-and-forget sketchybar']
+
+# Notify Sketchybar about workspace change
+exec-on-workspace-change = [
+'/bin/bash', '-c',
+'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+on-focus-changed = [
+'exec-and-forget sketchybar --trigger front_app_switched',
+'exec-and-forget --trigger update_windows'
+]
+
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
-# Mouse follows focus when focused monitor changes
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+[gaps]
+inner.horizontal = 5
+inner.vertical = 5
+outer.top = 45
+outer.left = 5
+outer.bottom = 5
+outer.right = 5
 
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodness#open-a-new-window-with-applescript
 cmd-enter = '''exec-and-forget osascript -e 'tell application "iTerm2" to create window with default profile''''
-cmd-shift-e = 'exec-and-forget emacs'
+cmd-shift-e = 'exec-and-forget open -n -a "Emacs"'
 cmd-shift-f = 'exec-and-forget open -n -a "Google Chrome"'
 cmd-shift-d = 'exec-and-forget open -n -a "Discord"'
 
@@ -29,10 +47,9 @@ cmd-shift-l = 'move right'
 
 cmd-f = 'fullscreen'
 cmd-s = 'layout v_accordion' # 'layout stacking' in i3
-cmd-w = 'layout h_accordion' # 'layout tabbed' in i3
 cmd-e = 'layout tiles horizontal vertical' # 'layout toggle split' in i3
-
 cmd-q = 'close'
+cmd-semicolon = 'split horizontal' # split in horizontal orientation
 
 cmd-shift-space = 'layout floating tiling' # 'floating toggle' in i3
 
