@@ -36,6 +36,7 @@ in {
     cargo
     python3
     gnumake
+    ansible
   ];
 
   programs = {

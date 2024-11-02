@@ -1,6 +1,6 @@
 { lib, config, pkgs, ... }:
 let
-  mypkgs = import ../packages/all-packages.nix {
+  mypkgs = import ../../packages/all-packages.nix {
     inherit pkgs lib config;
   };
 in {
