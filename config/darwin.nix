@@ -28,6 +28,7 @@
       "scroll-reverser"
       "google-chrome"
       "instantview"
+      "flameshot"
       "aerospace"
       "bitwarden"
       "tailscale"
