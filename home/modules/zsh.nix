@@ -49,12 +49,12 @@
     plugins = [
       {
         name = "custom-functions";
-        src = ../dotfiles;
+        src = ../../dotfiles;
         file = ".functions.zsh";
       }
       {
         name = "powerlevel10k-config";
-        src = ../dotfiles;
+        src = ../../dotfiles;
         file = ".p10k.zsh";
       }
     ];

@@ -7,8 +7,8 @@
 
   imports = [
     ./shared.nix
-    ./neovim.nix
-    ./zsh.nix
+    ./modules/neovim.nix
+    ./modules/zsh.nix
   ];
 
   home.packages = with pkgs; [

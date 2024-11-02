@@ -44,13 +44,13 @@
   };
 
   home.file = {
-    ".emacs".source = ../dotfiles/.emacs;
-    ".emacs.d/config.org".source = ../dotfiles/.emacs.d/config.org;
-    ".emacs.d/terminal.org".source = ../dotfiles/.emacs.d/terminal.org;
-    ".emacs.d/functions.org".source = ../dotfiles/.emacs.d/functions.org;
-    ".emacs.d/email.org".source = ../dotfiles/.emacs.d/email.org;
-    ".emacs.d/org.org".source = ../dotfiles/.emacs.d/org.org;
-    ".emacs.d/lsp.org".source = ../dotfiles/.emacs.d/lsp.org;
-    ".mbsyncrc".source = ../dotfiles/.mbsyncrc;
+    ".emacs".source = ../../dotfiles/.emacs;
+    ".emacs.d/config.org".source = ../../dotfiles/.emacs.d/config.org;
+    ".emacs.d/terminal.org".source = ../../dotfiles/.emacs.d/terminal.org;
+    ".emacs.d/functions.org".source = ../../dotfiles/.emacs.d/functions.org;
+    ".emacs.d/email.org".source = ../../dotfiles/.emacs.d/email.org;
+    ".emacs.d/org.org".source = ../../dotfiles/.emacs.d/org.org;
+    ".emacs.d/lsp.org".source = ../../dotfiles/.emacs.d/lsp.org;
+    ".mbsyncrc".source = ../../dotfiles/.mbsyncrc;
   };
 }

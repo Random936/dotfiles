@@ -10,8 +10,9 @@
 
   imports = [
     ./shared.nix
-    ./neovim.nix
-    ./emacs.nix
-    ./zsh.nix
+    ./modules/aerospace.nix
+    ./modules/neovim.nix
+    ./modules/emacs.nix
+    ./modules/zsh.nix
   ];
 }

@@ -7,10 +7,10 @@
 
   imports = [
     ./shared.nix
-    ./hacking.nix
-    ./neovim.nix
-    ./emacs.nix
-    ./zsh.nix
+    ./modules/hacking.nix
+    ./modules/neovim.nix
+    ./modules/emacs.nix
+    ./modules/zsh.nix
   ];
 
   home.packages = with pkgs; [
