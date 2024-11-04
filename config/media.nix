@@ -1,12 +1,13 @@
-{ config, pkgs, inputs, ... }: {
+{ config, pkgs, inputs, lib, ... }: {
 
   imports = [
     ../hardware/media.nix
     ./headless.nix
-    (import ./networking.nix { 
+    (import ./networking.nix {
       hostname = "r330-media";
-      ip_address = "192.168.100.40"; 
+      ip_address = "192.168.100.40";
       open_ports = [ 80 443 32400 ];
+      inherit lib;
     })
   ];
 
