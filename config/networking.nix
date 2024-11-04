@@ -1,4 +1,4 @@
-{ ip_address, hostname }: 
+{ ip_address, hostname, open_ports }: 
 {
   # Configure hostname.
   networking.hostName = hostname;
@@ -16,7 +16,7 @@
   };
 
   networking.nameservers = [ "192.168.100.1" ];
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = open_ports;
   networking.interfaces.enp6s18.ipv4.addresses = [
     {
       address = ip_address;
