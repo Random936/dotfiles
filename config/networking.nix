@@ -1,4 +1,4 @@
-{ ip_address, hostname }:
+{ ip_address, hostname, open_ports }:
 {
   # Configure hostname.
   networking.hostName = hostname;
