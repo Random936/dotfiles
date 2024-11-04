@@ -7,6 +7,9 @@
   networking.useDHCP = false;
   networking.useNetworkd= true;
 
+  # Bug fix
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   networking.defaultGateway = {
       address = ip_address;
       interface = "enp6s18";
