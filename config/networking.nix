@@ -1,4 +1,4 @@
-{ ip_address, hostname, open_ports }: 
+{ ip_address, hostname }:
 {
   # Configure hostname.
   networking.hostName = hostname;
@@ -8,7 +8,7 @@
   networking.useNetworkd= true;
 
   # Bug fix
-  systemd.services.NetworkManager-wait-online.enable = false;
+  systemd.services.systemd-networkd-wait-online.enable = false;
 
   networking.defaultGateway = {
       address = ip_address;
