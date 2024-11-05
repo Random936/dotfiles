@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     feh
+    ncdu
     dconf
     docker
     zoom-us

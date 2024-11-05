@@ -45,6 +45,7 @@
   # Nextcloud Setup
   services.nextcloud = {
       enable = true;
+      package = pkgs.nextcloud30;
       configureRedis = true;
       database.createLocally = true;
       autoUpdateApps.enable = true;

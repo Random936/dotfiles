@@ -4,10 +4,6 @@
     homeDirectory = "/Users/jadenmaxwell";
   };
 
-  home.packages = with pkgs; [
-    virt-viewer
-  ];
-
   imports = [
     ./shared.nix
     ./modules/sketchybar.nix

@@ -21,7 +21,6 @@ in {
     wget
     curl
     tmux
-    ncdu
     btop
     iftop
     p7zip

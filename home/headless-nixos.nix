@@ -12,6 +12,7 @@
   ];
 
   home.packages = with pkgs; [
+    ncdu
     nvtopPackages.full
   ];
 }
