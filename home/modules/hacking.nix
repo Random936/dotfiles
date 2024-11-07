@@ -31,7 +31,7 @@ in {
     })
   ]) ++ (with mypkgs; [
     evil-winrm
-    binaryninja
+    #binaryninja
   ]);
 
 }
