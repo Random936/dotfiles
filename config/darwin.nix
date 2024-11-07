@@ -33,6 +33,7 @@
       "bitwarden"
       "tailscale"
       "discord"
+      "barrier"
       "iterm2"
       "zoom"
       "vlc"

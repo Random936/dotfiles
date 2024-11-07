@@ -20,6 +20,7 @@
     docker
     zoom-us
     discord
+    barrier
     wireshark
     flameshot
     pavucontrol
