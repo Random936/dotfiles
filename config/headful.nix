@@ -49,9 +49,20 @@
   };
 
   # List packages to be installed for headful systems
-  environment.systemPackages = with pkgs; [
-    picom
-  ];
+  #environment.systemPackages = with pkgs; [
+  #];
+
+  # Install OpenGL
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # Install picom for transparency.
+  services.picom = {
+    enable = true;
+    backend = "glx";
+  };
 
   # Install additional programs
   programs.thunar.enable = true;

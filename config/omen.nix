@@ -49,12 +49,6 @@
   services.xserver.dpi = 96;
   environment.variables.GDK_SCALE = "0.5";
 
-  # Install OpenGL
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
   # Ignore laptop lid closing when connected to power.
   services.logind.lidSwitchExternalPower = "ignore";
 
