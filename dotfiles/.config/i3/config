@@ -18,6 +18,7 @@ bindsym $mod+Return exec "alacritty"
 bindsym $mod+Shift+f exec "google-chrome-stable"
 bindsym $mod+Shift+e exec "emacsclient -c"
 bindsym $mod+Shift+d exec "discord"
+bindsym $mod+Shift+t exec "thunar"
 
 # Lock screen with i3lock-fancy
 bindsym $mod+Shift+x exec "i3lock-fancy"
