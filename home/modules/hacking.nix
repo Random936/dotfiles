@@ -1,9 +1,4 @@
-{ lib, config, pkgs, ... }:
-let
-  mypkgs = import ../../packages/all-packages.nix {
-    inherit pkgs lib config;
-  };
-in {
+{ lib, config, pkgs, ... }: {
   # Hacking specific packages.
   home.packages = (with pkgs; [
     yara
@@ -14,6 +9,7 @@ in {
     nikto
     sqlmap
     wpscan
+    pwndbg
     openssl
     remmina
     netexec
@@ -22,6 +18,7 @@ in {
     exploitdb
     responder
     burpsuite
+    evil-winrm
     feroxbuster
     (wordlists.override {
       lists = with pkgs; [
@@ -29,9 +26,6 @@ in {
         seclists
       ];
     })
-  ]) ++ (with mypkgs; [
-    evil-winrm
-    #binaryninja
   ]);
 
 }

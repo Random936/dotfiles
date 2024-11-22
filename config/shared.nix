@@ -35,6 +35,22 @@
     vim
     screen
     killall
+
+    # Create a "fhs" package for running binaries
+    (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
+      pkgs.buildFHSUserEnv (base // {
+      name = "fhs";
+      targetPkgs = pkgs:
+        (base.targetPkgs pkgs) ++ (with pkgs; [
+          pkg-config
+          libxml2
+          ncurses
+        ]
+      );
+      profile = "export FHS=1";
+      runScript = "bash";
+      extraOutputsToInstall = ["dev"];
+    }))
   ];
 
   # Enable services.

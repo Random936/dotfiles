@@ -64,6 +64,8 @@
     backend = "glx";
   };
 
-  # Install additional programs
+  # Install Thunar
   programs.thunar.enable = true;
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
 }
