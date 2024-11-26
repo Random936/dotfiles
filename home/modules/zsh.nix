@@ -16,7 +16,7 @@
       ls = "eza";
       awkuniq = "sort | uniq";
       histogram = "awkuniq -c | sort -nr";
-      json-less = "jq -C . | less -M";
+      json-less = "jq -C . | less -R";
       csv2json = "python -c 'import csv, json, sys; print(json.dumps([dict(r) for r in csv.DictReader(sys.stdin)]))'";
 
       # Nix Specific aliases
