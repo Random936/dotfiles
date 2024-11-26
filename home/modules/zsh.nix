@@ -19,6 +19,14 @@
       json-less = "jq -C . | less -R";
       csv2json = "python -c 'import csv, json, sys; print(json.dumps([dict(r) for r in csv.DictReader(sys.stdin)]))'";
 
+      # Server connection aliases
+      r330-idrac = "ssh root@192.168.100.11 racadm";
+      r730xd-idrac = "ssh root@192.168.100.12 racadm";
+      ideapad = "ssh root@192.168.100.20";
+      r330-proxmox = "ssh root@192.168.100.21";
+      r730xd-proxmox = "ssh root@192.168.100.22";
+      r330-media = "ssh media@192.168.100.40";
+
       # Nix Specific aliases
       update-darwin = "darwin-rebuild switch --flake ~/dotfiles";
       update-config = "sudo nixos-rebuild switch --flake ~/dotfiles";
