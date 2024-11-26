@@ -156,6 +156,6 @@ client.unfocused #333333 #222222 #888888 #292d2e #eeeeee
 exec "xautolock -detectsleep -time 3 -locker i3lock-fancy"
 
 # Startup Applications
-exec_always  --no-startup-id "$HOME/.screenlayout/launch.sh &" # setup screen layout and wallpapers
-exec_always  --no-startup-id "$HOME/.scripts/autostart_desktop.sh &" # run autostart desktop apps
-exec --no-startup-id "polybar &" # status bar
+exec_always --no-startup-id "$HOME/.screenlayout/launch.sh &" # setup screen layout and wallpapers
+exec_always --no-startup-id "$HOME/.scripts/autostart_desktop.sh &" # run autostart desktop apps
+exec_always --no-startup-id "(killall polybar) && (polybar &)" # status bar

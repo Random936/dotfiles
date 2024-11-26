@@ -7,12 +7,15 @@
     ffuf
     amass
     nikto
+    rlwrap
     sqlmap
     wpscan
+    ghidra
     pwndbg
     openssl
     remmina
     netexec
+    rustscan
     inetutils
     thc-hydra
     exploitdb
