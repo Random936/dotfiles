@@ -15,6 +15,7 @@
     openssl
     remmina
     netexec
+    pwntools
     rustscan
     inetutils
     thc-hydra
