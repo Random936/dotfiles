@@ -66,12 +66,60 @@
       };
   };
 
+  # Gitea
+  services.gitea = {
+      enable = true;
+      settings = {
+          server = {
+              ROOT_URL = "https://git.randomctf.com";
+              HTTP_ADDR = "127.0.0.1";
+              HTTP_PORT = 3300;
+              DOMAIN = "git.randomctf.com";
+          };
+          service = {
+              DISABLE_REGISTRATION = true;
+          };
+      };
+
+  };
+
+  # SSH Config for Gitea
+  services.openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+      extraConfig = ''
+      Match User gitea
+        AllowTCPForwarding no
+        AllowAgentForwarding no
+        PasswordAuthentication no
+        X11Forwarding no
+        PermitTTY no
+      '';
+  };
+
+
   # NGINX Reverse Proxy Setup
   services.nginx = {
     enable = true;
-    virtualHosts.${config.services.nextcloud.hostName} = {
-      enableACME = true;
-      forceSSL = true;
+    virtualHosts = {
+        ${config.services.nextcloud.hostName} = {
+          enableACME = true;
+          forceSSL = true;
+        };
+
+        "git.randomctf.com" = {
+            enableACME = true;
+            forceSSL = true;
+
+            extraConfig = ''
+              access_log /var/log/nginx/access.git.log;
+            '';
+
+            locations."/".extraConfig = ''
+              proxy_buffering off;
+              proxy_pass http://localhost:3300/;
+            '';
+        };
     };
   };
 
@@ -79,6 +127,7 @@
     acceptTerms = true;
     certs = {
         ${config.services.nextcloud.hostName}.email = "admin@randomctf.com";
+        ${config.services.gitea.settings.server.DOMAIN}.email = "admin@randomctf.com";
     };
   };
 
