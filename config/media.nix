@@ -102,11 +102,21 @@
   services.nginx = {
     enable = true;
     virtualHosts = {
+
+        # Landing Page (randomctf.com)
+        "randomctf.com" = {
+          enableACME = true;
+          forceSSL = true;
+          root = "/var/www/randomctf.com";
+        };
+
+        # Nextcloud
         ${config.services.nextcloud.hostName} = {
           enableACME = true;
           forceSSL = true;
         };
 
+        # Gitea
         "git.randomctf.com" = {
             enableACME = true;
             forceSSL = true;
@@ -126,6 +136,7 @@
   security.acme = {
     acceptTerms = true;
     certs = {
+        "randomctf.com".email = "admin@randomctf.com";
         ${config.services.nextcloud.hostName}.email = "admin@randomctf.com";
         ${config.services.gitea.settings.server.DOMAIN}.email = "admin@randomctf.com";
     };
