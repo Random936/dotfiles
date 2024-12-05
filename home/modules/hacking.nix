@@ -1,6 +1,7 @@
 { lib, config, pkgs, ... }: {
   # Hacking specific packages.
   home.packages = (with pkgs; [
+    gdb
     yara
     nmap
     john
@@ -12,6 +13,8 @@
     wpscan
     ghidra
     pwndbg
+    strace
+    strace
     openssl
     remmina
     netexec
