@@ -7,6 +7,7 @@
     # Additional packages for functionality
     isync
     ispell
+    texliveFull
     ledger
     mu
 
