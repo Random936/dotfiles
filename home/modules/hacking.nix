@@ -21,6 +21,7 @@
     pwntools
     rustscan
     inetutils
+    wireshark
     thc-hydra
     exploitdb
     responder

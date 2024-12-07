@@ -10,6 +10,8 @@
     texliveFull
     ledger
     mu
+    zip
+    unzip
 
     # Fonts
     maple-mono

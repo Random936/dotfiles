@@ -10,6 +10,7 @@
     ./modules/hacking.nix
     ./modules/neovim.nix
     ./modules/emacs.nix
+    ./modules/apps.nix
     ./modules/zsh.nix
   ];
 
@@ -18,14 +19,10 @@
     ncdu
     dconf
     docker
-    zoom-us
-    discord
     barrier
-    wireshark
     flameshot
     pavucontrol
     virt-viewer
-    libreoffice
     google-chrome
     bitwarden-cli
     wireguard-tools
