@@ -175,7 +175,8 @@ Org-roam is a plain-text knowledge management system. It brings some of Roam's m
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ("C-c n o" . org-id-get-create)
-         ("C-c n t" . jm/org-roam-capture-today))
+         ("C-c n t" . jm/org-roam-capture-today)
+         ("C-c n r" . jm/org-roam-refresh-agenda-list))
   :config
   ;; Config for org-roam capture templates.
   (setq jm/org-roam-templates-directory (expand-file-name "templates" org-roam-directory)

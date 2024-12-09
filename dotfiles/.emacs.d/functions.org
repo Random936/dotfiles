@@ -6,6 +6,8 @@ Creates a function to refresh the ~org-agenda-files~ variable to be set to inclu
 
 #+begin_src emacs-lisp
 (defun jm/org-roam-refresh-agenda-list ()
+  (interactive)
+  (org-roam-db-sync)
   (let ((directory (expand-file-name org-roam-dailies-directory org-roam-directory)))
     (setq org-agenda-files
           (seq-filter

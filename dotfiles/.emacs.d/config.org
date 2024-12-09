@@ -28,6 +28,16 @@ Disables the dialog prompting box and instead prompts the user in the minibuffer
 (setq use-dialog-box nil)
 #+end_src
 
+** Global Auto Revert 
+
+Enabling global auto revert in Emacs so that changes across a shared file system are synced with emacs buffers.
+
+#+begin_src emacs-lisp
+(global-auto-revert-mode 1)
+(setq auto-revert-use-notify nil)
+(setq auto-revert-verbose 1)
+#+end_src
+
 ** Relocate Custom File
 
 Change location of custom file. This will stop *custom* from appending to the config file.

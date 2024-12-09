@@ -5,5 +5,6 @@
       discord
       shotcut
       libreoffice
+      bitwarden-desktop
     ];
 }
