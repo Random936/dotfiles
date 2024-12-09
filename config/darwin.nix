@@ -1,9 +1,6 @@
 { config, pkgs, lib, ... }: {
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # Path fix for GUI applications.
-  launchd.user.envVariables.PATH = config.environment.systemPath;
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     git
