@@ -24,6 +24,7 @@ in {
     btop
     iftop
     p7zip
+    sshpass
     ripgrep
     openvpn
     pciutils

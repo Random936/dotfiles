@@ -19,9 +19,9 @@
       json-less = "jq -C . | less -R";
       csv2json = "python -c 'import csv, json, sys; print(json.dumps([dict(r) for r in csv.DictReader(sys.stdin)]))'";
 
-      # Server connection aliases
-      r330-idrac = "ssh root@192.168.100.11 racadm";
-      r730xd-idrac = "ssh root@192.168.100.12 racadm";
+      # Server user/address aliases
+      r330-idrac = "bw-ssh iDRAC root@192.168.100.11 racadm";
+      r730xd-idrac = "bw-ssh iDRAC root@192.168.100.12 racadm";
       ideapad = "ssh root@192.168.100.20";
       r330-proxmox = "ssh root@192.168.100.21";
       r730xd-proxmox = "ssh root@192.168.100.22";
@@ -48,9 +48,10 @@
     function ....... { cd ../../../../../../.. }
     function bw-copy { bw-load && bw get password "$1" | xsel --clipboard -i }
     function bw-clear { echo -n "" | xsel --clipboard }
+    function bw-ssh { sshpass -p "$(bw-load && bw get password "$1")" ssh ''${@:2} }
 
     if [[ "$(uname)" == "Darwin" ]]; then
-       source <(/opt/homebrew/bin/brew shellenv)
+        source <(/opt/homebrew/bin/brew shellenv)
     fi
     '';
 
