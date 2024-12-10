@@ -1,9 +1,9 @@
 {pkgs, ... }: {
     home.packages = with pkgs; [
       vlc
+      typora
       zoom-us
       discord
-      shotcut
       libreoffice
       bitwarden-desktop
     ];
