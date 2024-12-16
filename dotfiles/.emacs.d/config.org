@@ -122,7 +122,7 @@ This package fixes issues with the path on MacOS by pulling the ~$PATH~ variable
 
 #+begin_src emacs-lisp
 (use-package exec-path-from-shell
-  :init
+  :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 #+end_src
@@ -532,17 +532,9 @@ Dired is a built-in package in Emacs that allows for basic file navigation. Whil
     :custom ((dired-listing-switches "-ahgo"))
     :config
     (evil-collection-define-key 'normal 'dired-mode-map
-      "h" 'dired-single-up-directory
-      "l" 'dired-single-buffer
+      "h" 'dired-up-directory
+      "l" 'dired-find-file
       "T" 'dired-create-empty-file))
-#+end_src
-
-*** Dired Single
-
-Vanilla dired opens a new buffer for every new directory it visits. When managing files, this will quickly fill up resulting in a ridiculous number of buffers. Though, single dired fixes this problem by instead modifying the current buffer when navigating through files.
-
-#+begin_src emacs-lisp
-  (use-package dired-single :after dired)
 #+end_src
 
 *** All the Icons Dired
