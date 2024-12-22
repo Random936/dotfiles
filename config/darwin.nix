@@ -33,6 +33,7 @@
       "barrier"
       "iterm2"
       "zoom"
+      "plex"
       "vlc"
     ];
   };
