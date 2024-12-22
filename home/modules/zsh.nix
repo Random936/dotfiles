@@ -26,6 +26,7 @@
       r330-proxmox = "ssh root@192.168.100.21";
       r730xd-proxmox = "ssh root@192.168.100.22";
       r330-media = "ssh media@192.168.100.40";
+      sampledb-dev = "ssh sampledb@192.168.100.42";
 
       # Nix Specific aliases
       update-darwin = "darwin-rebuild switch --flake ~/dotfiles";
