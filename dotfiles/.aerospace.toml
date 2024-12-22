@@ -85,7 +85,7 @@ cmd-shift-0 = 'move-node-to-workspace 10'
 
 cmd-shift-c = 'reload-config'
 
-cmd-r = 'mode resize'
+cmd-shift-r = 'mode resize'
 
 [mode.resize.binding]
 h = 'resize width +50'
