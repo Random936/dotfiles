@@ -8,7 +8,6 @@
     isync
     ispell
     texliveFull
-    ledger
     mu
     zip
     unzip

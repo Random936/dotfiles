@@ -134,7 +134,8 @@ This section contains the ~mu4e~ emacs specific configuration.
           (:maildir "/Club" :key ?c)
           (:maildir "/UCSC" :key ?u)
           (:maildir "/Newsletters" :key ?n)
-          (:maildir "/Automated" :key ?A))))
+          (:maildir "/Automated" :key ?A)
+          (:maildir "/Spam" :key ?S))))
 #+end_src
 
 Adding some configuration to correct ~mu4e~'s default values.

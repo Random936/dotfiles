@@ -30,7 +30,7 @@ outer.right = 5
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodness#open-a-new-window-with-applescript
 cmd-enter = '''exec-and-forget osascript -e 'tell application "iTerm2" to create window with default profile''''
-cmd-shift-e = 'exec-and-forget open -n -a "Emacs"'
+cmd-shift-e = 'exec-and-forget emacs'
 cmd-shift-f = 'exec-and-forget open -n -a "Google Chrome"'
 cmd-shift-d = 'exec-and-forget open -n -a "Discord"'
 
