@@ -12,4 +12,6 @@
     ./modules/emacs.nix
     ./modules/zsh.nix
   ];
+
+  home.file.".config/ghostty/config".source = ../dotfiles/.config/ghostty/config;
 }
