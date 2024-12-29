@@ -631,6 +631,7 @@ This is the section to include imports from other files.
   (jm/load-config-if-exists "~/.emacs.d/org.org") ; Org-mode
   (jm/load-config-if-exists "~/.emacs.d/lsp.org") ; Language Server Protocol
   (jm/load-config-if-exists "~/.emacs.d/terminal.org") ; Emacs Terminal
+  (jm/load-config-if-exists "~/.emacs.d/email.org") ; Mu4e/SMTP Config
 
   ;; Load EXWM configuration if environment variable set.
   (let ((exwm-org-file "~/.emacs.d/exwm.org"))

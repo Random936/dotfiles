@@ -1,0 +1,167 @@
+#+TITLE: Email Configuration
+
+* Initial Setup
+
+Before installing any packages with emacs, there is some initial setup that needs to be done. The first part of this is installing isync. Isync is the actual program that is used to sync mail with remote imap servers such as the one used by gmail.
+
+This can be installed with the following command:
+#+begin_src bash
+sudo pacman -S isync
+#+end_src
+
+After this is installed, a config file must be created at the location ~~/.mbsyncrc~ to configure isync to connect to some gmail account. I've included this in the git repo, so after installing everything with ~stow .~, it should already be configured properly. However, some information such as the username and password might need to be updated.
+
+The password uses GPG to decrypt some encrypted password file for added security. To create this file, run the following commands:
+#+begin_src bash
+vim ~/.passwords/gmail # Add your password to the file.
+gpg -c ~/.passwords/gmail # Creates a gmail.gpg file.
+rm ~/.passwords/gmail # Remove the plaintext password file.
+#+end_src
+
+** Disclaimer
+
+If you are using two factor authentication, this will not work. In this case, you will need to create an /app password/. A guide on how to do this can be found [[https://support.google.com/accounts/answer/185833][here]]. From here, I can just replace this value with what used to be my normal password.
+
+** Installation for MacOS
+
+MacOS doesn't include a certificate file in the typical ~/etc/ssl/certs~ directory. Due to this, you have to create a file using the ~Keychain Access~ app.
+#+begin_src bash
+Open the Application Keychain Access.app
+Select System Roots in the sidebar
+Select all items listen here – ⌘ + a
+Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
+#+end_src
+
+** Mu4e Installation
+
+
+In this section, I'm setting up ~mu4e~ to give emacs the capability to send emails using my gmail account. To start, you need to install the ~mu4e~ package outside of Emacs.
+
+#+begin_src bash
+yay -S mu
+#+end_src
+
+After installing the ~mu~ client, I also need to run a initial index using the following command:
+
+#+begin_src bash
+mbsync -a
+mu init --maildir=~/.mail --my-address=jadenprovost@gmail.com
+mu index
+#+end_src
+
+* Custom Functions
+
+#+begin_src emacs-lisp
+(defconst jm/email-filters-path "~/Nextcloud/filters.json")
+
+(defun jm/any-string-match-p (needles haystack)
+  (when (listp needles)
+    (let (result)
+      (dolist (needle needles result)
+        (setq result (or result (s-matches-p needle haystack)))))))
+
+(defun jm/load-email-filters (msg)
+  (let ((filters (append (json-read-file jm/email-filters-path) nil))
+        (trash-flag (member
+                     (car (mu4e-string-to-flags "T"))
+                     (mu4e-message-field msg :flags)))
+        folder)
+    (if trash-flag
+        "/Trash"
+      (dolist (filter filters)
+        (let ((subject (mu4e-message-field msg :subject))
+              (filter-folder (cdr (assoc-string "folder" filter)))
+              (subject-filters (append (cdr (assoc-string "subject" filter)) nil))
+              (from-filters (append (cdr (assoc-string "from-contact" filter)) nil))
+              (bcc-filters (append (cdr (assoc-string "bcc-contact" filter)) nil)))
+          (when (or (jm/any-string-match-p subject-filters subject)
+                    (mu4e-message-contact-field-matches msg :from from-filters)
+                    (mu4e-message-contact-field-matches msg :bcc bcc-filters))
+            (setq folder filter-folder))))
+      (if folder folder "/Archive"))))
+#+end_src
+
+* Mu4e
+
+This section contains the ~mu4e~ emacs specific configuration.
+
+#+begin_src emacs-lisp
+
+(use-package mu4e
+  :ensure nil
+  :bind ("C-x m" . mu4e)
+  :config
+  (add-hook 'mu4e-compose-mode-hook (lambda () (use-hard-newlines -1)))
+
+  (setq mu4e-mu-binary (executable-find "mu")
+        mu4e-change-filenames-when-moving t ; Avoids syncing issues.
+        mu4e-search-results-limit 2000 ; Extend header view max message count.
+        mu4e-compose-format-flowed t) ; Disable hard line wrapping
+
+  ;; Fix message citation style for gmail.
+  (setq message-cite-style message-cite-style-gmail
+        message-citation-line-format "On %a, %b %d, %Y at %H:%M %p %f wrote:"
+        message-citation-line-function 'message-insert-formatted-citation-line)
+
+  ;; Refresh mail every X seconds. Set to 5 minutes currently
+  (setq mu4e-update-interval (* 5 60)
+        mu4e-get-mail-command "mbsync -a"
+        mu4e-maildir "~/.mail")
+
+  ;; Config mu4e folders
+  (setq mu4e-drafts-folder "/Drafts"
+        mu4e-sent-folder "/Sent"
+        mu4e-trash-folder "/Trash"
+        mu4e-refile-folder #'jm/load-email-filters)
+
+  ;; Config mu4e bookmarks
+  (setq mu4e-bookmarks
+        '((:name "Filtered unread messages" :query "flag:unread AND (maildir:/Archive OR maildir:/Inbox) AND NOT flag:trashed" :key ?u)
+          (:name "All unread messages" :query "flag:unread" :key ?U)
+          (:name "Today's messages" :query "date:today..now" :key ?t)
+          (:name "Last 7 days" :query "date:7d..now" :hide-unread t :key ?w)
+          (:name "Flagged messages" :query "flag:flagged" :key ?f)))
+
+  (setq mu4e-maildir-shortcuts
+        '((:maildir "/Inbox" :key ?i)
+          (:maildir "/Archive" :key ?a)
+          (:maildir "/Drafts" :key ?d)
+          (:maildir "/Sent" :key ?s)
+          (:maildir "/Trash" :key ?t)
+          (:maildir "/Finance" :key ?f)
+          (:maildir "/Packages" :key ?p)
+          (:maildir "/Work" :key ?w)
+          (:maildir "/Club" :key ?c)
+          (:maildir "/UCSC" :key ?u)
+          (:maildir "/Newsletters" :key ?n)
+          (:maildir "/Automated" :key ?A)
+          (:maildir "/Spam" :key ?S))))
+#+end_src
+
+Adding some configuration to correct ~mu4e~'s default values.
+#+begin_src emacs-lisp
+(setq user-full-name "Jaden Provost Maxwell-Comfort")
+(setq user-mail-address "jadenprovost@gmail.com")
+#+end_src
+
+* SMTP
+
+In order to send mail with ~mu4e~, you must also configure an SMTP client.  Based on the ~mu4e~ wiki, I was able to shamelessly steal some of the config for the gmail configuration found [[https://www.djcbsoftware.nl/code/mu/mu4e/Gmail-configuration.html][here]].
+
+#+begin_src emacs-lisp
+(use-package smtpmail
+  :after mu4e
+  :config
+  (setq smtpmail-stream-type 'ssl
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 465))
+
+(setq send-mail-function 'smtpmail-send-it)
+#+end_src
+
+When running this however, you need to authenticate by creating an ~~/.authinfo~ file. This file is formatted as follows:
+#+begin_src text
+machine smtp.gmail.com port 465 login "<USER>" password "<PASS>"
+#+end_src
+
+Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security.
