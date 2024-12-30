@@ -29,7 +29,16 @@ outer.right = 5
 
 [mode.main.binding]
 # See: https://nikitabobko.github.io/AeroSpace/goodness#open-a-new-window-with-applescript
-cmd-enter = 'exec-and-forget open -n -a "Ghostty"'
+cmd-enter = '''exec-and-forget osascript << EOF
+tell application "Ghostty"
+        if it is running then
+                activate
+                tell application "System Events" to keystroke "n" using {command down}
+        else
+                activate
+        end if
+end tell
+EOF'''
 cmd-shift-e = 'exec-and-forget /etc/profiles/per-user/*/bin/emacs'
 cmd-shift-f = 'exec-and-forget open -n -a "Google Chrome"'
 cmd-shift-d = 'exec-and-forget open -n -a "Discord"'
