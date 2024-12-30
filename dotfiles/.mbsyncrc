@@ -1,25 +1,25 @@
-IMAPAccount gmail
-Host imap.gmail.com
-User jadenprovost@gmail.com
-PassCmd "PATH=/opt/homebrew/bin:$PATH bw --session $(cat $HOME/.bw_session) --nointeraction get password 'Emacs Gmail'"
-TLSType IMAPS
-TLSVersions +1.2
-AuthMechs PLAIN
-SystemCertificates no
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+IMAPAccount protonmail
+Host 127.0.0.1
+User jadenprovost@proton.me
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.emacs.d/.mbsyncpass.gpg | awk '/1143/ {print $NF}'"
+Port 1143
+TLSType STARTTLS
+AuthMechs LOGIN
+CertificateFile ~/.config/protonmail/bridge/cert.pem
 
-IMAPStore gmail-remote
-Account gmail
+IMAPStore protonmail-remote
+Account protonmail
 
-MaildirStore gmail-local
+MaildirStore protonmail-local
 Subfolders Verbatim
 Path ~/.mail/
-Inbox ~/.mail/Inbox
-Trash ~/.mail/Trash
+Inbox ~/.mail/INBOX
+SubFolders Verbatim
 
-Channel gmail
-Far :gmail-remote:
-Near :gmail-local:
-Patterns * ![Gmail]* !Archive
+Channel protonmail
+Far :protonmail-remote:
+Near :protonmail-local:
+Patterns * "!All Mail"
 Create Both
+Expunge None
 SyncState *

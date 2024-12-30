@@ -2,35 +2,11 @@
 
 * Initial Setup
 
-Before installing any packages with emacs, there is some initial setup that needs to be done. The first part of this is installing isync. Isync is the actual program that is used to sync mail with remote imap servers such as the one used by gmail.
+Before installing any packages with emacs, there is some initial setup that needs to be done. 
 
-This can be installed with the following command:
-#+begin_src bash
-sudo pacman -S isync
-#+end_src
+** Exporting TLS Certificates
 
-After this is installed, a config file must be created at the location ~~/.mbsyncrc~ to configure isync to connect to some gmail account. I've included this in the git repo, so after installing everything with ~stow .~, it should already be configured properly. However, some information such as the username and password might need to be updated.
-
-The password uses GPG to decrypt some encrypted password file for added security. To create this file, run the following commands:
-#+begin_src bash
-vim ~/.passwords/gmail # Add your password to the file.
-gpg -c ~/.passwords/gmail # Creates a gmail.gpg file.
-rm ~/.passwords/gmail # Remove the plaintext password file.
-#+end_src
-
-** Disclaimer
-
-If you are using two factor authentication, this will not work. In this case, you will need to create an /app password/. A guide on how to do this can be found [[https://support.google.com/accounts/answer/185833][here]]. From here, I can just replace this value with what used to be my normal password.
-
-** Installation for MacOS
-
-MacOS doesn't include a certificate file in the typical ~/etc/ssl/certs~ directory. Due to this, you have to create a file using the ~Keychain Access~ app.
-#+begin_src bash
-Open the Application Keychain Access.app
-Select System Roots in the sidebar
-Select all items listen here – ⌘ + a
-Export the items with ⇧ + ⌘ + e to the file ~/.mail/certificates/root-certificates.pem
-#+end_src
+After installing the ~proton-mail-bridge~, you will need to export the certificates by going to Settings > Advanced settings > Export TLS certificates. From here you should place this at the path ~~/.config/protonmail/bridge/~.
 
 ** Mu4e Installation
 
@@ -44,7 +20,7 @@ yay -S mu
 After installing the ~mu~ client, I also need to run a initial index using the following command:
 
 #+begin_src bash
-mbsync -a
+mkdir ~/.mail && mbsync -a
 mu init --maildir=~/.mail --my-address=jadenprovost@gmail.com
 mu index
 #+end_src
@@ -123,25 +99,27 @@ This section contains the ~mu4e~ emacs specific configuration.
           (:name "Flagged messages" :query "flag:flagged" :key ?f)))
 
   (setq mu4e-maildir-shortcuts
-        '((:maildir "/Inbox" :key ?i)
+        ;; Proton folders
+        '((:maildir "INBOX" :key ?i)
           (:maildir "/Archive" :key ?a)
           (:maildir "/Drafts" :key ?d)
           (:maildir "/Sent" :key ?s)
+          (:maildir "/Spam" :key ?S)
           (:maildir "/Trash" :key ?t)
-          (:maildir "/Finance" :key ?f)
-          (:maildir "/Packages" :key ?p)
-          (:maildir "/Work" :key ?w)
-          (:maildir "/Club" :key ?c)
-          (:maildir "/UCSC" :key ?u)
-          (:maildir "/Newsletters" :key ?n)
-          (:maildir "/Automated" :key ?A)
-          (:maildir "/Spam" :key ?S))))
+
+          ;; My folders
+          (:maildir "/Folders/Finance" :key ?f)
+          (:maildir "/Folders/Packages" :key ?p)
+          (:maildir "/Folders/Work" :key ?w)
+          (:maildir "/Folders/Club" :key ?c)
+          (:maildir "/Folders/UCSC" :key ?u)
+          (:maildir "/Folders/Newsletters" :key ?n))))
 #+end_src
 
 Adding some configuration to correct ~mu4e~'s default values.
 #+begin_src emacs-lisp
 (setq user-full-name "Jaden Provost Maxwell-Comfort")
-(setq user-mail-address "jadenprovost@gmail.com")
+(setq user-mail-address "jadenprovost@proton.me")
 #+end_src
 
 * SMTP
@@ -152,16 +130,22 @@ In order to send mail with ~mu4e~, you must also configure an SMTP client.  Base
 (use-package smtpmail
   :after mu4e
   :config
-  (setq smtpmail-stream-type 'ssl
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 465))
+  (setq smtpmail-stream-type 'starttls
+        smtpmail-smtp-server "127.0.0.1"
+        smtpmail-smtp-service 1025))
 
 (setq send-mail-function 'smtpmail-send-it)
 #+end_src
 
 When running this however, you need to authenticate by creating an ~~/.authinfo~ file. This file is formatted as follows:
-#+begin_src text
+#+begin_src authinfo
+# For gmail
 machine smtp.gmail.com port 465 login "<USER>" password "<PASS>"
+
+# For Proton Mail
+# Copy the remaining information from the proton-mail-bridge for both IMAP and SMTP
+machine 127.0.0.1 port <PORT> login "<USER>" password "<PASS>"
+machine 127.0.0.1 port <PORT> login "<USER>" password "<PASS>"
 #+end_src
 
-Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security.
+Similarly to the password configured above for the IMAP server, you can also pass an ~authinfo.gpg~ file for some added security. If you are using proton mail, make sure this matches the path set in your ~.mbsyncrc~ file.

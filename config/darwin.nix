@@ -16,6 +16,7 @@
     brews = [
       "wireguard-tools"
       "bitwarden-cli"
+      "pinentry-mac"
       "sketchybar"
       "coreutils"
       "watch"
@@ -29,6 +30,7 @@
       "aerospace"
       "bitwarden"
       "tailscale"
+      "wireshark"
       "firefox"
       "ghostty"
       "discord"

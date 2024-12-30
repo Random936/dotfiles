@@ -4,6 +4,10 @@
     homeDirectory = "/Users/jadenmaxwell";
   };
 
+  home.packages = with pkgs; [
+    gnupg
+  ];
+
   imports = [
     ./shared.nix
     ./modules/sketchybar.nix
