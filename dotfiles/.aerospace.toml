@@ -40,7 +40,7 @@ tell application "Ghostty"
 end tell
 EOF'''
 cmd-shift-e = 'exec-and-forget /etc/profiles/per-user/*/bin/emacs'
-cmd-shift-f = 'exec-and-forget open -n -a "Google Chrome"'
+cmd-shift-f = 'exec-and-forget open -n -a "Firefox"'
 cmd-shift-d = 'exec-and-forget open -n -a "Discord"'
 
 # i3 wraps focus by default

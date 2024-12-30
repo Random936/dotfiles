@@ -15,7 +15,7 @@ floating_modifier $mod
 
 # Application hot keys
 bindsym $mod+Return exec "alacritty"
-bindsym $mod+Shift+f exec "google-chrome-stable"
+bindsym $mod+Shift+f exec "firefox"
 bindsym $mod+Shift+e exec "emacsclient -c"
 bindsym $mod+Shift+d exec "discord"
 bindsym $mod+Shift+t exec "thunar"

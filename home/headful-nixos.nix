@@ -20,10 +20,10 @@
     dconf
     docker
     barrier
+    firefox
     flameshot
     pavucontrol
     virt-viewer
-    google-chrome
     bitwarden-cli
     wireguard-tools
     nextcloud-client

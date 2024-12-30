@@ -22,13 +22,14 @@
     ];
     casks = [
       "font-hack-nerd-font"
+      "proton-mail-bridge"
       "scroll-reverser"
-      "google-chrome"
       "instantview"
       "flameshot"
       "aerospace"
       "bitwarden"
       "tailscale"
+      "firefox"
       "ghostty"
       "discord"
       "barrier"
