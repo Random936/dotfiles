@@ -47,9 +47,6 @@
     function .....   { cd ../../../../.. }
     function ......  { cd ../../../../../.. }
     function ....... { cd ../../../../../../.. }
-    function bw-copy { bw-load && bw get password "$1" | xsel --clipboard -i }
-    function bw-clear { echo -n "" | xsel --clipboard }
-    function bw-ssh { sshpass -p "$(bw-load && bw get password "$1")" ssh ''${@:2} }
 
     if [[ "$(uname)" == "Darwin" ]]; then
         source <(/opt/homebrew/bin/brew shellenv)
