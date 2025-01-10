@@ -16,7 +16,6 @@ in {
     # Utilities
     jq
     bc
-    dig
     file
     wget
     curl
@@ -29,6 +28,12 @@ in {
     openvpn
     pciutils
     fastfetch
+
+    # Network tools
+    dig
+    iperf
+    tcpdump
+    traceroute
 
     # Dev tools
     clang
