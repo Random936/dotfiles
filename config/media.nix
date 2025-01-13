@@ -69,6 +69,7 @@
   # Gitea
   services.gitea = {
       enable = true;
+      stateDir = "/mnt/storage/gitea";
       settings = {
           server = {
               ROOT_URL = "https://git.randomctf.com";
