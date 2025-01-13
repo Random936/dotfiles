@@ -38,7 +38,7 @@
 
     # Create a "fhs" package for running binaries
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
-      pkgs.buildFHSUserEnv (base // {
+      pkgs.buildFHSEnv (base // {
       name = "fhs";
       targetPkgs = pkgs:
         (base.targetPkgs pkgs) ++ (with pkgs; [
