@@ -1,7 +1,7 @@
 IMAPAccount protonmail
 Host 127.0.0.1
 User jadenprovost@proton.me
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.emacs.d/.mbsyncpass.gpg | awk '/1143/ {print $NF}'"
+PassCmd "cat ~/.authinfo | awk '/machine 127.0.0.1 port 1143/ {print $NF}'"
 Port 1143
 TLSType STARTTLS
 AuthMechs LOGIN
@@ -21,5 +21,5 @@ Far :protonmail-remote:
 Near :protonmail-local:
 Patterns * "!All Mail"
 Create Both
-Expunge None
+Expunge Both
 SyncState *
