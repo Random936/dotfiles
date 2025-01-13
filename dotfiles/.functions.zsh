@@ -19,7 +19,15 @@ bw-init() {
 }
 
 bw-copy() {
-    bw-load && NODE_OPTIONS="--no-deprecation" bw get password "$1" | xsel --clipboard -i
+    clipboard_cmd=""
+
+    if [[ "$(uname)" == "Linux" ]]; then
+        clipboard_cmd="xsel --clipboard -i"
+    elif [[ "$(uname)" == "Darwin" ]]; then
+        clipboard_cmd="pbcopy"
+    fi
+
+    bw-load && NODE_OPTIONS="--no-deprecation" bw get password "$1" | $clipboard_cmd
 }
 
 bw-clear() {
