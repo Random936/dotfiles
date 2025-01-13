@@ -22,6 +22,7 @@
     barrier
     firefox
     flameshot
+    traceroute
     pavucontrol
     virt-viewer
     bitwarden-cli

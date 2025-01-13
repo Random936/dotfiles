@@ -33,7 +33,6 @@ in {
     dig
     iperf
     tcpdump
-    traceroute
 
     # Dev tools
     clang
