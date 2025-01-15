@@ -7,4 +7,4 @@ function load_script() {
 }
 
 load_script "$HOME/.screenlayout/wallpapers.sh" # wallpapers script
-
+load_script "$HOME/.screenlayout/layout.sh"
