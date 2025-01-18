@@ -8,6 +8,7 @@
     ffuf
     amass
     nikto
+    nuclei
     rlwrap
     sqlmap
     wpscan
