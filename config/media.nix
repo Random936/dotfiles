@@ -39,7 +39,7 @@
       enable = true;
       openFirewall = true;
       user = "media";
-      dataDir = "/mnt/storage/plex";
+      dataDir = "/mnt/media/plex";
   };
 
   # Nextcloud Setup
@@ -52,7 +52,7 @@
       https = true;
 
       hostName = "nextcloud.randomctf.com";
-      datadir = "/mnt/storage/nextcloud";
+      datadir = "/mnt/files/nextcloud";
       maxUploadSize = "50G";
 
       settings = {
@@ -69,7 +69,7 @@
   # Gitea
   services.gitea = {
       enable = true;
-      stateDir = "/mnt/storage/gitea";
+      stateDir = "/mnt/files/gitea";
       settings = {
           server = {
               ROOT_URL = "https://git.randomctf.com";

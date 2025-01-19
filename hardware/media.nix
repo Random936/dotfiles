@@ -18,8 +18,13 @@
       fsType = "ext4";
     };
 
-  fileSystems."/mnt/storage" =
+  fileSystems."/mnt/media" =
     { device = "/dev/disk/by-uuid/b579c911-e74c-4f03-b918-a4e5a6b764ab";
+      fsType = "ext4";
+    };
+
+  fileSystems."/mnt/files" =
+    { device = "/dev/disk/by-uuid/f3a62e58-9556-47d7-b78b-3211f269f4ce";
       fsType = "ext4";
     };
 
