@@ -27,7 +27,7 @@ bw-copy() {
         clipboard_cmd="pbcopy"
     fi
 
-    bw-load && NODE_OPTIONS="--no-deprecation" bw get password "$1" | $clipboard_cmd
+    bw-load && NODE_OPTIONS="--no-deprecation" bw get password "$1" | eval $clipboard_cmd
 }
 
 bw-clear() {
