@@ -28,6 +28,7 @@
     bitwarden-cli
     wireguard-tools
     nextcloud-client
+    protonmail-desktop
     nvtopPackages.full
   ];
 
