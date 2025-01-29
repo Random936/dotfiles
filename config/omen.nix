@@ -10,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Supported Filesystems
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = [ "ntfs" "nfs" ];
 
   # Import default user config
   users.users.random = import ./user.nix;

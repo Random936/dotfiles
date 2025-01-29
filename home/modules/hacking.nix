@@ -20,6 +20,7 @@
     remmina
     netexec
     pwntools
+    openldap
     rustscan
     inetutils
     wireshark
@@ -28,6 +29,7 @@
     responder
     burpsuite
     evil-winrm
+    cifs-utils
     feroxbuster
     (wordlists.override {
       lists = with pkgs; [
