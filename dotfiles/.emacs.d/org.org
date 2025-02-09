@@ -142,8 +142,9 @@ Adds a hook to repeated tasks in org agenda that, when repeated, checkboxes will
 
 #+begin_src emacs-lisp
 (add-hook 'org-after-todo-state-change-hook
-        (lambda () (when (org-get-todo-state)
-                        (org-id-get-create))))
+          (lambda () (when (org-get-todo-state)
+                       (org-id-get-create)
+                       (save-buffer))))
 #+end_src
 
 ** Org Agenda
